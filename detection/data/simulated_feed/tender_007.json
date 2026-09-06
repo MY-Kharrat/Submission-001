@@ -1,0 +1,14 @@
+{
+  "id": "tender-007",
+  "title": "CI/CD Pipeline and Process Automation Infrastructure",
+  "issuer": "Apex Financial Group",
+  "deadline": "2026-11-05",
+  "raw_text": "Apex Financial requires automated workflow and CI/CD pipeline modernization across 50+ microservices. The solution must implement GitOps deployment patterns, automated security scanning integration, infrastructure-as-code scripting, and developer platform tooling.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Automated CI/CD pipeline configuration with GitOps",
+    "Infrastructure as Code automation (Terraform/Ansible)",
+    "Automated security scanning tools integration",
+    "Developer portal and deployment workflow automation"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "tender-001",
+  "title": "Web Application Security Assessment",
+  "issuer": "TechCorp International",
+  "deadline": "2026-11-15",
+  "raw_text": "TechCorp International is seeking a qualified vendor to perform a comprehensive security assessment and penetration testing engagement on our customer-facing web applications. Scope includes OWASP Top 10 testing, API security review, and authentication mechanism evaluation. The vendor must provide a detailed report with remediation priorities within 30 days of engagement start.",
+  "source": "simulated_feed",
+  "requirements": [
+    "OWASP Top 10 security testing coverage",
+    "API security review for REST and GraphQL endpoints",
+    "Authentication and session management audit",
+    "Detailed remediation report within 30 days"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "tender-011",
+  "title": "Robotic Process Automation (RPA) and Invoice Tooling",
+  "issuer": "Northern Energy Utility",
+  "deadline": "2026-11-18",
+  "raw_text": "Northern Energy requires workflow automation tools to digitize paper invoice processing and meter data reconciliation. Vendor will build automated python scripts, OCR extraction tools, and ERP integration bots to eliminate manual data entry errors.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Workflow automation tools development",
+    "OCR document extraction and validation engine",
+    "Automated SAP ERP integration scripts",
+    "Exception dashboard and monitoring interface"
+  ]
+}

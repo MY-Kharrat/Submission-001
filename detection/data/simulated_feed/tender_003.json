@@ -1,0 +1,15 @@
+{
+  "id": "tender-003",
+  "title": "CI/CD Pipeline Automation for Microservices",
+  "issuer": "FinServ Solutions",
+  "deadline": "2026-10-20",
+  "raw_text": "FinServ Solutions seeks expertise in automation and tooling to build a robust CI/CD pipeline for our microservices architecture. Current stack includes Kubernetes, GitLab, and ArgoCD. We need automated testing gates, deployment rollback mechanisms, and monitoring integration with Datadog. Security scanning must be integrated into the pipeline.",
+  "source": "simulated_feed",
+  "requirements": [
+    "CI/CD pipeline design for Kubernetes microservices",
+    "Automated testing gates with quality thresholds",
+    "Deployment rollback automation",
+    "Datadog monitoring integration",
+    "Security scanning in pipeline"
+  ]
+}

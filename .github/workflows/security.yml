@@ -1,0 +1,87 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"   # weekly, Monday -- catches newly disclosed CVEs in deps nobody touched that week
+  workflow_dispatch:
+
+# Note: every pinned SHA/tag below was resolved from upstream on 2026-09-06.
+# Third-party actions, images and audit tool versions are pinned so a force-moved
+# upstream tag cannot silently change what runs on this repo's runner.
+
+permissions:
+  contents: read
+
+jobs:
+  secrets-scan:
+    if: github.event_name != 'schedule'   # deterministic scan; weekly run re-scans deps instead
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history -- gitleaks needs it to catch secrets committed in the past, not just the current diff
+
+      # Official action pinned to full commit SHA (gitleaks/gitleaks-action v2).
+      # Upload-artifact disabled so the job only needs contents: read.
+      - uses: gitleaks/gitleaks-action@dcedce43c6f43de0b836d1fe38946645c9c638dc
+        with:
+          enable-upload-artifact: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  python-security-lint:
+    if: github.event_name != 'schedule'   # deterministic scan; weekly run re-scans deps instead
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [detection, agent, shared]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Bandit
+        run: pip install bandit==1.9.4
+      - name: Bandit scan
+        # -lll fails only on HIGH severity so low-confidence noise can't
+        # silently red the build and get this workflow disabled.
+        run: bandit -r ${{ matrix.dir }} -e "*/tests" -lll
+
+  dependency-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit==2.10.1
+      - name: Audit dependencies
+        # requirements.lock pins the exact installed set so the audit matches
+        # what actually runs, not a fresh >= resolution. Regenerate it whenever
+        # requirements.txt changes:  pip freeze > requirements.lock
+        run: pip-audit -r requirements.lock
+
+  # Replaces CodeQL here -- CodeQL is free only on public repos; on a private
+  # repo it needs the paid GitHub Advanced Security / Code Security add-on.
+  # Semgrep's CLI scan (not the paid Semgrep App/dashboard) is free regardless
+  # of repo visibility and covers similar ground for a Python codebase.
+  semgrep:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container:
+      image: semgrep/semgrep:1.176.1   # pinned; bump deliberately, not via "latest"
+    steps:
+      - uses: actions/checkout@v4
+      # --severity WARNING gates on medium+ findings; --error turns findings into
+      # a failing check. Excludes keep vendored deps, tests and data out of scope
+      # (tests/data produced false positives that would get the job disabled).
+      - run: semgrep scan --config auto --error --severity WARNING --exclude tests --exclude .venv --exclude '*.db'

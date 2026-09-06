@@ -1,0 +1,14 @@
+{
+  "id": "tender-012",
+  "title": "Predictive Analytics and AI Pipeline Integration",
+  "issuer": "Horizon Healthcare",
+  "deadline": "2026-12-15",
+  "raw_text": "Horizon Healthcare requests AI integration consulting services to build predictive patient readmission models and integrate machine learning pipelines with electronic health record (EHR) systems. Vendor must possess HL7/FHIR interoperability expertise.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Machine learning pipeline design and integration",
+    "Predictive analytics model development for clinical data",
+    "HL7/FHIR EHR data pipeline integration",
+    "Model governance and drift monitoring configuration"
+  ]
+}

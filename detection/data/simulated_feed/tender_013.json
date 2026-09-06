@@ -1,0 +1,14 @@
+{
+  "id": "tender-013",
+  "title": "Red Team Adversarial Emulation and Security Audit",
+  "issuer": "Apex Defense Tech",
+  "deadline": "2026-11-28",
+  "raw_text": "Apex Defense Tech is soliciting proposals for a full-scope red team security assessment and physical/digital penetration testing engagement. The target environment includes air-gapped dev labs, active directory infrastructure, and internal C2 detection posture.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Adversarial red team emulation and penetration testing",
+    "Active Directory and C2 security assessment",
+    "SOC detection and incident response capability evaluation",
+    "Executive debriefing and mitigation roadmap"
+  ]
+}
