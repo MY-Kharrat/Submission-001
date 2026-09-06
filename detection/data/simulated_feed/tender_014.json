@@ -1,0 +1,14 @@
+{
+  "id": "tender-014",
+  "title": "Legacy Core Banking Modernization and Microservices",
+  "issuer": "Heritage Credit Union",
+  "deadline": "2026-12-01",
+  "raw_text": "Heritage Credit Union requires custom software development services to replace legacy COBOL core banking workflows with modern cloud-native microservices. Deliverables include real-time transaction processing engines, audit logging services, and admin portal UI.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Legacy system refactoring and custom software development",
+    "Cloud-native microservices architecture implementation",
+    "High-throughput transaction processing engine",
+    "Role-based administrative portal UI"
+  ]
+}

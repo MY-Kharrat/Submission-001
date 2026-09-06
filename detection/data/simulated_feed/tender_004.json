@@ -1,0 +1,15 @@
+{
+  "id": "tender-004",
+  "title": "AI-Powered Customer Support Chatbot",
+  "issuer": "RetailMax Group",
+  "deadline": "2027-01-15",
+  "raw_text": "RetailMax Group is looking for a consulting partner to integrate AI capabilities into our customer support workflow. The project involves building a RAG-based chatbot that can answer product questions using our knowledge base, with escalation to human agents. Must include analytics dashboard for conversation metrics and continuous learning from agent corrections. Data privacy compliance with GDPR is required.",
+  "source": "simulated_feed",
+  "requirements": [
+    "RAG-based chatbot with knowledge base integration",
+    "Human agent escalation workflow",
+    "Analytics dashboard for conversation metrics",
+    "GDPR-compliant data handling",
+    "Continuous learning from agent corrections"
+  ]
+}

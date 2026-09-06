@@ -1,0 +1,14 @@
+{
+  "id": "tender-006",
+  "title": "Custom Web Application Development for Citizen Portal",
+  "issuer": "City of Austin",
+  "deadline": "2026-10-15",
+  "raw_text": "The City of Austin is seeking a qualified vendor for custom software development to modernize our public services web portal. The project requires full stack web application development using modern frameworks, accessibility compliance (WCAG 2.1 AA), and integration with legacy municipal REST APIs.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Custom full stack web application development",
+    "WCAG 2.1 AA web accessibility compliance",
+    "RESTful API integration with legacy databases",
+    "Responsive UI/UX implementation for desktop and mobile"
+  ]
+}

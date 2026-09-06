@@ -1,0 +1,14 @@
+{
+  "id": "tender-010",
+  "title": "Mobile Application and Backend Microservices Development",
+  "issuer": "Metro Transit Authority",
+  "deadline": "2026-12-05",
+  "raw_text": "Metro Transit Authority invites proposals for custom software development of a cross-platform passenger ticketing mobile app and cloud-native backend microservices. Key requirements include real-time GPS tracking integration, secure payment processing, and high-concurrency offline sync.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Cross-platform mobile application development (iOS & Android)",
+    "Backend microservices architecture implementation",
+    "Real-time geolocation tracking API integration",
+    "PCI-DSS compliant payment gateway integration"
+  ]
+}

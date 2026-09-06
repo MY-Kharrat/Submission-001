@@ -1,0 +1,14 @@
+{
+  "id": "tender-005",
+  "title": "Network Penetration Testing and Vulnerability Assessment",
+  "issuer": "MedHealth Systems",
+  "deadline": "2026-11-30",
+  "raw_text": "MedHealth Systems requires a thorough penetration testing engagement covering our internal network, cloud infrastructure on AWS, and medical device communication protocols. The vendor must hold OSCP or equivalent certifications. HIPAA compliance considerations must be documented. Final deliverable is an executive summary plus detailed technical findings with proof-of-concept demonstrations for critical and high severity findings.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Internal network and AWS cloud penetration testing",
+    "OSCP or equivalent security certifications required",
+    "HIPAA compliance documentation and risk mapping",
+    "Technical report with PoC for critical/high severity findings"
+  ]
+}

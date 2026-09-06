@@ -1,0 +1,18 @@
+.env
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+*.db
+*.sqlite3
+.idea/
+.vscode/
+.DS_Store
+dist/
+build/
+*.egg-info/
+
+# Local-only planning/instruction files — never commit these
+AGENTS.md
+person2-detection-and-agent-plan.md
+yc-research-plan-upgrades.md

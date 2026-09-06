@@ -1,0 +1,14 @@
+{
+  "id": "tender-008",
+  "title": "Enterprise LLM RAG Pipeline and Data Integration",
+  "issuer": "Global Logistics Corp",
+  "deadline": "2026-12-10",
+  "raw_text": "Global Logistics Corp is procuring AI integration consulting services to implement an enterprise Retrieval-Augmented Generation (RAG) system over internal operational knowledge bases. The project includes data pipeline engineering, vector database indexing, and LLM fine-tuning/guardrail configuration.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Enterprise RAG architecture implementation",
+    "Data pipeline integration for structured and unstructured documents",
+    "Vector store configuration and semantic search optimization",
+    "AI guardrail and compliance monitoring integration"
+  ]
+}

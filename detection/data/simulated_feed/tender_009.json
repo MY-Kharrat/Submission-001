@@ -1,0 +1,14 @@
+{
+  "id": "tender-009",
+  "title": "Cloud Infrastructure Security Audit and Penetration Testing",
+  "issuer": "Vanguard Biotech",
+  "deadline": "2026-11-20",
+  "raw_text": "Vanguard Biotech seeks an accredited cyber security vendor to conduct a cloud penetration testing and vulnerability assessment across Azure environments. Scope includes Kubernetes cluster security audit, IAM policy evaluation, and API security testing.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Azure cloud infrastructure penetration testing",
+    "Kubernetes security assessment and RBAC audit",
+    "REST and GraphQL API penetration testing",
+    "Remediation guidance and re-test verification"
+  ]
+}

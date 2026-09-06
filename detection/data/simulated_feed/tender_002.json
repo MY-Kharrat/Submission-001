@@ -1,0 +1,15 @@
+{
+  "id": "tender-002",
+  "title": "Internal HR Portal Development",
+  "issuer": "GreenLeaf Industries",
+  "deadline": "2026-12-01",
+  "raw_text": "GreenLeaf Industries requires a custom software development partner to build an internal HR portal. The application should handle employee onboarding, leave management, and performance tracking. We prefer a modern React frontend with a Python backend. Must integrate with our existing Active Directory for SSO.",
+  "source": "simulated_feed",
+  "requirements": [
+    "Employee onboarding workflow module",
+    "Leave management with approval chains",
+    "Performance tracking dashboard",
+    "Active Directory SSO integration",
+    "React frontend with Python backend"
+  ]
+}
