@@ -1,0 +1,156 @@
+[
+  {
+    "project_id": "PRJ-0001",
+    "client_sector": "energy",
+    "summary": "Energy data platform migration",
+    "tech_stack": [
+      "Azure",
+      "Flutter",
+      "MongoDB"
+    ],
+    "outcome": "Cut infrastructure costs by 38% after migration."
+  },
+  {
+    "project_id": "PRJ-0002",
+    "client_sector": "manufacturing",
+    "summary": "Manufacturing customer portal revamp",
+    "tech_stack": [
+      "Docker",
+      "LlamaIndex",
+      "Node.js"
+    ],
+    "outcome": "Delivered on schedule with a 52% reduction in reported defects."
+  },
+  {
+    "project_id": "PRJ-0003",
+    "client_sector": "manufacturing",
+    "summary": "Manufacturing internal workflow automation",
+    "tech_stack": [
+      "GraphQL",
+      "AWS",
+      "React",
+      "PostgreSQL",
+      "TypeScript",
+      "Pinecone"
+    ],
+    "outcome": "Cut infrastructure costs by 34% after migration."
+  },
+  {
+    "project_id": "PRJ-0004",
+    "client_sector": "banking",
+    "summary": "Banking legacy system modernization",
+    "tech_stack": [
+      "Scikit-learn",
+      "Terraform",
+      "n8n",
+      "React",
+      "TensorFlow"
+    ],
+    "outcome": "Reduced manual processing time by 56%."
+  },
+  {
+    "project_id": "PRJ-0005",
+    "client_sector": "logistics",
+    "summary": "Logistics data platform migration",
+    "tech_stack": [
+      "Node.js",
+      "Terraform",
+      "n8n",
+      "Flutter",
+      "Pinecone",
+      "React"
+    ],
+    "outcome": "Cut infrastructure costs by 42% after migration."
+  },
+  {
+    "project_id": "PRJ-0006",
+    "client_sector": "real estate",
+    "summary": "Real estate mobile app for field agents",
+    "tech_stack": [
+      "Scikit-learn",
+      "Swift",
+      "Flutter",
+      "Terraform",
+      "Redis"
+    ],
+    "outcome": "Reduced manual processing time by 35%."
+  },
+  {
+    "project_id": "PRJ-0007",
+    "client_sector": "telecom",
+    "summary": "Telecom data platform migration",
+    "tech_stack": [
+      "PostgreSQL",
+      "Flutter",
+      "REST APIs",
+      "ChromaDB",
+      "Python",
+      "Scikit-learn"
+    ],
+    "outcome": "Increased platform adoption by 35% within the first quarter."
+  },
+  {
+    "project_id": "PRJ-0008",
+    "client_sector": "retail",
+    "summary": "Retail internal workflow automation",
+    "tech_stack": [
+      "MongoDB",
+      "ChromaDB",
+      "Redis",
+      "Python",
+      "PyTorch"
+    ],
+    "outcome": "Improved system response time by 27%."
+  },
+  {
+    "project_id": "PRJ-0009",
+    "client_sector": "logistics",
+    "summary": "Logistics AI-powered document processing",
+    "tech_stack": [
+      "PostgreSQL",
+      "Swift",
+      "Kotlin",
+      "Tailwind CSS",
+      "GraphQL",
+      "Python"
+    ],
+    "outcome": "Improved system response time by 20%."
+  },
+  {
+    "project_id": "PRJ-0010",
+    "client_sector": "logistics",
+    "summary": "Logistics real-time analytics dashboard",
+    "tech_stack": [
+      "LlamaIndex",
+      "n8n",
+      "Swift",
+      "PyTorch"
+    ],
+    "outcome": "Cut infrastructure costs by 37% after migration."
+  },
+  {
+    "project_id": "PRJ-0011",
+    "client_sector": "insurance",
+    "summary": "Insurance mobile app for field agents",
+    "tech_stack": [
+      "Flutter",
+      "Redis",
+      "LlamaIndex",
+      "MongoDB",
+      "GCP"
+    ],
+    "outcome": "Delivered on schedule with a 22% reduction in reported defects."
+  },
+  {
+    "project_id": "PRJ-0012",
+    "client_sector": "healthcare",
+    "summary": "Healthcare AI-powered document processing",
+    "tech_stack": [
+      "AWS",
+      "Azure",
+      "Swift",
+      "Redis"
+    ],
+    "outcome": "Reduced manual processing time by 52%."
+  }
+]

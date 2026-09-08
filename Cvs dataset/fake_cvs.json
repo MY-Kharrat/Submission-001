@@ -1,0 +1,896 @@
+[
+  {
+    "cv_id": "CV-0001",
+    "name": "Employee_001",
+    "role": "Solutions Architect",
+    "years_experience": 2,
+    "skills": [
+      "Redis",
+      "PostgreSQL",
+      "GCP",
+      "Django"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Real estate internal workflow automation",
+        "client_sector": "real estate",
+        "description": "Contributed as solutions architect on a real estate sector project, working with Django, Redis, GCP.",
+        "tech_stack": [
+          "Redis",
+          "Django",
+          "GCP"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0002",
+    "name": "Employee_002",
+    "role": "AI/ML Engineer",
+    "years_experience": 1,
+    "skills": [
+      "AWS",
+      "CI/CD",
+      "GCP",
+      "Tailwind CSS",
+      "LangChain",
+      "Django",
+      "GraphQL",
+      "Terraform"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Public administration real-time analytics dashboard",
+        "client_sector": "public administration",
+        "description": "Contributed as ai/ml engineer on a public administration sector project, working with Django, GCP, CI/CD.",
+        "tech_stack": [
+          "Tailwind CSS",
+          "GraphQL",
+          "GCP"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0003",
+    "name": "Employee_003",
+    "role": "Frontend Developer",
+    "years_experience": 7,
+    "skills": [
+      "Pinecone",
+      "MongoDB",
+      "JavaScript",
+      "Flutter"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Logistics internal workflow automation",
+        "client_sector": "logistics",
+        "description": "Contributed as frontend developer on a logistics sector project, working with JavaScript, Flutter, MongoDB.",
+        "tech_stack": [
+          "MongoDB",
+          "JavaScript",
+          "Pinecone"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0004",
+    "name": "Employee_004",
+    "role": "Solutions Architect",
+    "years_experience": 4,
+    "skills": [
+      "Next.js",
+      "GCP",
+      "Node.js",
+      "REST APIs",
+      "Django",
+      "PyTorch"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Public administration legacy system modernization",
+        "client_sector": "public administration",
+        "description": "Contributed as solutions architect on a public administration sector project, working with Node.js, GCP, PyTorch.",
+        "tech_stack": [
+          "PyTorch",
+          "Next.js",
+          "GCP"
+        ]
+      },
+      {
+        "project_name": "Education mobile app for field agents",
+        "client_sector": "education",
+        "description": "Contributed as solutions architect on a education sector project, working with GCP, REST APIs, Django.",
+        "tech_stack": [
+          "Node.js",
+          "Django",
+          "GCP"
+        ]
+      },
+      {
+        "project_name": "Real estate legacy system modernization",
+        "client_sector": "real estate",
+        "description": "Contributed as solutions architect on a real estate sector project, working with Next.js, GCP, PyTorch.",
+        "tech_stack": [
+          "Node.js",
+          "REST APIs",
+          "PyTorch"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0005",
+    "name": "Employee_005",
+    "role": "Data Engineer",
+    "years_experience": 15,
+    "skills": [
+      "Qdrant",
+      "Azure",
+      "Kotlin",
+      "GraphQL",
+      "Tailwind CSS",
+      "Flutter",
+      "Scikit-learn",
+      "GCP"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Telecom data platform migration",
+        "client_sector": "telecom",
+        "description": "Contributed as data engineer on a telecom sector project, working with GraphQL, Flutter, Tailwind CSS.",
+        "tech_stack": [
+          "Tailwind CSS",
+          "Flutter",
+          "GCP"
+        ]
+      },
+      {
+        "project_name": "Logistics real-time analytics dashboard",
+        "client_sector": "logistics",
+        "description": "Contributed as data engineer on a logistics sector project, working with Flutter, Azure, Scikit-learn.",
+        "tech_stack": [
+          "GCP",
+          "Qdrant",
+          "Scikit-learn"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0006",
+    "name": "Employee_006",
+    "role": "Full Stack Developer",
+    "years_experience": 11,
+    "skills": [
+      "Terraform",
+      "React",
+      "REST APIs",
+      "Flutter",
+      "PyTorch"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Education customer portal revamp",
+        "client_sector": "education",
+        "description": "Contributed as full stack developer on a education sector project, working with Terraform, REST APIs, Flutter.",
+        "tech_stack": [
+          "REST APIs",
+          "Terraform",
+          "React"
+        ]
+      },
+      {
+        "project_name": "Logistics data platform migration",
+        "client_sector": "logistics",
+        "description": "Contributed as full stack developer on a logistics sector project, working with Flutter, Terraform, REST APIs.",
+        "tech_stack": [
+          "REST APIs",
+          "React",
+          "PyTorch"
+        ]
+      },
+      {
+        "project_name": "Healthcare AI-powered document processing",
+        "client_sector": "healthcare",
+        "description": "Contributed as full stack developer on a healthcare sector project, working with PyTorch, React, Terraform.",
+        "tech_stack": [
+          "REST APIs",
+          "React",
+          "PyTorch"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0007",
+    "name": "Employee_007",
+    "role": "Backend Developer",
+    "years_experience": 10,
+    "skills": [
+      "Kotlin",
+      "Java",
+      "FastAPI",
+      "n8n",
+      "Tailwind CSS",
+      "CI/CD"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Retail customer portal revamp",
+        "client_sector": "retail",
+        "description": "Contributed as backend developer on a retail sector project, working with Java, Tailwind CSS, Kotlin.",
+        "tech_stack": [
+          "Kotlin",
+          "n8n",
+          "CI/CD"
+        ]
+      },
+      {
+        "project_name": "Education data platform migration",
+        "client_sector": "education",
+        "description": "Contributed as backend developer on a education sector project, working with Java, n8n, CI/CD.",
+        "tech_stack": [
+          "FastAPI",
+          "Tailwind CSS",
+          "n8n"
+        ]
+      },
+      {
+        "project_name": "Retail mobile app for field agents",
+        "client_sector": "retail",
+        "description": "Contributed as backend developer on a retail sector project, working with CI/CD, FastAPI, n8n.",
+        "tech_stack": [
+          "CI/CD",
+          "FastAPI",
+          "n8n"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0008",
+    "name": "Employee_008",
+    "role": "QA Engineer",
+    "years_experience": 2,
+    "skills": [
+      "GCP",
+      "React",
+      "ChromaDB",
+      "Java",
+      "Python"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Real estate customer portal revamp",
+        "client_sector": "real estate",
+        "description": "Contributed as qa engineer on a real estate sector project, working with React, GCP, Java.",
+        "tech_stack": [
+          "ChromaDB",
+          "GCP",
+          "Python"
+        ]
+      }
+    ],
+    "certifications": [
+      "PMP"
+    ]
+  },
+  {
+    "cv_id": "CV-0009",
+    "name": "Employee_009",
+    "role": "Data Scientist",
+    "years_experience": 11,
+    "skills": [
+      "Azure",
+      "Django",
+      "Swift",
+      "PostgreSQL",
+      "GraphQL",
+      "Kotlin",
+      "TensorFlow"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Retail internal workflow automation",
+        "client_sector": "retail",
+        "description": "Contributed as data scientist on a retail sector project, working with Azure, Kotlin, PostgreSQL.",
+        "tech_stack": [
+          "Swift",
+          "PostgreSQL",
+          "Kotlin"
+        ]
+      },
+      {
+        "project_name": "Energy customer portal revamp",
+        "client_sector": "energy",
+        "description": "Contributed as data scientist on a energy sector project, working with Kotlin, TensorFlow, Azure.",
+        "tech_stack": [
+          "Azure",
+          "PostgreSQL",
+          "Swift"
+        ]
+      },
+      {
+        "project_name": "Healthcare mobile app for field agents",
+        "client_sector": "healthcare",
+        "description": "Contributed as data scientist on a healthcare sector project, working with Django, TensorFlow, GraphQL.",
+        "tech_stack": [
+          "PostgreSQL",
+          "Django",
+          "TensorFlow"
+        ]
+      },
+      {
+        "project_name": "Public administration AI-powered document processing",
+        "client_sector": "public administration",
+        "description": "Contributed as data scientist on a public administration sector project, working with PostgreSQL, Django, Azure.",
+        "tech_stack": [
+          "PostgreSQL",
+          "GraphQL",
+          "Azure"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Solutions Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0010",
+    "name": "Employee_010",
+    "role": "Solutions Architect",
+    "years_experience": 9,
+    "skills": [
+      "Next.js",
+      "PostgreSQL",
+      "Docker",
+      "CI/CD"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Energy mobile app for field agents",
+        "client_sector": "energy",
+        "description": "Contributed as solutions architect on a energy sector project, working with CI/CD, Next.js, Docker.",
+        "tech_stack": [
+          "CI/CD",
+          "Next.js",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "project_name": "Telecom API integration hub",
+        "client_sector": "telecom",
+        "description": "Contributed as solutions architect on a telecom sector project, working with Docker, PostgreSQL, CI/CD.",
+        "tech_stack": [
+          "PostgreSQL",
+          "Next.js",
+          "CI/CD"
+        ]
+      },
+      {
+        "project_name": "Retail customer portal revamp",
+        "client_sector": "retail",
+        "description": "Contributed as solutions architect on a retail sector project, working with Next.js, Docker, PostgreSQL.",
+        "tech_stack": [
+          "Next.js",
+          "CI/CD",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "project_name": "Education data platform migration",
+        "client_sector": "education",
+        "description": "Contributed as solutions architect on a education sector project, working with Next.js, Docker, CI/CD.",
+        "tech_stack": [
+          "PostgreSQL",
+          "Next.js",
+          "Docker"
+        ]
+      }
+    ],
+    "certifications": [
+      "PMP"
+    ]
+  },
+  {
+    "cv_id": "CV-0011",
+    "name": "Employee_011",
+    "role": "Cloud Architect",
+    "years_experience": 2,
+    "skills": [
+      "PostgreSQL",
+      "JavaScript",
+      "Next.js",
+      "CI/CD",
+      "ChromaDB",
+      "LangChain",
+      "Flutter",
+      "MongoDB"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Telecom mobile app for field agents",
+        "client_sector": "telecom",
+        "description": "Contributed as cloud architect on a telecom sector project, working with LangChain, JavaScript, Next.js.",
+        "tech_stack": [
+          "Flutter",
+          "JavaScript",
+          "LangChain"
+        ]
+      },
+      {
+        "project_name": "Real estate AI-powered document processing",
+        "client_sector": "real estate",
+        "description": "Contributed as cloud architect on a real estate sector project, working with MongoDB, Next.js, PostgreSQL.",
+        "tech_stack": [
+          "PostgreSQL",
+          "CI/CD",
+          "ChromaDB"
+        ]
+      },
+      {
+        "project_name": "Manufacturing internal workflow automation",
+        "client_sector": "manufacturing",
+        "description": "Contributed as cloud architect on a manufacturing sector project, working with JavaScript, ChromaDB, MongoDB.",
+        "tech_stack": [
+          "ChromaDB",
+          "JavaScript",
+          "Next.js"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0012",
+    "name": "Employee_012",
+    "role": "Data Engineer",
+    "years_experience": 6,
+    "skills": [
+      "Docker",
+      "Tailwind CSS",
+      "LlamaIndex",
+      "Python",
+      "ChromaDB",
+      "CI/CD"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Real estate internal workflow automation",
+        "client_sector": "real estate",
+        "description": "Contributed as data engineer on a real estate sector project, working with Tailwind CSS, LlamaIndex, Docker.",
+        "tech_stack": [
+          "Docker",
+          "ChromaDB",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "project_name": "Telecom AI-powered document processing",
+        "client_sector": "telecom",
+        "description": "Contributed as data engineer on a telecom sector project, working with ChromaDB, Tailwind CSS, LlamaIndex.",
+        "tech_stack": [
+          "Tailwind CSS",
+          "LlamaIndex",
+          "Python"
+        ]
+      },
+      {
+        "project_name": "Telecom customer portal revamp",
+        "client_sector": "telecom",
+        "description": "Contributed as data engineer on a telecom sector project, working with Docker, Python, LlamaIndex.",
+        "tech_stack": [
+          "Docker",
+          "CI/CD",
+          "LlamaIndex"
+        ]
+      }
+    ],
+    "certifications": [
+      "Certified Kubernetes Administrator"
+    ]
+  },
+  {
+    "cv_id": "CV-0013",
+    "name": "Employee_013",
+    "role": "Solutions Architect",
+    "years_experience": 5,
+    "skills": [
+      "Tailwind CSS",
+      "Terraform",
+      "Python",
+      "FastAPI",
+      "React"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Education customer portal revamp",
+        "client_sector": "education",
+        "description": "Contributed as solutions architect on a education sector project, working with Python, Terraform, FastAPI.",
+        "tech_stack": [
+          "Terraform",
+          "Tailwind CSS",
+          "React"
+        ]
+      },
+      {
+        "project_name": "Insurance customer portal revamp",
+        "client_sector": "insurance",
+        "description": "Contributed as solutions architect on a insurance sector project, working with Python, Terraform, React.",
+        "tech_stack": [
+          "Terraform",
+          "Tailwind CSS",
+          "React"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0014",
+    "name": "Employee_014",
+    "role": "Business Analyst",
+    "years_experience": 7,
+    "skills": [
+      "Spring Boot",
+      "PostgreSQL",
+      "Docker",
+      "Kubernetes",
+      "Tailwind CSS",
+      "Azure",
+      "Python",
+      "Next.js"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Logistics mobile app for field agents",
+        "client_sector": "logistics",
+        "description": "Contributed as business analyst on a logistics sector project, working with Tailwind CSS, PostgreSQL, Azure.",
+        "tech_stack": [
+          "PostgreSQL",
+          "Kubernetes",
+          "Spring Boot"
+        ]
+      },
+      {
+        "project_name": "Energy mobile app for field agents",
+        "client_sector": "energy",
+        "description": "Contributed as business analyst on a energy sector project, working with Kubernetes, Python, Next.js.",
+        "tech_stack": [
+          "Azure",
+          "Docker",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "project_name": "Retail customer portal revamp",
+        "client_sector": "retail",
+        "description": "Contributed as business analyst on a retail sector project, working with Kubernetes, Next.js, Docker.",
+        "tech_stack": [
+          "Tailwind CSS",
+          "Python",
+          "Spring Boot"
+        ]
+      }
+    ],
+    "certifications": [
+      "Scrum Master (CSM)"
+    ]
+  },
+  {
+    "cv_id": "CV-0015",
+    "name": "Employee_015",
+    "role": "DevOps Engineer",
+    "years_experience": 11,
+    "skills": [
+      "GraphQL",
+      "ChromaDB",
+      "Java",
+      "FastAPI",
+      "Tailwind CSS",
+      "Django",
+      "Next.js",
+      "LangChain"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Banking internal workflow automation",
+        "client_sector": "banking",
+        "description": "Contributed as devops engineer on a banking sector project, working with Next.js, Java, Django.",
+        "tech_stack": [
+          "Django",
+          "FastAPI",
+          "Tailwind CSS"
+        ]
+      },
+      {
+        "project_name": "Education internal workflow automation",
+        "client_sector": "education",
+        "description": "Contributed as devops engineer on a education sector project, working with Next.js, Tailwind CSS, ChromaDB.",
+        "tech_stack": [
+          "Tailwind CSS",
+          "GraphQL",
+          "Django"
+        ]
+      },
+      {
+        "project_name": "Logistics customer portal revamp",
+        "client_sector": "logistics",
+        "description": "Contributed as devops engineer on a logistics sector project, working with FastAPI, Java, LangChain.",
+        "tech_stack": [
+          "ChromaDB",
+          "Django",
+          "Java"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0016",
+    "name": "Employee_016",
+    "role": "DevOps Engineer",
+    "years_experience": 11,
+    "skills": [
+      "LlamaIndex",
+      "TensorFlow",
+      "CI/CD",
+      "Qdrant"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Telecom data platform migration",
+        "client_sector": "telecom",
+        "description": "Contributed as devops engineer on a telecom sector project, working with TensorFlow, Qdrant, CI/CD.",
+        "tech_stack": [
+          "TensorFlow",
+          "CI/CD",
+          "Qdrant"
+        ]
+      },
+      {
+        "project_name": "Logistics customer portal revamp",
+        "client_sector": "logistics",
+        "description": "Contributed as devops engineer on a logistics sector project, working with CI/CD, TensorFlow, LlamaIndex.",
+        "tech_stack": [
+          "Qdrant",
+          "CI/CD",
+          "TensorFlow"
+        ]
+      },
+      {
+        "project_name": "Energy API integration hub",
+        "client_sector": "energy",
+        "description": "Contributed as devops engineer on a energy sector project, working with Qdrant, CI/CD, LlamaIndex.",
+        "tech_stack": [
+          "Qdrant",
+          "CI/CD",
+          "LlamaIndex"
+        ]
+      },
+      {
+        "project_name": "Real estate internal workflow automation",
+        "client_sector": "real estate",
+        "description": "Contributed as devops engineer on a real estate sector project, working with CI/CD, Qdrant, TensorFlow.",
+        "tech_stack": [
+          "LlamaIndex",
+          "Qdrant",
+          "TensorFlow"
+        ]
+      }
+    ],
+    "certifications": [
+      "PMP"
+    ]
+  },
+  {
+    "cv_id": "CV-0017",
+    "name": "Employee_017",
+    "role": "Project Manager",
+    "years_experience": 4,
+    "skills": [
+      "Java",
+      "JavaScript",
+      "PostgreSQL",
+      "Swift",
+      "React"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Logistics mobile app for field agents",
+        "client_sector": "logistics",
+        "description": "Contributed as project manager on a logistics sector project, working with Swift, React, JavaScript.",
+        "tech_stack": [
+          "JavaScript",
+          "React",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "project_name": "Banking internal workflow automation",
+        "client_sector": "banking",
+        "description": "Contributed as project manager on a banking sector project, working with Swift, JavaScript, Java.",
+        "tech_stack": [
+          "React",
+          "Swift",
+          "Java"
+        ]
+      },
+      {
+        "project_name": "Education mobile app for field agents",
+        "client_sector": "education",
+        "description": "Contributed as project manager on a education sector project, working with Java, Swift, React.",
+        "tech_stack": [
+          "Swift",
+          "PostgreSQL",
+          "JavaScript"
+        ]
+      },
+      {
+        "project_name": "Manufacturing real-time analytics dashboard",
+        "client_sector": "manufacturing",
+        "description": "Contributed as project manager on a manufacturing sector project, working with React, Swift, Java.",
+        "tech_stack": [
+          "Swift",
+          "React",
+          "JavaScript"
+        ]
+      }
+    ],
+    "certifications": [
+      "PMP"
+    ]
+  },
+  {
+    "cv_id": "CV-0018",
+    "name": "Employee_018",
+    "role": "Business Analyst",
+    "years_experience": 11,
+    "skills": [
+      "PyTorch",
+      "Kotlin",
+      "PostgreSQL",
+      "Redis",
+      "GCP",
+      "JavaScript"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Retail AI-powered document processing",
+        "client_sector": "retail",
+        "description": "Contributed as business analyst on a retail sector project, working with PostgreSQL, JavaScript, PyTorch.",
+        "tech_stack": [
+          "Kotlin",
+          "JavaScript",
+          "GCP"
+        ]
+      },
+      {
+        "project_name": "Logistics data platform migration",
+        "client_sector": "logistics",
+        "description": "Contributed as business analyst on a logistics sector project, working with JavaScript, Kotlin, PyTorch.",
+        "tech_stack": [
+          "Redis",
+          "JavaScript",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "project_name": "Education API integration hub",
+        "client_sector": "education",
+        "description": "Contributed as business analyst on a education sector project, working with Redis, PyTorch, Kotlin.",
+        "tech_stack": [
+          "Redis",
+          "JavaScript",
+          "PyTorch"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0019",
+    "name": "Employee_019",
+    "role": "Cloud Architect",
+    "years_experience": 8,
+    "skills": [
+      "Pinecone",
+      "LlamaIndex",
+      "REST APIs",
+      "CI/CD"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Energy mobile app for field agents",
+        "client_sector": "energy",
+        "description": "Contributed as cloud architect on a energy sector project, working with REST APIs, LlamaIndex, CI/CD.",
+        "tech_stack": [
+          "Pinecone",
+          "LlamaIndex",
+          "REST APIs"
+        ]
+      },
+      {
+        "project_name": "Real estate real-time analytics dashboard",
+        "client_sector": "real estate",
+        "description": "Contributed as cloud architect on a real estate sector project, working with LlamaIndex, CI/CD, Pinecone.",
+        "tech_stack": [
+          "Pinecone",
+          "LlamaIndex",
+          "CI/CD"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0020",
+    "name": "Employee_020",
+    "role": "Solutions Architect",
+    "years_experience": 7,
+    "skills": [
+      "Flutter",
+      "Kubernetes",
+      "TypeScript",
+      "MongoDB",
+      "REST APIs"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Retail API integration hub",
+        "client_sector": "retail",
+        "description": "Contributed as solutions architect on a retail sector project, working with TypeScript, REST APIs, Kubernetes.",
+        "tech_stack": [
+          "TypeScript",
+          "MongoDB",
+          "Kubernetes"
+        ]
+      },
+      {
+        "project_name": "Healthcare API integration hub",
+        "client_sector": "healthcare",
+        "description": "Contributed as solutions architect on a healthcare sector project, working with Flutter, REST APIs, Kubernetes.",
+        "tech_stack": [
+          "Kubernetes",
+          "Flutter",
+          "TypeScript"
+        ]
+      },
+      {
+        "project_name": "Banking customer portal revamp",
+        "client_sector": "banking",
+        "description": "Contributed as solutions architect on a banking sector project, working with Kubernetes, REST APIs, Flutter.",
+        "tech_stack": [
+          "REST APIs",
+          "Kubernetes",
+          "Flutter"
+        ]
+      }
+    ],
+    "certifications": [
+      "Certified Kubernetes Administrator"
+    ]
+  }
+]
