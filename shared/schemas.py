@@ -1,7 +1,7 @@
 from datetime import date, datetime
-from typing import Literal
+from typing import Literal, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 # Edit here if team skills change detection and agent both import this.
 CAPABILITY_TAXONOMY: list[str] = [
@@ -13,25 +13,39 @@ CAPABILITY_TAXONOMY: list[str] = [
 
 
 class Tender(BaseModel):
+    model_config = ConfigDict(strict=True)
+
     id: str
     title: str
     issuer: str           # explicit, never inferred
     sector: str           # tagged against CAPABILITY_TAXONOMY; "unknown" when no match
     requirements: list[str]
     deadline: date
-    raw_text: str         # size cap enforced in normalize.py, not here @TODO i need to fully dev after 5 SEPTEMBER 
+    raw_text: str         # size cap enforced in normalize.py (20_000 chars)
     source: Literal["simulated_feed", "manual"]
     detected_at: datetime
     status: Literal["new", "processed", "archived"]
 
 
+class ExtractorOutput(BaseModel):
+    """Strict schema for the Quarantined Extractor. No other output allowed."""
+
+    model_config = ConfigDict(strict=True)
+
+    fact: str
+    relevance: Literal["sector", "estimated_revenue", "past_projects", "key_partners"]
+    source_url: str
+
+
 class ProspectResearch(BaseModel):
-    tender_id: str
-    issuer: str
-    sector: str | None
-    estimated_revenue: str | None
-    past_projects: list[str]
-    key_partners: list[str]
-    notes: str
-    confidence: Literal["low", "medium", "high"]  # computed by runner.py, not the model
-    sources: list[str]  # only URLs that contributed a fact, not every URL searched
+    """Final output of the Agentic Prospect Research."""
+
+    model_config = ConfigDict(strict=True)
+
+    sector: Optional[str] = None
+    estimated_revenue: Optional[str] = None
+    past_projects: list[str] = Field(default_factory=list)
+    key_partners: list[str] = Field(default_factory=list)
+    confidence: Literal["high", "medium", "low"] = "low"
+    sources: list[str] = Field(default_factory=list)
+
