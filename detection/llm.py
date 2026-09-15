@@ -15,7 +15,6 @@ import httpx
 _PROVIDER_URLS = {
     "anthropic": "https://api.anthropic.com/v1/messages",
     "openai": "https://api.openai.com/v1/chat/completions",
-    "ollama": os.environ.get("OLLAMA_URL")
 }
 
 
@@ -95,7 +94,7 @@ async def _call_ollama(
 ) -> str:
     """POST prompt to the OpenAI Chat Completions API."""
     headers = {
-        "Authorization": f"",
+        "Authorization": f"xx",
         "Content-Type": "application/json",
     }
     messages = []
@@ -103,9 +102,10 @@ async def _call_ollama(
         messages.append({"role": "system", "content": system})
     messages.append({"role": "user", "content": prompt})
 
+    print("provider URL = ",os.environ.get("LLM_URL"))
     async with httpx.AsyncClient(timeout=timeout) as client:
         resp = await client.post(
-            _PROVIDER_URLS["ollama"],
+            os.environ.get("LLM_URL"),
             headers=headers,
             json={"model": model, "messages": messages, "max_tokens": 1024},
         )
