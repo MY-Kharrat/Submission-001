@@ -6,7 +6,7 @@ from shared.schemas import ExtractorOutput, ProspectResearch, Tender
 from research.audit import AuditLogger
 from research.extractor import Extractor
 from research.search import SearchResult, SearchTool
-from shared.store import get_tender
+from shared.store import get_tender, save_research
 from pathlib import Path
 
 GAP_QUERIES: dict[str, str] = {
@@ -51,7 +51,7 @@ class Runner:
         label = GAP_QUERIES.get(gap)
         return f"{issuer} {label}"
 
-    def finalize(self) -> ProspectResearch:
+    def finalize(self, tender_id) -> ProspectResearch:
         def first(field: str) -> Optional[str]:
             items = self.accumulated_facts.get(field) or []
             return items[0].fact if items else None
@@ -74,7 +74,7 @@ class Runner:
             confidence = "medium"
         else:
             confidence = "low"
-        return ProspectResearch(
+        pr = ProspectResearch(
             sector=sector,
             estimated_revenue=estimated_revenue,
             past_projects=past_projects,
@@ -82,6 +82,8 @@ class Runner:
             confidence=confidence,
             sources=sorted(self.sources),
         )
+        save_research(tender_id,pr)
+        return pr
 
     async def run(
         self,
@@ -151,4 +153,4 @@ class Runner:
             if not progressed:
                 ## TODO: We accumulate the fact & set it to None. Or, we ignore it, and let tool search for it again
                 continue
-        return self.finalize()
+        return self.finalize(tender_id)
