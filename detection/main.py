@@ -14,7 +14,7 @@ from fastapi import Depends, FastAPI, HTTPException, Query
 
 from shared.auth import require_internal_token
 from shared.schemas import Tender
-from detection import store
+from shared import store
 from detection.normalize import ValidationError, normalize_tender
 
 load_dotenv()

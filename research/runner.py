@@ -6,7 +6,7 @@ from shared.schemas import ExtractorOutput, ProspectResearch, Tender
 from research.audit import AuditLogger
 from research.extractor import Extractor
 from research.search import SearchResult, SearchTool
-from detection.store import get_tender
+from shared.store import get_tender
 from pathlib import Path
 
 GAP_QUERIES: dict[str, str] = {
