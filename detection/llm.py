@@ -15,6 +15,7 @@ import httpx
 _PROVIDER_URLS = {
     "anthropic": "https://api.anthropic.com/v1/messages",
     "openai": "https://api.openai.com/v1/chat/completions",
+    "ollama": os.environ.get("OLLAMA_URL")
 }
 
 
@@ -29,8 +30,10 @@ async def llm_call(prompt: str, system: Optional[str] = None) -> str:
         try:
             if provider == "anthropic":
                 return await _call_anthropic(api_key, model, prompt, system, timeout)
-            else:
+            elif provider == "openai":
                 return await _call_openai(api_key, model, prompt, system, timeout)
+            else:
+                return await _call_ollama(api_key, model, prompt, system, timeout)
         except httpx.HTTPError as exc:
             if isinstance(exc, httpx.HTTPStatusError) and 400 <= exc.response.status_code < 500:
                 raise
@@ -80,6 +83,29 @@ async def _call_openai(
     async with httpx.AsyncClient(timeout=timeout) as client:
         resp = await client.post(
             _PROVIDER_URLS["openai"],
+            headers=headers,
+            json={"model": model, "messages": messages, "max_tokens": 1024},
+        )
+        resp.raise_for_status()
+        return resp.json()["choices"][0]["message"]["content"]
+
+
+async def _call_ollama(
+    api_key: str, model: str, prompt: str, system: Optional[str], timeout: int
+) -> str:
+    """POST prompt to the OpenAI Chat Completions API."""
+    headers = {
+        "Authorization": f"",
+        "Content-Type": "application/json",
+    }
+    messages = []
+    if system:
+        messages.append({"role": "system", "content": system})
+    messages.append({"role": "user", "content": prompt})
+
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        resp = await client.post(
+            _PROVIDER_URLS["ollama"],
             headers=headers,
             json={"model": model, "messages": messages, "max_tokens": 1024},
         )
