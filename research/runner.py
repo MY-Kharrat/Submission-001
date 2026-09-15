@@ -25,6 +25,7 @@ class Runner:
         audit: Optional[AuditLogger] = None,
         iteration_cap: Optional[int] = None,
         timeout_seconds: Optional[float] = None,
+        fetch_tender: Optional[Callable[[str], Optional[Tender]]] = None,
     ):
         self.search_tool = search_tool or SearchTool()
         self.extractor = extractor or Extractor()
@@ -36,6 +37,7 @@ class Runner:
         log_path = str(log_dir / "audit.log")
         
         self.audit = audit or AuditLogger(log_path=log_path)
+        self.fetch_tender = fetch_tender or get_tender
         self.iteration_cap = iteration_cap or int(os.environ.get("MAX_SEARCH_ITERATIONS", "4"))
         self.timeout_seconds = timeout_seconds or float(os.environ.get("TOTAL_RUN_TIMEOUT_SECONDS", "30"))
         self.accumulated_facts: dict[str, list[ExtractorOutput]] = {}
@@ -89,7 +91,7 @@ class Runner:
     ) -> ProspectResearch:
         start = time.monotonic()
         search = search_fn or self.search_tool.search
-        tender = get_tender(tender_id)
+        tender = self.fetch_tender(tender_id)
         if(tender is None):
             return # Throw exception & log
         issuer = tender.issuer
