@@ -233,7 +233,7 @@ class Runner:
                 except Exception:
                     continue
 
-                for fact in out:
+                for fact in out.facts:
                     if fact.category not in GAP_QUERIES:
                         continue
                     self.accumulated_facts.setdefault(fact.category, []).append(fact)
