@@ -63,6 +63,7 @@ def _default_log_path() -> str:
             pass
         return str(fallback)
 
+LOG_PATH = Path(__file__).parent / "audit.log"
 
 class Runner:
     def __init__(
@@ -80,7 +81,8 @@ class Runner:
 
         # Audit log points at a configured/data volume, never the source tree,
         # so a read-only container filesystem can't 500 every request.
-        self.audit = audit or AuditLogger(log_path=_default_log_path())
+        
+        self.audit = audit or AuditLogger(log_path=LOG_PATH)
         self.fetch_tender = fetch_tender or get_tender
         self.save_research = save_prospect or save_research
         self.iteration_cap = iteration_cap or int(os.environ.get("MAX_SEARCH_ITERATIONS", "4"))
