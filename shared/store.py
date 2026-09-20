@@ -185,7 +185,17 @@ def get_research_by_issuer(issuer: str) -> Optional[ProspectResearch]:
         return _row_to_research(row) if row else None
 
 def get_research_by_tender_id(tender_id:str)-> Optional[ProspectResearch]:
-    pass
+    """tender_id-keyed cache lookup: latest stored research for specific tender
+
+    Lets a repeated run for the same organization (or a second tender from the
+    same issuer) be served without re-spending search/LLM budget.
+    """
+    with _connect() as conn:
+        row = conn.execute(
+            "SELECT * FROM research WHERE tender_id = ? ",
+            (tender_id),
+        ).fetchone()
+        return _row_to_research(row) if row else None
 
 def list_research() -> dict[str, ProspectResearch]:
     with _connect() as conn:
