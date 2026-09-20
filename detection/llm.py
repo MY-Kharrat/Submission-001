@@ -21,6 +21,8 @@ _PROVIDER_URLS = {
 async def llm_call(prompt: str, system: Optional[str] = None) -> str:
     """Runs a prompt against the configured provider, retrying transient 5xx/network failures once."""
     provider = os.environ.get("LLM_PROVIDER", "anthropic")
+    if provider not in ("anthropic", "openai", "ollama"):
+        raise ValueError(f"Unknown LLM_PROVIDER={provider!r}; expected anthropic|openai|ollama")
     api_key = os.environ.get("LLM_API_KEY", "")
     model = os.environ.get("LLM_MODEL", "claude-3-5-haiku-20241022")
     timeout = int(os.environ.get("PER_CALL_TIMEOUT_SECONDS", "8"))
@@ -92,20 +94,21 @@ async def _call_openai(
 async def _call_ollama(
     api_key: str, model: str, prompt: str, system: Optional[str], timeout: int
 ) -> str:
-    """POST prompt to the OpenAI Chat Completions API."""
-    headers = {
-        "Authorization": f"xx",
-        "Content-Type": "application/json",
-    }
+    """POST prompt to a self-hosted Ollama-compatible Chat Completions endpoint."""
+    base_url = os.environ.get("LLM_URL")
+    if not base_url:
+        raise ValueError("LLM_PROVIDER=ollama requires LLM_URL to be set")
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
     messages = []
     if system:
         messages.append({"role": "system", "content": system})
     messages.append({"role": "user", "content": prompt})
 
-    print("provider URL = ",os.environ.get("LLM_URL"))
     async with httpx.AsyncClient(timeout=timeout) as client:
         resp = await client.post(
-            os.environ.get("LLM_URL"),
+            base_url,
             headers=headers,
             json={"model": model, "messages": messages, "max_tokens": 1024},
         )
