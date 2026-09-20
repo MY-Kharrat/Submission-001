@@ -4,11 +4,19 @@ import os
 
 import pytest
 from httpx import ASGITransport, AsyncClient
+from unittest.mock import AsyncMock
 
 os.environ["INTERNAL_SERVICE_TOKEN"] = "test-token"
 
 from research.tests.test_runner import make_tender  # noqa: F401  (reuse helper)
+from research.search import SearchTool
 from shared import store
+
+
+@pytest.fixture(autouse=True)
+def no_network_search(monkeypatch):
+    # Hermetic: never hit Tavily/LLM from API tests regardless of ambient keys.
+    monkeypatch.setattr(SearchTool, "search", AsyncMock(return_value=[]))
 
 
 @pytest.fixture(autouse=True)
