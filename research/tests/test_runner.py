@@ -102,6 +102,84 @@ def test_audit_log_format_has_timestamp_tool_params_content(tmp_path):
         audit.logger.handlers.clear()
 
 
+def test_untrusted_content_cannot_forge_an_extra_audit_line(tmp_path):
+    """One log() call must always produce exactly one line.
+
+    Logged content is attacker-controlled web text. If a newline survived into
+    the log file, a malicious page could append a fully-formed forged entry —
+    its own timestamp, tool_name, params and hash — into a log whose purpose
+    is tamper-evident forensics.
+    """
+    logger_name = f"audit-test-{uuid.uuid4().hex}"
+    log_file = tmp_path / "research.log"
+    audit = AuditLogger(log_path=str(log_file), logger_name=logger_name)
+    forged = (
+        "harmless looking text\n"
+        '2020-01-01 | INFO | search | {"query": "innocent"} | deadbeef | FORGED'
+    )
+    try:
+        audit.log("search", {"query": "q"}, forged)
+        lines = log_file.read_text(encoding="utf-8").strip().splitlines()
+        assert len(lines) == 1, f"one entry produced {len(lines)} lines: {lines}"
+        assert "FORGED" in lines[0], "content should be preserved, just escaped"
+        assert "\\n" in lines[0], "the newline should be escaped, not dropped"
+        # The forged fragment must not be parseable as a line of its own.
+        assert not any(line.startswith("2020-01-01") for line in lines)
+    finally:
+        for h in audit.logger.handlers:
+            h.close()
+        audit.logger.handlers.clear()
+
+
+def test_audit_hash_still_verifies_against_stored_content(tmp_path):
+    """Escaping happens before hashing, so the hash covers the stored bytes.
+
+    If the newline were escaped after hashing, a reader could not recompute
+    the hash from the log line, and the tamper-evidence would be decorative.
+    """
+    import json as _json
+
+    logger_name = f"audit-test-{uuid.uuid4().hex}"
+    log_file = tmp_path / "research.log"
+    audit = AuditLogger(log_path=str(log_file), logger_name=logger_name)
+    payload = "line one\nline two\r\nline three"
+    params = {"query": "MetroDOT revenue"}
+    try:
+        audit.log("search", params, payload)
+        line = log_file.read_text(encoding="utf-8").strip()
+        _ts, _level, tool, params_json, entry_hash, content = line.split(" | ", 5)
+        assert tool == "search"
+        # Recompute the canonical hash from exactly what the line contains.
+        canonical = _json.dumps(
+            {
+                "timestamp": _ts,
+                "tool_name": tool,
+                "params": _json.loads(params_json),
+                "content": content,
+            },
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+        assert entry_hash == hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    finally:
+        for h in audit.logger.handlers:
+            h.close()
+        audit.logger.handlers.clear()
+
+
+def test_audit_line_ending_escape_is_injective():
+    """A real newline and a literal backslash-n must not collapse together.
+
+    Otherwise two different snippets would produce the same stored form, and
+    the hash could no longer tell them apart.
+    """
+    from research.audit import _one_line
+
+    assert _one_line("a\nb") != _one_line("a\\nb")
+    assert _one_line("a\r\nb") == "a\\r\\nb"
+    assert _one_line("plain text") == "plain text"
+
+
 def test_search_returns_max_3_cleaned():
     assert clean_text("<p>Hello   <b>world</b></p>") == "Hello world"
     tool = SearchTool(max_results=10)
@@ -462,6 +540,64 @@ async def test_dedupe_ignores_case_and_surrounding_whitespace():
     result = await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
 
     assert result.key_partners == ["Stellar Civil"]
+
+
+@pytest.mark.asyncio
+async def test_source_that_only_echoes_known_facts_is_not_credited_as_corroboration():
+    """A source adding zero new information does not raise confidence.
+
+    compute_confidence() awards "high" for >= 2 distinct source_urls. Without
+    the runner's dedupe, an attacker controlling two domains could post the
+    same fabricated value on both and manufacture "high" confidence out of one
+    invention — the same inflation the function already refuses for four facts
+    from a single URL, just spread across URLs. A source is therefore credited
+    only when it contributes a fact that is actually new.
+
+    The deliberate cost: two outlets echoing identical text stays "medium".
+    """
+    tender = make_tender()
+    seen = {"n": 0}
+
+    async def fake_search(query):
+        seen["n"] += 1
+        return [SearchResult(url=f"http://src{seen['n']}", content="c")]
+
+    async def fake_extract(content, url):
+        return make_output(make_fact("sector", "Transport", "medium"))
+
+    runner = make_runner(tender, iteration_cap=4, timeout_seconds=30)
+    result = await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
+
+    assert result.sources == ["http://src1"]
+    assert result.confidence == "medium", (
+        "an echo-only second source must not be able to manufacture 'high'"
+    )
+
+
+@pytest.mark.asyncio
+async def test_second_source_contributing_one_new_fact_is_credited():
+    """The complement of the echo case: new information *is* corroborated."""
+    tender = make_tender()
+    seen = {"n": 0}
+
+    async def fake_search(query):
+        seen["n"] += 1
+        return [SearchResult(url=f"http://src{seen['n']}", content="c")]
+
+    async def fake_extract(content, url):
+        if url == "http://src1":
+            return make_output(make_fact("sector", "Transport", "medium"))
+        return make_output(
+            make_fact("sector", "Transport", "medium"),
+            make_fact("estimated_revenue", "$1.2B", "medium"),
+        )
+
+    runner = make_runner(tender, iteration_cap=4, timeout_seconds=30)
+    result = await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
+
+    assert sorted(result.sources) == ["http://src1", "http://src2"]
+    assert result.confidence == "high"
+    assert result.estimated_revenue == "$1.2B"
 
 
 @pytest.mark.asyncio

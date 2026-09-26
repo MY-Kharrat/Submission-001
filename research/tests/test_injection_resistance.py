@@ -20,6 +20,7 @@ from research.extractor import Extractor
 from research.prompts import EXTRACTOR_SYSTEM_PROMPT, SNIPPET_CAP_CHARS
 from research.runner import compute_confidence
 from research.search import SearchResult
+from shared.redaction import SecretScrubber
 from shared.schemas import ExtractorOutput, Fact
 
 
@@ -377,6 +378,74 @@ async def test_llm_transport_failure_is_logged_with_traceback(caplog):
             out = await Extractor().extract("content", "https://x")
     assert out.facts == []
     assert "LLM call failed" in caplog.text
+
+
+@pytest.mark.asyncio
+async def test_api_key_is_never_written_to_logs(caplog):
+    """Degrading with exc_info=True must not print the provider credential.
+
+    httpx's exception str() happens to omit request headers today, so a
+    leak here would be invisible until a provider client changed its repr or
+    started authenticating by query parameter. The test therefore uses a
+    leak vector httpx does not currently produce, to assert the scrubbing
+    control rather than httpx's incidental formatting.
+    """
+    secret = "sk-live-DO-NOT-LOG-THIS-0123456789"
+
+    class _LeakyAuthError(RuntimeError):
+        """Stands in for any client that renders the request it failed."""
+
+        def __str__(self):
+            return (
+                "auth failed\n"
+                f"  request headers: x-api-key={secret}\n"
+                f"  url: https://api.example.com/v1?key={secret}"
+            )
+
+    boom = AsyncMock(side_effect=_LeakyAuthError("auth failed"))
+    with caplog.at_level(logging.DEBUG):
+        with patch("research.extractor.llm_call", new=boom):
+            with patch.dict("os.environ", {"LLM_API_KEY": secret}):
+                out = await Extractor().extract("content", "https://x")
+
+    assert out.facts == []
+    assert "LLM call failed" in caplog.text, "the failure should still be logged"
+    assert secret not in caplog.text
+    assert "***REDACTED***" in caplog.text, "the secret should be visibly replaced"
+    assert secret not in repr(out)
+
+
+@pytest.mark.asyncio
+async def test_extractor_logger_actually_scrubs(caplog):
+    """Guards against the scrubber being silently detached from the logger.
+
+    A filter installed on a logger that a later refactor replaces would leave
+    the code looking defended while nothing scrubs anything. This asserts the
+    live connection rather than the filter's behaviour in isolation.
+    """
+    from research.extractor import logger as extractor_logger
+
+    assert any(
+        isinstance(f, SecretScrubber) for f in extractor_logger.filters
+    ), "extractor logger has no SecretScrubber attached"
+
+
+def test_scrub_leaves_ordinary_text_alone():
+    """Scrubbing must not mangle normal log output.
+
+    A short placeholder token ("x", "dev") must not blank out every log line
+    that happens to contain it, or scrubbing would destroy the very logs it
+    exists to protect.
+    """
+    from shared.redaction import scrub
+
+    text = "extracted 3 facts for tender 42 (dev build, x retries)"
+    with patch.dict(
+        "os.environ",
+        {"INTERNAL_SERVICE_TOKEN": "x", "LLM_API_KEY": "dev"},
+    ):
+        assert scrub(text) == text
+
 
 
 @pytest.mark.asyncio
