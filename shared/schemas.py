@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import Literal, Optional, List
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 # Edit here if team skills change detection and agent both import this.
 CAPABILITY_TAXONOMY: list[str] = [
@@ -30,15 +30,32 @@ class Tender(BaseModel):
 class Fact(BaseModel):
     model_config = ConfigDict(strict=True)
 
-    value: str
+    value: str = Field(min_length=1)
     category: Literal["sector", "estimated_revenue", "past_projects", "key_partners"]
     confidence: Literal["low", "medium", "high"]
+
+    @field_validator("value")
+    @classmethod
+    def _not_blank(cls, v: str) -> str:
+        # A blank fact is noise, and an attacker could pad facts=[] with empty
+        # entries to make sparse output look evidence-rich.
+        stripped = v.strip()
+        if not stripped:
+            raise ValueError("fact value must not be blank")
+        return stripped
 
 
 class ExtractorOutput(BaseModel):
     """Strict schema for the Quarantined Extractor. No other output allowed."""
 
-    model_config = ConfigDict(strict=True)
+    # extra="forbid" is a contract boundary, not pedantry: a reply carrying any
+    # key outside {facts} (a smuggled "command"/"tool" field, or an
+    # attacker-supplied "source_url" that would spoof provenance) is rejected
+    # wholesale and degrades to facts=[]. Note the tradeoff: this is fail-closed,
+    # so a model that starts adding a harmless "summary" key loses ALL facts for
+    # that snippet. research/tools/llm_contract_probe.py exists to detect exactly
+    # that drift against the live model, which the mocked test suite cannot.
+    model_config = ConfigDict(strict=True, extra="forbid")
 
     # Empty list, never null: "no fact found" is facts=[].
     facts: List[Fact]

@@ -418,6 +418,53 @@ async def test_runner_round_robins_queries_across_gaps():
 
 
 @pytest.mark.asyncio
+async def test_repeated_facts_are_deduplicated_across_iterations():
+    """The same fact re-read on a later iteration is stored once.
+
+    Consecutive gap queries hit overlapping pages, so the identical fact comes
+    back again. Listing it twice is noise, and for an attacker-controlled page
+    it means the payload is restated once per iteration.
+    """
+    tender = make_tender()
+
+    async def fake_search(query):
+        return [SearchResult(url="http://a", content="same page every time")]
+
+    async def fake_extract(content, url):
+        return make_output(
+            make_fact("sector", "Transport", "medium"),
+            make_fact("key_partners", "Stellar Civil", "medium"),
+        )
+
+    runner = make_runner(tender, iteration_cap=3, timeout_seconds=30)
+    result = await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
+
+    assert result.sector == "Transport"
+    assert result.key_partners == ["Stellar Civil"]
+    assert result.sources == ["http://a"]
+
+
+@pytest.mark.asyncio
+async def test_dedupe_ignores_case_and_surrounding_whitespace():
+    """Same fact, different surface form -> still one entry."""
+    tender = make_tender()
+    seen = {"n": 0}
+
+    async def fake_search(query):
+        seen["n"] += 1
+        return [SearchResult(url="http://a", content="c")]
+
+    async def fake_extract(content, url):
+        value = "Stellar Civil" if seen["n"] == 1 else "  stellar civil  "
+        return make_output(make_fact("key_partners", value, "medium"))
+
+    runner = make_runner(tender, iteration_cap=3, timeout_seconds=30)
+    result = await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
+
+    assert result.key_partners == ["Stellar Civil"]
+
+
+@pytest.mark.asyncio
 async def test_runner_skips_gaps_already_filled():
     """A gap backed by a fact is never re-searched."""
     tender = make_tender()

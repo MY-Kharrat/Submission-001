@@ -247,7 +247,21 @@ class Runner:
                 for fact in out.facts:
                     if fact.category not in GAP_QUERIES:
                         continue
-                    self.accumulated_facts.setdefault(fact.category, []).append(fact)
+                    bucket = self.accumulated_facts.setdefault(fact.category, [])
+                    # Idempotent accumulation: consecutive gap queries often
+                    # re-read the same overlapping page, so the identical fact
+                    # arrives again. Without this, output lists fill with
+                    # duplicates and an attacker-controlled page gets its
+                    # payload restated once per iteration. A fact that is not
+                    # new also does not credit its URL as a fresh source, so
+                    # "echo a known fact from many URLs" cannot inflate
+                    # confidence.
+                    if any(
+                        existing.value.strip().casefold() == fact.value.strip().casefold()
+                        for existing in bucket
+                    ):
+                        continue
+                    bucket.append(fact)
                     self.sources.add(r.url)
             iterations += 1
         return self.finalize(tender_id)
