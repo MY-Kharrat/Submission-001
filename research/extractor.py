@@ -19,7 +19,11 @@ class Extractor:
         # Quarantine: trusted instructions travel via system=, the untrusted
         # snippet (capped) via the user message — never concatenated.
         try:
-            raw = (await llm_call(f"Source text:\n{content}\n\nJSON:",
+            # Cap the untrusted snippet before it reaches the model, so a huge
+            # page cannot blow the context window or smuggle extra instructions
+            # past review.
+            capped = content[:SNIPPET_CAP_CHARS]
+            raw = (await llm_call(f"Source text:\n{capped}\n\nJSON:",
                                   system=EXTRACTOR_SYSTEM_PROMPT)).strip()
         except Exception as e:
             print(f"Error[Extractor]: {e}")

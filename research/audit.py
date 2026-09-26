@@ -46,14 +46,14 @@ class AuditEntry:
     content: str
 
     def __str__(self):
-        ## Ready if I needed to punch the logs into tools like ElasticSearch
-        return json.dumps({
-            "timestamp": self.timestamp,
-            "tool_name": self.tool_name,
-            "params": self.params,
-            "hash": self.hash,
-            "content": self.content
-        }, ensure_ascii=False)
+        # Single source of truth for the log line. AuditLogger.log() renders
+        # exactly this, so there is one serialization of an entry, not two
+        # divergent ones. Ready as-is for shipping to ElasticSearch et al.
+        return (
+            f"{self.timestamp} | INFO | {self.tool_name} | "
+            f"{json.dumps(self.params, ensure_ascii=False)} | "
+            f"{self.hash} | {self.content}"
+        )
 
 
 class AuditLogger:
@@ -113,11 +113,5 @@ class AuditLogger:
             hash=entry_hash,
         )
 
-        self.logger.info(
-            "%s | INFO | %s | %s | %s | %s",
-            entry.timestamp,
-            entry.tool_name,
-            json.dumps(entry.params, ensure_ascii=False),
-            entry.hash,
-            entry.content,
-        )
+        # Rendered by the entry itself — one serialization, not two.
+        self.logger.info("%s", entry)

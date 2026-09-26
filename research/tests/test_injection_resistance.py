@@ -20,6 +20,11 @@ from research.runner import compute_confidence
 from shared.schemas import Fact
 
 
+async def _noop_resolve(_hostname: str) -> None:
+    """Stand-in for fetch._resolve_guarded: the initial host is public."""
+    return None
+
+
 @pytest.mark.asyncio
 async def test_trusted_instructions_use_system_channel_not_user_concat():
     """Quarantine mechanism: system prompt passed separately via system=."""
@@ -34,10 +39,6 @@ async def test_trusted_instructions_use_system_channel_not_user_concat():
     assert mock.call_args.args[0] != EXTRACTOR_SYSTEM_PROMPT
 
 
-@pytest.mark.xfail(
-    reason="extractor imports SNIPPET_CAP_CHARS but never applies it to the user message",
-    strict=False,
-)
 @pytest.mark.asyncio
 async def test_snippet_capped_before_model():
     mock = AsyncMock(return_value='{"facts": []}')
@@ -131,3 +132,101 @@ async def test_fetch_blocks_loopback_host():
 
     with pytest.raises(FetchError):
         await fetch_url("http://localhost:9/should-never-connect")
+
+
+@pytest.mark.parametrize(
+    "location",
+    [
+        "http://169.254.169.254/latest/meta-data/iam/security-credentials/",
+        "http://127.0.0.1:8080/admin",
+        "http://[::1]/admin",
+        "file:///etc/passwd",
+    ],
+)
+@pytest.mark.asyncio
+async def test_fetch_refuses_redirect_to_unvalidated_target(monkeypatch, location):
+    """A 3xx must never be followed to a Location the guard never validated.
+
+    The guard screens the *initial* URL only. With follow_redirects=True,
+    httpx resolves the redirect chain internally and hands the caller the
+    *final* response, so a public host could bounce the tool straight into
+    cloud instance metadata or loopback without assert_url_allowed /
+    _resolve_guarded ever running again. The tool is the backstop (the model
+    picks the URLs), so the redirect is refused outright.
+    """
+    import httpx
+
+    from research.tools import fetch as fetch_mod
+    from research.tools.fetch import FetchError, fetch_url
+
+    start_url = "https://public.example/start"
+    secret = b"AWS_SECRET_ACCESS_KEY=leaked-metadata-value"
+    requested: list[str] = []
+    client_kwargs: dict = {}
+
+    # The initial URL is a public host, so it legitimately passes the guard.
+    monkeypatch.setattr(fetch_mod, "assert_url_allowed", lambda url: "public.example")
+    monkeypatch.setattr(fetch_mod, "_resolve_guarded", _noop_resolve)
+
+    class _FakeResponse:
+        def __init__(self, status_code, headers=None, body=b""):
+            self.status_code = status_code
+            self.headers = headers or {}
+            self._body = body
+
+        @property
+        def is_redirect(self):
+            return self.status_code in (301, 302, 303, 307, 308)
+
+        def raise_for_status(self):
+            if self.status_code >= 400:
+                raise httpx.HTTPStatusError(
+                    f"{self.status_code}", request=None, response=None
+                )
+
+        async def aiter_bytes(self):
+            yield self._body
+
+    class _FakeStream:
+        def __init__(self, response):
+            self._response = response
+
+        async def __aenter__(self):
+            return self._response
+
+        async def __aexit__(self, *exc):
+            return False
+
+    class _FakeClient:
+        def __init__(self, **kwargs):
+            client_kwargs.update(kwargs)
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        def stream(self, method, url):
+            if client_kwargs.get("follow_redirects") and url == start_url:
+                # httpx follows the 3xx internally: the caller only ever sees
+                # the final response, so the guard never sees the Location host.
+                requested.extend([url, location])
+                return _FakeStream(_FakeResponse(200, body=secret))
+            requested.append(url)
+            return _FakeStream(
+                _FakeResponse(302, {"location": location}, secret)
+            )
+
+    monkeypatch.setattr(httpx, "AsyncClient", _FakeClient)
+
+    with pytest.raises(FetchError) as excinfo:
+        await fetch_url(start_url)
+
+    assert location in str(excinfo.value)
+    # The redirect target was never requested, and the metadata body never
+    # came back to the caller.
+    assert requested == [start_url]
+    assert "leaked-metadata-value" not in str(excinfo.value)
+    # The client itself must not even be able to follow redirects.
+    assert client_kwargs.get("follow_redirects") is False

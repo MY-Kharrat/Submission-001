@@ -6,6 +6,9 @@ The model chooses the URLs, so the tool itself must be the backstop:
   IPs are refused (blocks 127.0.0.1, 10/8, 172.16/12, 192.168/16, 169.254/8,
   ::1, fc00::/7, fe80::/10, ...),
 - response body is capped at FETCH_MAX_BYTES (default 256 KiB),
+- redirects are never followed: a 3xx raises FetchError instead of fetching an
+  unvalidated Location (a redirect to 169.254.169.254 or 127.0.0.1 would
+  otherwise bypass every check above),
 - every call is bounded by PER_CALL_TIMEOUT_SECONDS with one
   retry-with-backoff on timeout/5xx and no retry on 4xx.
 """
@@ -80,8 +83,20 @@ async def fetch_url(url: str) -> str:
     last_exc: Exception | None = None
     for attempt in range(2):
         try:
-            async with httpx.AsyncClient(timeout=timeout, follow_redirects=True) as client:
+            # follow_redirects=False is the SSRF backstop: a 3xx is never
+            # followed, because the Location target would be fetched without
+            # re-running assert_url_allowed/_resolve_guarded. The model picks
+            # the URLs, so the tool — not the caller — must decide what is
+            # reachable. Returning the validated URL as a redirect is the
+            # caller's cue to re-validate and re-issue explicitly.
+            async with httpx.AsyncClient(timeout=timeout, follow_redirects=False) as client:
                 async with client.stream("GET", url) as resp:
+                    if resp.is_redirect:
+                        location = resp.headers.get("location", "")
+                        raise FetchError(
+                            f"Blocked redirect to unvalidated location {location!r} "
+                            f"from {url!r}; re-issue the fetch with the validated URL"
+                        )
                     if 400 <= resp.status_code < 500:
                         resp.raise_for_status()
                     if resp.status_code >= 500:

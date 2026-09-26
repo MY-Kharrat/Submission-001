@@ -18,6 +18,11 @@ GAP_QUERIES: dict[str, str] = {
     "key_partners": "key partners",
 }
 
+# Defense in depth: SearchTool caps to 3 as well, but the orchestrator must not
+# trust the tool alone — an alternate/injected search implementation returning
+# more would otherwise widen both the token cost and the injection surface.
+MAX_RESULTS_PER_QUERY = 3
+
 
 class TenderNotFoundError(LookupError):
     """Raised when Runner.run() is asked for a tender that does not exist."""
@@ -63,7 +68,7 @@ def _default_log_path() -> str:
             pass
         return str(fallback)
 
-LOG_PATH = Path(__file__).parent / "audit.log"
+LOG_PATH = _default_log_path()
 
 class Runner:
     def __init__(
@@ -95,8 +100,8 @@ class Runner:
         self._current_issuer: str = ""
 
     def _missing_fields(self) -> list[str]:
-        # return [k for k in GAP_QUERIES.keys() if not self.accumulated_facts.get(k)]
-        return ", ".join(k for k in GAP_QUERIES if not self.accumulated_facts.get(k))
+        """Fields not yet backed by any accumulated fact, in GAP_QUERIES order."""
+        return [k for k in GAP_QUERIES if not self.accumulated_facts.get(k)]
 
     def _build_query(self, issuer: str, gap: str) -> str:
         label = GAP_QUERIES.get(gap)
@@ -186,8 +191,12 @@ class Runner:
         cached = self.fetch_cached(issuer)
         if cached is not None:
             self.audit.log("fetch_cache", {"tender_id": tender_id, "issuer": issuer}, "")
-            self.save_research(tender_id, cached)
-            return cached
+            # The cached record carries the tender_id it was first researched
+            # under; restamp it so the API body never reports another tender's
+            # id when a second tender shares this issuer.
+            restamped = cached.model_copy(update={"tender_id": tender_id})
+            self.save_research(tender_id, restamped)
+            return restamped
         
         iterations = 0
         while iterations < self.iteration_cap:
@@ -196,18 +205,18 @@ class Runner:
                 break
             # This returns list of missing fields (sector, estimated_revenue, key_partners, past_projects)
             missing = self._missing_fields()
-            if len(missing) <= 0:
+            if not missing:
                 # There's no missing facts
                 self.audit.log("missing_fields", {}, "There's no missing field!")
                 break
 
-            # # Round-robin over the *current* missing set: if the first gap can
-            # # never be filled, later iterations still attempt the other fields
-            # # instead of re-searching the same un-fillable gap forever.
-            # gap = missing[iterations % len(missing)]
+            # Round-robin over the *current* missing set: if the first gap can
+            # never be filled, later iterations still attempt the other fields
+            # instead of re-searching the same un-fillable gap forever.
+            gap = missing[iterations % len(missing)]
 
             # Builds a query: <issuer, gap>
-            query = self._build_query(issuer, missing)
+            query = self._build_query(issuer, gap)
             try:
                 # Performs a web search using Tavily
                 results = await search(query)
@@ -215,7 +224,7 @@ class Runner:
                 self.audit.log("Search Error", {"query": query}, str(e))
                 iterations += 1
                 continue
-            results = (results or [])
+            results = (results or [])[:MAX_RESULTS_PER_QUERY]
 
             # Process the top results per query (not just the first success):
             # audit every snippet, and let each extraction fail gracefully so

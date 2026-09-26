@@ -178,8 +178,10 @@ def get_research_by_issuer(issuer: str) -> Optional[ProspectResearch]:
     same issuer) be served without re-spending search/LLM budget.
     """
     with _connect() as conn:
+        # rowid is the insertion counter, so this is true recency. ORDER BY
+        # tender_id would be lexicographic on an opaque id ("t10" < "t2").
         row = conn.execute(
-            "SELECT * FROM research WHERE issuer = ? ORDER BY tender_id LIMIT 1",
+            "SELECT * FROM research WHERE issuer = ? ORDER BY rowid DESC LIMIT 1",
             (issuer,),
         ).fetchone()
         return _row_to_research(row) if row else None
@@ -193,7 +195,7 @@ def get_research_by_tender_id(tender_id:str)-> Optional[ProspectResearch]:
     with _connect() as conn:
         row = conn.execute(
             "SELECT * FROM research WHERE tender_id = ? ",
-            (tender_id),
+            (tender_id,),
         ).fetchone()
         return _row_to_research(row) if row else None
 

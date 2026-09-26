@@ -269,10 +269,6 @@ async def test_runner_respects_timeout():
     assert result.confidence == "low"
 
 
-@pytest.mark.xfail(
-    reason="runner processes all injected search_fn results instead of top 3",
-    strict=False,
-)
 @pytest.mark.asyncio
 async def test_runner_truncates_results_to_3():
     tender = make_tender()
@@ -384,10 +380,6 @@ def test_runner_build_query():
     assert r._build_query("MetroDOT", "estimated_revenue") == "MetroDOT estimated revenue annual budget"
 
 
-@pytest.mark.xfail(
-    reason="_missing_fields returns a joined string, not a per-gap list for round-robin",
-    strict=False,
-)
 def test_runner_missing_fields_lists_each_gap():
     r = make_runner()
     assert set(r._missing_fields()) == set(GAP_QUERIES.keys())
@@ -395,10 +387,66 @@ def test_runner_missing_fields_lists_each_gap():
     assert "sector" not in r._missing_fields()
 
 
-@pytest.mark.xfail(
-    reason="issuer cache returns the cached object with its original tender_id",
-    strict=False,
-)
+@pytest.mark.asyncio
+async def test_runner_round_robins_queries_across_gaps():
+    """Each iteration must search a real, distinct per-gap query.
+
+    Regression for the load-bearing bug: _missing_fields() used to return a
+    comma-joined string, so GAP_QUERIES.get(gap) was None and every query
+    degenerated to "<issuer> None" — searches "succeeded" while researching
+    nothing. The round-robin must also keep rotating so an un-fillable first
+    gap cannot starve the remaining three.
+    """
+    tender = make_tender()
+    queries = []
+
+    async def fake_search(query):
+        queries.append(query)
+        return []  # nothing extractable: every gap stays missing
+
+    runner = make_runner(tender, iteration_cap=4, timeout_seconds=30)
+    await runner.run(tender.id, search_fn=fake_search)
+
+    assert len(queries) == 4
+    # No garbage queries, and every query names a real GAP_QUERIES label.
+    assert not any(q.endswith("None") for q in queries)
+    assert all(q.startswith("MetroDOT ") for q in queries)
+    labels = [q[len("MetroDOT "):] for q in queries]
+    assert set(labels) == set(GAP_QUERIES.values())
+    # One gap per iteration, no repeats while every gap is still missing.
+    assert len(set(labels)) == 4
+
+
+@pytest.mark.asyncio
+async def test_runner_skips_gaps_already_filled():
+    """A gap backed by a fact is never re-searched."""
+    tender = make_tender()
+    queries = []
+
+    async def fake_search(query):
+        queries.append(query)
+        return [SearchResult(url="http://a", content="c")]
+
+    async def fake_extract(content, url):
+        # Only ever fills "sector".
+        return make_output(make_fact("sector", "Transport", "medium"))
+
+    runner = make_runner(tender, iteration_cap=4, timeout_seconds=30)
+    await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
+
+    labels = [q[len("MetroDOT "):] for q in queries]
+    # "sector" is searched once, on iteration 0 when it was genuinely missing,
+    # and never re-searched once the fact is in hand. The other three gaps,
+    # which stay un-fillable here, each get a turn.
+    assert labels.count(GAP_QUERIES["sector"]) == 1
+    assert labels[0] == GAP_QUERIES["sector"]
+    assert set(labels[1:]) == {
+        GAP_QUERIES["estimated_revenue"],
+        GAP_QUERIES["past_projects"],
+        GAP_QUERIES["key_partners"],
+    }
+
+
 @pytest.mark.asyncio
 async def test_issuer_cache_restamps_tender_id():
     from shared.schemas import ProspectResearch

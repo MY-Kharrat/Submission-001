@@ -65,3 +65,63 @@ async def test_run_missing_tender_is_404():
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         resp = await client.post("/research/does-not-exist", headers=TOKEN_HEADER)
         assert resp.status_code == 404
+
+
+def _research(tender_id="t1", issuer="MetroDOT", sector="Transport"):
+    from shared.schemas import ProspectResearch
+
+    return ProspectResearch(
+        tender_id=tender_id,
+        issuer=issuer,
+        sector=sector,
+        estimated_revenue=None,
+        past_projects=[],
+        key_partners=[],
+        notes="",
+        confidence="low",
+        sources=[],
+    )
+
+
+def test_get_research_by_tender_id_binds_single_parameter():
+    """Regression: the binding must be a 1-tuple, not a bare string.
+
+    `(tender_id)` is not a tuple — sqlite3 would bind it as a sequence of
+    individual characters and raise "Incorrect number of bindings supplied"
+    for any id longer than one character. Dormant while nothing called it,
+    fatal the moment runner.py's `TODO: change to get_research_by_tenderid`
+    is picked up.
+    """
+    store.save_research("t1", _research("t1"))
+    found = store.get_research_by_tender_id("t1")
+    assert found is not None
+    assert found.tender_id == "t1"
+    assert store.get_research_by_tender_id("does-not-exist") is None
+
+
+def test_get_research_by_issuer_returns_most_recent_not_lexicographic():
+    """Regression: recency must not be `ORDER BY tender_id`.
+
+    tender_id is an opaque string, so lexicographic order puts "t1" before
+    "t10" and "t2" — i.e. the cache would serve stale research for a
+    re-researched issuer. rowid is the insertion counter, so
+    ORDER BY rowid DESC is true recency. These ids are chosen so the newest
+    ("t10") is NOT the lexicographically smallest ("t1"): a lexicographic
+    lookup returns the stale first result and fails this assertion.
+    """
+    from research.tests.test_runner import make_tender as _make
+
+    for tid in ("t2", "t10"):
+        t = _make()
+        t.id = tid
+        store.save_tender(t, f"hash-{tid}")
+
+    # Oldest -> newest. "t1" is the oldest and is also the lexicographically
+    # smallest, so a lexicographic lookup returns stale "t1" and fails.
+    for tid, sector in (("t1", "oldest"), ("t2", "second"), ("t10", "newest")):
+        store.save_research(tid, _research(tid, sector=sector))
+
+    latest = store.get_research_by_issuer("MetroDOT")
+    assert latest is not None
+    assert latest.tender_id == "t10"
+    assert latest.sector == "newest"
