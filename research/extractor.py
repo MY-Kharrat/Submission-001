@@ -6,10 +6,17 @@ from typing import Optional
 from pydantic import ValidationError
 
 from detection.llm import llm_call
+from shared.redaction import SecretScrubber
 from shared.schemas import ExtractorOutput
 from .prompts import EXTRACTOR_SYSTEM_PROMPT, SNIPPET_CAP_CHARS
 
 logger = logging.getLogger(__name__)
+
+# On the logger, not a handler, so records are scrubbed before any handler
+# sees them. This is the logger that logs exc_info for a failed provider call,
+# and that traceback is rendered from a provider exception we do not control.
+if not any(isinstance(f, SecretScrubber) for f in logger.filters):
+    logger.addFilter(SecretScrubber())
 
 # A single page cannot plausibly support more than a handful of facts. Bounding
 # this keeps one verbose or hijacked page from bloating the research object and

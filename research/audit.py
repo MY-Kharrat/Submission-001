@@ -37,6 +37,26 @@ def _cap_content(raw_content: str) -> str:
     return raw_content
 
 
+def _one_line(raw: str) -> str:
+    """Collapse a value so one audit entry is always exactly one log line.
+
+    Logged content is untrusted web text. A newline inside it would let a
+    malicious page append a whole forged entry — its own timestamp, tool_name,
+    params and hash — to a log whose entire purpose is tamper-evident
+    forensics, which would make the trail actively misleading during exactly
+    the incident it exists to reconstruct.
+
+    Applied *before* hashing, so the hash still covers precisely the bytes that
+    are stored and a reader can recompute it. The backslash is escaped first
+    so the mapping stays reversible and therefore injective: LF and a literal
+    "\\n" cannot collapse to the same stored form.
+    """
+    return (raw.replace("\\", "\\\\")
+               .replace("\r\n", "\\r\\n")
+               .replace("\r", "\\r")
+               .replace("\n", "\\n"))
+
+
 @dataclass(frozen=True) # Append-only, can't modify.
 class AuditEntry:
     timestamp: str
@@ -46,9 +66,13 @@ class AuditEntry:
     content: str
 
     def __str__(self):
-        # Single source of truth for the log line. AuditLogger.log() renders
-        # exactly this, so there is one serialization of an entry, not two
-        # divergent ones. Ready as-is for shipping to ElasticSearch et al.
+        # Single source of truth for the log line: AuditLogger.log() renders
+        # exactly this, so an entry has one serialization rather than two that
+        # can drift apart. The pipe-delimited shape is human/grep friendly,
+        # which is what the operational log is for. For machine ingestion,
+        # re-serialize the dataclass fields as JSON — the fields are structured
+        # for exactly that, and `hash` is reproducible from them because
+        # log() hashes the same values.
         return (
             f"{self.timestamp} | INFO | {self.tool_name} | "
             f"{json.dumps(self.params, ensure_ascii=False)} | "
@@ -91,7 +115,11 @@ class AuditLogger:
     def log(self, tool_name: str, params: Optional[dict] = None, raw_content: str = "") -> None:
 
         safe_params = _redact_params(params or {})
-        content = _cap_content(raw_content or "")
+        # Cap the raw text first (so the truncation count describes what was
+        # actually seen), then escape it onto a single line before it is
+        # hashed or written. Untrusted content must never be able to add a line
+        # to a tamper-evident log.
+        content = _one_line(_cap_content(raw_content or ""))
         # isoformat() already carries the +00:00 offset — no extra "Z" suffix.
         timestamp = datetime.now(timezone.utc).isoformat()
 
