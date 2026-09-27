@@ -1,6 +1,7 @@
 import hashlib
 import json
 import logging
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from logging.handlers import TimedRotatingFileHandler
@@ -86,6 +87,15 @@ class AuditLogger:
                  logger_name: str = "audit"):
         self.log_path = log_path
 
+        # Correlation ID. Without it, a run's tool calls are only reconstructable
+        # by timestamp proximity -- and every call in an agent loop shares a
+        # second-scale timestamp, so "what did this one run actually touch?"
+        # becomes guesswork. This is the "correlation IDs that stitch together
+        # orchestrator -> tool call -> downstream" pattern; per-run, not global,
+        # so two concurrent runs stay separable. It rides inside params, which
+        # means it is covered by the entry hash automatically.
+        self.run_id = uuid.uuid4().hex[:12]
+
         try:
             Path(log_path).parent.mkdir(parents=True, exist_ok=True)
         except OSError:
@@ -115,6 +125,9 @@ class AuditLogger:
     def log(self, tool_name: str, params: Optional[dict] = None, raw_content: str = "") -> None:
 
         safe_params = _redact_params(params or {})
+        # setdefault, not overwrite: a caller re-auditing a prior run can pin the
+        # original run_id, but the common case is "this run's id".
+        safe_params.setdefault("run_id", self.run_id)
         # Cap the raw text first (so the truncation count describes what was
         # actually seen), then escape it onto a single line before it is
         # hashed or written. Untrusted content must never be able to add a line

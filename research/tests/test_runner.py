@@ -1,5 +1,6 @@
 import asyncio
 import hashlib
+import json
 import uuid
 from datetime import date, datetime, timezone
 from types import SimpleNamespace
@@ -83,6 +84,53 @@ def test_audit_logs_before_extraction_with_hash(tmp_path):
         for h in audit.logger.handlers:
             h.close()
         audit.logger.handlers.clear()
+
+
+def test_audit_entries_share_one_run_id_and_it_is_hashed(tmp_path):
+    """Every call in a run must be reconstructable from the log alone.
+
+    Agent-loop calls all land within the same second, so timestamp proximity
+    cannot separate them. The correlation ID is what makes "what did this run
+    touch?" answerable, and it must be inside the hashed entry so it cannot be
+    edited after the fact to re-attribute a call to another run.
+    """
+    logger_name = f"audit-test-{uuid.uuid4().hex}"
+    log_file = tmp_path / "research.log"
+    audit = AuditLogger(log_path=str(log_file), logger_name=logger_name)
+    try:
+        audit.log("search", {"query": "a"}, "page one")
+        audit.log("search", {"query": "b"}, "page two")
+        lines = log_file.read_text(encoding="utf-8").strip().splitlines()
+        assert len(lines) == 2
+        run_ids = {json.loads(line.split(" | ")[3])["run_id"] for line in lines}
+        assert run_ids == {audit.run_id}, f"run_id not shared across entries: {run_ids}"
+
+        # And it is inside the hash, not just bolted onto the line.
+        _ts, _lvl, _tool, params_json, entry_hash, _content = lines[0].split(" | ", 5)
+        canonical = json.dumps({
+            "timestamp": _ts, "tool_name": "search",
+            "params": json.loads(params_json), "content": "page one",
+        }, sort_keys=True, ensure_ascii=False)
+        assert entry_hash == hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+    finally:
+        for h in audit.logger.handlers:
+            h.close()
+        audit.logger.handlers.clear()
+
+
+def test_separate_runs_get_separate_ids(tmp_path):
+    """Two concurrent runs must not share a correlation ID."""
+    ids = set()
+    for name in ("a", "b"):
+        audit = AuditLogger(
+            log_path=str(tmp_path / f"{name}.log"),
+            logger_name=f"audit-test-{uuid.uuid4().hex}",
+        )
+        ids.add(audit.run_id)
+        for h in audit.logger.handlers:
+            h.close()
+        audit.logger.handlers.clear()
+    assert len(ids) == 2, "run_id must be per-instance"
 
 
 def test_audit_log_format_has_timestamp_tool_params_content(tmp_path):
