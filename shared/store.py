@@ -104,13 +104,47 @@ def init_db() -> None:
 
 
 def save_tender(tender: Tender, dedup_hash: str) -> None:
+    """Insert a tender, or update it in place, without ever deleting the row.
+
+    This was ``INSERT OR REPLACE``, which is a DELETE followed by an INSERT.
+    Combined with ``research.tender_id ... ON DELETE CASCADE`` that silently
+    destroyed the computed research for a tender on *every* re-ingest — not
+    just the concurrent-duplicate case: a plain ``status: new -> processed``
+    transition, or a sheet edit that changed the title, both wiped it. The
+    tender row looked fine, so the loss was invisible.
+
+    Two distinct conflicts need two distinct answers, hence two clauses:
+
+    - ``ON CONFLICT(dedup_hash)`` — a duplicate ingest that arrived with a
+      different id (each ingest mints a random uuid). Update the content but
+      keep the *existing* id, so research already keyed to that id stays
+      attached instead of being orphaned.
+    - ``ON CONFLICT(id)`` — the same id re-sent with edited content, so the
+      hash moved too. Keep the id, refresh everything including the hash.
+      Without this clause a PRIMARY KEY conflict would raise IntegrityError,
+      because the hash clause alone does not cover the id index.
+
+    ``id`` is deliberately never reassigned in either clause: the id is the
+    research foreign key, and changing it would break the link in both
+    directions. Every other mutable column is listed explicitly rather than
+    relying on REPLACE's reset-to-default behaviour, which would blank any
+    column omitted from the SET list.
+    """
+    content_columns = """
+           title = excluded.title, issuer = excluded.issuer, sector = excluded.sector,
+           requirements = excluded.requirements, deadline = excluded.deadline,
+           raw_text = excluded.raw_text, source = excluded.source,
+           detected_at = excluded.detected_at, status = excluded.status"""
     with _connect() as conn:
         try:
             conn.execute(
-                """INSERT OR REPLACE INTO tenders
+                f"""INSERT INTO tenders
                    (id, title, issuer, sector, requirements, deadline, raw_text,
                     source, detected_at, status, dedup_hash)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                   ON CONFLICT(dedup_hash) DO UPDATE SET{content_columns}
+                   ON CONFLICT(id) DO UPDATE SET{content_columns},
+                       dedup_hash = excluded.dedup_hash""",
                 (
                     tender.id, tender.title, tender.issuer, tender.sector,
                     json.dumps(tender.requirements), tender.deadline.isoformat(),
