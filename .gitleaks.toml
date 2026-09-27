@@ -1,0 +1,23 @@
+title = "OliveSoft-Challenge gitleaks configuration"
+
+[extend]
+useDefault = true
+
+# The secret-scrubbing tests must assert against a value that *looks* like a
+# credential: a short, low-entropy dummy would pass even a broken scrubber, and
+# would not prove the real filter does anything. Those literals trip gitleaks'
+# generic-api-key rule (keyword + entropy above threshold), which is the correct
+# behaviour for the scanner and the wrong outcome for CI.
+#
+# This allowlist is deliberately path-scoped rather than matching the literals
+# globally: a value that happens to look like one of these canaries somewhere
+# outside the test files should still be reported.
+#
+# Neither literal is a real key. Do not add production secrets to the paths
+# below, and do not widen them to whole directories.
+[[allowlists]]
+description = "Synthetic canary literals used by secret-scrubber tests"
+paths = [
+  '''^research/tests/test_injection_resistance\.py$''',
+  '''^shared/tests/test_redaction\.py$''',
+]
