@@ -156,6 +156,29 @@ async def test_trusted_instructions_use_system_channel_not_user_concat():
     assert mock.call_args.args[0] != EXTRACTOR_SYSTEM_PROMPT
 
 
+@pytest.mark.parametrize("fragment", [
+    "HALLUCINATION GUARDRAIL",
+    "do not supply it",
+    "An absent fact is a correct answer",
+    "return {\"facts\": []}",
+    "confidence 'low'",
+])
+def test_prompt_forbids_fabrication_and_names_the_failure_mode(fragment):
+    """Plan L181: the guardrail must be explicit, not just "don't guess".
+
+    Prohibiting guessing is not enough on its own -- the model still needs to
+    be told what to do instead, or a thin page becomes a plausible invention
+    with a confident-looking label. A wrong-but-confident research output is
+    worse for the demo than an honest "insufficient public data".
+    """
+    assert fragment in EXTRACTOR_SYSTEM_PROMPT
+
+
+def test_snippet_cap_unchanged_by_prompt_growth():
+    """SNIPPET_CAP_CHARS is the untrusted budget; prompt growth must not eat it."""
+    assert SNIPPET_CAP_CHARS == 4000
+
+
 @pytest.mark.asyncio
 async def test_snippet_capped_before_model():
     mock = AsyncMock(return_value='{"facts": []}')
