@@ -1,0 +1,43 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: [detection, research, shared]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      # The suite is hermetic by design: every provider call is mocked, and no
+      # credential is supplied here on purpose. If a test ever reaches for a
+      # real API it fails immediately and loudly instead of silently depending
+      # on a developer's shell, and this job can never spend money or leak a
+      # key through a test run.
+      - name: Run tests
+        env:
+          INTERNAL_SERVICE_TOKEN: ci-test-token-not-a-real-secret
+        run: |
+          if [ -d "${{ matrix.dir }}" ]; then
+            python -m pytest "${{ matrix.dir }}" -q
+          else
+            echo "Directory ${{ matrix.dir }} not present yet, skipping."
+          fi

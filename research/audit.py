@@ -1,0 +1,158 @@
+import hashlib
+import json
+import logging
+import uuid
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from logging.handlers import TimedRotatingFileHandler
+from pathlib import Path
+from typing import Optional
+# This approach doesn't rely on machine's logrotate.
+# The python instance is the one responsable for rotating this microservice's logs.
+
+# Param keys containing one of these fragments are secrets (api_key, token,
+# secret, auth header...) — their values never reach the log file in cleartext.
+SENSITIVE_KEY_PARTS = ("key", "token", "secret", "auth", "password")
+
+REDACTED = "***REDACTED***"
+
+# Untrusted tool output is capped before logging so a huge page cannot
+# blow up the audit volume; the hash still covers exactly what is stored.
+CONTENT_CAP_CHARS = 2000
+
+
+def _redact_params(params: dict) -> dict:
+    """Return a copy of params with secret values replaced by REDACTED."""
+    redacted = {}
+    for k, v in (params or {}).items():
+        if any(part in str(k).lower() for part in SENSITIVE_KEY_PARTS):
+            redacted[k] = REDACTED
+        else:
+            redacted[k] = v
+    return redacted
+
+
+def _cap_content(raw_content: str) -> str:
+    if len(raw_content) > CONTENT_CAP_CHARS:
+        return raw_content[:CONTENT_CAP_CHARS] + f"...[truncated {len(raw_content) - CONTENT_CAP_CHARS} chars]"
+    return raw_content
+
+
+def _one_line(raw: str) -> str:
+    """Collapse a value so one audit entry is always exactly one log line.
+
+    Logged content is untrusted web text. A newline inside it would let a
+    malicious page append a whole forged entry — its own timestamp, tool_name,
+    params and hash — to a log whose entire purpose is tamper-evident
+    forensics, which would make the trail actively misleading during exactly
+    the incident it exists to reconstruct.
+
+    Applied *before* hashing, so the hash still covers precisely the bytes that
+    are stored and a reader can recompute it. The backslash is escaped first
+    so the mapping stays reversible and therefore injective: LF and a literal
+    "\\n" cannot collapse to the same stored form.
+    """
+    return (raw.replace("\\", "\\\\")
+               .replace("\r\n", "\\r\\n")
+               .replace("\r", "\\r")
+               .replace("\n", "\\n"))
+
+
+@dataclass(frozen=True) # Append-only, can't modify.
+class AuditEntry:
+    timestamp: str
+    tool_name: str
+    params: dict
+    hash: str
+    content: str
+
+    def __str__(self):
+        # Single source of truth for the log line: AuditLogger.log() renders
+        # exactly this, so an entry has one serialization rather than two that
+        # can drift apart. The pipe-delimited shape is human/grep friendly,
+        # which is what the operational log is for. For machine ingestion,
+        # re-serialize the dataclass fields as JSON — the fields are structured
+        # for exactly that, and `hash` is reproducible from them because
+        # log() hashes the same values.
+        return (
+            f"{self.timestamp} | INFO | {self.tool_name} | "
+            f"{json.dumps(self.params, ensure_ascii=False)} | "
+            f"{self.hash} | {self.content}"
+        )
+
+
+class AuditLogger:
+
+    def __init__(self, log_path: str = "/var/log/oliveSoft/research.log",
+                 logger_name: str = "audit"):
+        self.log_path = log_path
+
+        # Correlation ID. Without it, a run's tool calls are only reconstructable
+        # by timestamp proximity -- and every call in an agent loop shares a
+        # second-scale timestamp, so "what did this one run actually touch?"
+        # becomes guesswork. This is the "correlation IDs that stitch together
+        # orchestrator -> tool call -> downstream" pattern; per-run, not global,
+        # so two concurrent runs stay separable. It rides inside params, which
+        # means it is covered by the entry hash automatically.
+        self.run_id = uuid.uuid4().hex[:12]
+
+        try:
+            Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+        except OSError:
+            pass
+
+        # Unique logger per instance: a shared name broadcasts every record
+        # to ALL of its handlers, so reusing a name with a new path would
+        # silently duplicate (or misroute) lines into the first file.
+        self.logger = logging.getLogger(f"{logger_name}.{id(self):x}")
+        self.logger.setLevel(logging.INFO)
+        self.logger.propagate = False
+        handler = TimedRotatingFileHandler(
+            log_path,
+            when="midnight",
+            backupCount=365,
+            utc=True,
+            encoding="utf-8",
+        )
+        handler.suffix = "%Y-%m-%d"
+        handler.setFormatter(logging.Formatter("%(message)s"))
+        self.logger.addHandler(handler)
+
+    @staticmethod
+    def _sha256(s: str) -> str:
+        return hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+    def log(self, tool_name: str, params: Optional[dict] = None, raw_content: str = "") -> None:
+
+        safe_params = _redact_params(params or {})
+        # setdefault, not overwrite: a caller re-auditing a prior run can pin the
+        # original run_id, but the common case is "this run's id".
+        safe_params.setdefault("run_id", self.run_id)
+        # Cap the raw text first (so the truncation count describes what was
+        # actually seen), then escape it onto a single line before it is
+        # hashed or written. Untrusted content must never be able to add a line
+        # to a tamper-evident log.
+        content = _one_line(_cap_content(raw_content or ""))
+        # isoformat() already carries the +00:00 offset — no extra "Z" suffix.
+        timestamp = datetime.now(timezone.utc).isoformat()
+
+        # Tamper-evidence: the hash covers the full stored entry, not just
+        # the raw snippet, and it is written into the log line itself.
+        canonical = json.dumps({
+            "timestamp": timestamp,
+            "tool_name": tool_name,
+            "params": safe_params,
+            "content": content,
+        }, sort_keys=True, ensure_ascii=False)
+        entry_hash = self._sha256(canonical)
+
+        entry = AuditEntry(
+            timestamp=timestamp,
+            tool_name=tool_name,
+            params=safe_params,
+            content=content,
+            hash=entry_hash,
+        )
+
+        # Rendered by the entry itself — one serialization, not two.
+        self.logger.info("%s", entry)

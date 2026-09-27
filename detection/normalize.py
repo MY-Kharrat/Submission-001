@@ -13,7 +13,7 @@ import uuid
 from datetime import date, datetime, timezone
 
 from shared.schemas import CAPABILITY_TAXONOMY, Tender
-from detection import store
+from shared import store
 from detection.llm import llm_call
 
 RAW_TEXT_MAX_CHARS = 20_000

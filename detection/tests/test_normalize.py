@@ -7,7 +7,7 @@ from httpx import ASGITransport, AsyncClient
 
 os.environ["INTERNAL_SERVICE_TOKEN"] = "test-token"
 
-from detection import store
+from shared import store
 from detection.main import app
 from detection.normalize import (
     RAW_TEXT_MAX_CHARS,
