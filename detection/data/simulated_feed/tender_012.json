@@ -1,14 +1,14 @@
 {
   "id": "tender-012",
-  "title": "Predictive Analytics and AI Pipeline Integration",
-  "issuer": "Horizon Healthcare",
-  "deadline": "2026-12-15",
-  "raw_text": "Horizon Healthcare requests AI integration consulting services to build predictive patient readmission models and integrate machine learning pipelines with electronic health record (EHR) systems. Vendor must possess HL7/FHIR interoperability expertise.",
+  "title": "Public Statistics Data Platform and Open Data Portal",
+  "issuer": "National Statistics Directorate, Republic of Valdemar",
+  "deadline": "2026-10-17",
+  "raw_text": "The National Statistics Directorate, Republic of Valdemar, collects 1,400 statistical series across agriculture, transport, and demographics. Submission is by spreadsheet from 300 reporting units, then hand-validated, which takes nine days. We require a public statistics data platform on GCP with a BigQuery warehouse for validated series, Snowflake for the statistical model outputs, and a public open data portal over the de-identified subset. Validation must enforce a submission specification and reject non-conforming files with a specific error, not silently coerce them. A de-identification review must be documented and approved before any series is published. Every published series requires full lineage back to its submitting unit.",
   "source": "simulated_feed",
   "requirements": [
-    "Machine learning pipeline design and integration",
-    "Predictive analytics model development for clinical data",
-    "HL7/FHIR EHR data pipeline integration",
-    "Model governance and drift monitoring configuration"
+    "BigQuery warehouse for validated statistical series on GCP",
+    "Snowflake modelling of statistical outputs with full lineage to submitting unit",
+    "Submission specification enforcement rejecting non-conforming files with specific errors",
+    "Documented and approved de-identification review before publication"
   ]
 }

@@ -1,14 +1,8 @@
 {
   "id": "tender-013",
-  "title": "Red Team Adversarial Emulation and Security Audit",
-  "issuer": "Apex Defense Tech",
-  "deadline": "2026-11-28",
-  "raw_text": "Apex Defense Tech is soliciting proposals for a full-scope red team security assessment and physical/digital penetration testing engagement. The target environment includes air-gapped dev labs, active directory infrastructure, and internal C2 detection posture.",
-  "source": "simulated_feed",
-  "requirements": [
-    "Adversarial red team emulation and penetration testing",
-    "Active Directory and C2 security assessment",
-    "SOC detection and incident response capability evaluation",
-    "Executive debriefing and mitigation roadmap"
-  ]
+  "title": "Fleet Telematics Integration and Driver Application Rollout",
+  "issuer": "Vanterra Minerals SA",
+  "deadline": "2026-11-11",
+  "raw_text": "Vanterra Minerals SA operates a haulage fleet across four depots and has no visibility of vehicle position, fuel use, or driver hours. We require api integration between our telematics provider and the maintenance and fuel systems, so that vehicle events land in the systems that act on them rather than in a separate portal nobody reconciles. Alongside the integration, a driver-facing application is required for proof of delivery and electronic logbook capture, which must work in poor connectivity. The application must support the driver's local language. Deployment is to 260 vehicles over a three-month window with no interruption to dispatch during cutover. We expect the supplier to specify what happens when a telematics provider is offline for more than an hour, rather than assuming it will not happen.",
+  "source": "simulated_feed"
 }

@@ -1,15 +1,14 @@
 {
   "id": "tender-002",
-  "title": "Internal HR Portal Development",
-  "issuer": "GreenLeaf Industries",
-  "deadline": "2026-12-01",
-  "raw_text": "GreenLeaf Industries requires a custom software development partner to build an internal HR portal. The application should handle employee onboarding, leave management, and performance tracking. We prefer a modern React frontend with a Python backend. Must integrate with our existing Active Directory for SSO.",
+  "title": "Talent and Payroll Data Pipeline Modernisation",
+  "issuer": "Nordvale Logistics Group",
+  "deadline": "2026-12-04",
+  "raw_text": "Nordvale Logistics Group currently extracts workforce data nightly from a legacy SQL Server estate into spreadsheets. We are replacing this with a governed ETL pipeline. The work covers building a Talend pipeline for applicant tracking system data, migrating existing SSIS packages, and exposing warehouse-ready tables. We need incremental loads, not full reloads, and a reconciliation report that identifies drift between the legacy extracts and the new pipeline. Failure of any source must not truncate a load.",
   "source": "simulated_feed",
   "requirements": [
-    "Employee onboarding workflow module",
-    "Leave management with approval chains",
-    "Performance tracking dashboard",
-    "Active Directory SSO integration",
-    "React frontend with Python backend"
+    "Talend ETL pipeline over applicant tracking system data",
+    "SSIS package migration onto the new platform",
+    "Incremental load strategy with partial-failure tolerance",
+    "Reconciliation report detecting drift between legacy and new extracts"
   ]
 }

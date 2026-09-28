@@ -1,14 +1,14 @@
 {
   "id": "tender-005",
-  "title": "Network Penetration Testing and Vulnerability Assessment",
-  "issuer": "MedHealth Systems",
-  "deadline": "2026-11-30",
-  "raw_text": "MedHealth Systems requires a thorough penetration testing engagement covering our internal network, cloud infrastructure on AWS, and medical device communication protocols. The vendor must hold OSCP or equivalent certifications. HIPAA compliance considerations must be documented. Final deliverable is an executive summary plus detailed technical findings with proof-of-concept demonstrations for critical and high severity findings.",
+  "title": "Real-Time Order Event Streaming Platform",
+  "issuer": "Calderon Fashion Group",
+  "deadline": "2026-12-12",
+  "raw_text": "Calderon Fashion Group processes roughly 90,000 orders daily across 11 markets and currently settles them through nightly batch. We require a real-time streaming layer, with Kafka carrying order events from commerce and warehouse systems, landing in a Databricks lakehouse, and serving a consolidated view. Late-arriving and out-of-order events must be handled explicitly rather than dropped. The platform scope covers ingestion, modelling, and operational monitoring of the pipelines themselves. Market-currency normalisation and returns are in scope; downstream finance system replacement is not.",
   "source": "simulated_feed",
   "requirements": [
-    "Internal network and AWS cloud penetration testing",
-    "OSCP or equivalent security certifications required",
-    "HIPAA compliance documentation and risk mapping",
-    "Technical report with PoC for critical/high severity findings"
+    "Kafka ingestion of order events from commerce and warehouse systems",
+    "Databricks lakehouse modelling with explicit late-event handling",
+    "Market-currency normalisation and returns treatment",
+    "Operational monitoring of pipeline health, excluding downstream finance replacement"
   ]
 }

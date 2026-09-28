@@ -1,14 +1,14 @@
 {
   "id": "tender-010",
-  "title": "Mobile Application and Backend Microservices Development",
-  "issuer": "Metro Transit Authority",
-  "deadline": "2026-12-05",
-  "raw_text": "Metro Transit Authority invites proposals for custom software development of a cross-platform passenger ticketing mobile app and cloud-native backend microservices. Key requirements include real-time GPS tracking integration, secure payment processing, and high-concurrency offline sync.",
+  "title": "Trademark Similarity Detection and Prior-Art Crawler",
+  "issuer": "Ministry of Justice, Republic of Valdemar",
+  "deadline": "2026-11-21",
+  "raw_text": "The Ministry of Justice, Republic of Valdemar, receives 18,000 trademark and patent filings annually and currently assesses similarity to existing registrations manually by two examiners per application. We require a similarity detection system that flags candidate conflicting marks and prior art at submission time. Word marks require natural language processing to strip goods and services descriptions down to comparable concepts before matching, since applicants word the same class very differently. The system must handle image marks and word marks, apply national and international class codes, and return a ranked candidate list with the matched basis, not just a similarity number. Every automated flag must be reviewable and reversible by an examiner with the reasoning shown. Appeals against a rejection are frequent, so the full decision trail must be auditable by an external panel.",
   "source": "simulated_feed",
   "requirements": [
-    "Cross-platform mobile application development (iOS & Android)",
-    "Backend microservices architecture implementation",
-    "Real-time geolocation tracking API integration",
-    "PCI-DSS compliant payment gateway integration"
+    "Similarity detection across image marks and word marks",
+    "National and international class code handling",
+    "Ranked candidate list exposing the matched basis, not a bare score",
+    "Auditable decision trail sufficient for external appeal review"
   ]
 }

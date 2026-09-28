@@ -1,15 +1,14 @@
 {
   "id": "tender-003",
-  "title": "CI/CD Pipeline Automation for Microservices",
-  "issuer": "FinServ Solutions",
-  "deadline": "2026-10-20",
-  "raw_text": "FinServ Solutions seeks expertise in automation and tooling to build a robust CI/CD pipeline for our microservices architecture. Current stack includes Kubernetes, GitLab, and ArgoCD. We need automated testing gates, deployment rollback mechanisms, and monitoring integration with Datadog. Security scanning must be integrated into the pipeline.",
+  "title": "Executive HR Analytics and Workforce Reporting",
+  "issuer": "Helvetia Industrial AG",
+  "deadline": "2026-11-28",
+  "raw_text": "Helvetia Industrial AG wants a single executive view of workforce cost, attrition, and time-to-fill, currently spread across six divisional reporting packs built in different tools. We require a governed semantic model and a Power BI reporting layer replacing those packs, with consistent KPI definitions agreed with HR leadership. Historical comparison across three fiscal years is required. Row-level security must ensure divisional HR managers see only their own division. The model is built on a curated warehouse; the reporting work is the engagement scope, not the warehouse build.",
   "source": "simulated_feed",
   "requirements": [
-    "CI/CD pipeline design for Kubernetes microservices",
-    "Automated testing gates with quality thresholds",
-    "Deployment rollback automation",
-    "Datadog monitoring integration",
-    "Security scanning in pipeline"
+    "Power BI reporting layer replacing six divisional reporting packs",
+    "Governed semantic model with KPI definitions signed off by HR leadership",
+    "Three-year historical comparison",
+    "Row-level security scoped to divisional HR managers"
   ]
 }

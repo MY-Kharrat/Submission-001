@@ -1,14 +1,14 @@
 {
   "id": "tender-009",
-  "title": "Cloud Infrastructure Security Audit and Penetration Testing",
-  "issuer": "Vanguard Biotech",
-  "deadline": "2026-11-20",
-  "raw_text": "Vanguard Biotech seeks an accredited cyber security vendor to conduct a cloud penetration testing and vulnerability assessment across Azure environments. Scope includes Kubernetes cluster security audit, IAM policy evaluation, and API security testing.",
+  "title": "Automated Visual Inspection for Textile Quality Control",
+  "issuer": "Calderon Fashion Group",
+  "deadline": "2026-12-19",
+  "raw_text": "Calderon Fashion Group inspects 40,000 finished garments weekly against an eleven-point defect standard, using manual inspection at four factories. We require computer vision automated visual inspection on the production line to catch the seven defect classes responsible for most returns: fabric faults, stitching failure, colour deviation, print misalignment, button and trim absence, measurement deviation, and labelling error. False negatives on safety-critical defects must be prioritised over false positives. The system runs on edge hardware with limited connectivity, so inference must work offline and sync opportunistically. Ground truth for training is our existing inspector decisions, which are known to be inconsistent and will need adjudication.",
   "source": "simulated_feed",
   "requirements": [
-    "Azure cloud infrastructure penetration testing",
-    "Kubernetes security assessment and RBAC audit",
-    "REST and GraphQL API penetration testing",
-    "Remediation guidance and re-test verification"
+    "Computer vision inspection covering the seven highest-return defect classes",
+    "False-negative bias on safety-critical defects",
+    "Edge inference with offline operation and opportunistic sync",
+    "Training ground truth adjudication from inconsistent historical inspector decisions"
   ]
 }
