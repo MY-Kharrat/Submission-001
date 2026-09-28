@@ -18,23 +18,48 @@ from detection.llm import llm_call
 
 RAW_TEXT_MAX_CHARS = 20_000
 
+# Keyphrases per service line, drawn from the tools OliveSoft publishes against
+# each line. Declaration order here is not the tie-break authority — CAPABILITY_TAXONOMY
+# is, and the drift guard below keeps the two key sets identical.
 SECTOR_KEYPHRASES: dict[str, list[str]] = {
-    "Security Assessment & Penetration Testing": [
-        "penetration testing", "pen test", "pentest", "vulnerability assessment",
-        "security audit", "owasp", "security assessment", "soc2", "iso 27001"
+    "Data Integration": [
+        "mulesoft", "talend", "ssis", "boomi", "workato", "n8n",
+        "data integration", "integration platform", "api integration",
+        "system integration", "erp integration", "crm integration",
+        "etl", "elt", "esb", "middleware",
     ],
-    "Custom Software Development": [
-        "custom software", "software development", "web application development",
-        "full stack", "backend development", "frontend development", "custom application"
+    "AI Development": [
+        "artificial intelligence", "machine learning", "deep learning", "neural network",
+        "natural language processing", "nlp", "computer vision", "generative ai",
+        "large language model", "llm", "retrieval augmented generation", "rag",
+        "chatbot", "conversational ai", "predictive analytics", "predictive model",
+        "forecasting", "demand prediction", "anomaly detection", "text classification",
+        "text mining", "mlops",
     ],
-    "Automation & Tooling": [
-        "automation", "workflow automation", "ci/cd", "devops", "process automation", "rpa"
+    "BI & Dashboarding": [
+        "power bi", "tableau", "qlik", "qlik sense", "looker studio", "business intelligence",
+        "dashboard", "dashboards", "semantic model", "data visualization",
+        "data visualisation", "kpi", "reporting layer",
     ],
-    "Data/AI Integration Consulting": [
-        "ai integration", "data integration", "machine learning", "llm", "rag",
-        "artificial intelligence", "data pipeline", "analytics platform"
-    ]
+    "Salesforce Ecosystem": [
+        "salesforce", "sales cloud", "service cloud", "marketing cloud", "commerce cloud",
+        "crm analytics", "crm", "customer relationship management",
+    ],
+    "Data Platform": [
+        "snowflake", "databricks", "kafka", "bigquery", "azure data", "azure synapse",
+        "gcp", "google cloud", "data platform", "data warehouse", "data lake",
+        "lakehouse", "data lakehouse", "cloud data", "analytics platform",
+    ],
 }
+
+if set(SECTOR_KEYPHRASES) != set(CAPABILITY_TAXONOMY):
+    _missing = sorted(set(CAPABILITY_TAXONOMY) - set(SECTOR_KEYPHRASES))
+    _extra = sorted(set(SECTOR_KEYPHRASES) - set(CAPABILITY_TAXONOMY))
+    raise RuntimeError(
+        "SECTOR_KEYPHRASES and CAPABILITY_TAXONOMY have drifted apart. "
+        f"No keyphrases for: {_missing}. Keyphrases for unknown categories: {_extra}."
+    )
+
 
 
 class ValidationError(Exception):
@@ -68,7 +93,13 @@ def validate_fields(data: dict) -> None:
 
 
 def tag_sector(raw_text: str, title: str) -> str:
-    """Best-keyphrase-matching category, or 'unknown' when nothing matches."""
+    """
+    Best-keyphrase-matching service line, or 'unknown' when nothing matches.
+
+    Highest score wins. Ties go to whichever category comes first in
+    CAPABILITY_TAXONOMY, so the result depends on the declared taxonomy order
+    and not on the order keyphrases happen to be listed in.
+    """
     text_lower = f"{title} {raw_text}".lower()
     scores: dict[str, int] = {}
 
@@ -84,8 +115,8 @@ def tag_sector(raw_text: str, title: str) -> str:
     if not scores:
         return "unknown"
 
-    best_category, _ = max(scores.items(), key=lambda x: x[1])
-    return best_category
+    precedence = {category: rank for rank, category in enumerate(CAPABILITY_TAXONOMY)}
+    return min(scores, key=lambda category: (-scores[category], precedence[category]))
 
 
 def extract_json_payload(text: str) -> str:

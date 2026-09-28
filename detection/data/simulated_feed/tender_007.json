@@ -1,14 +1,14 @@
 {
   "id": "tender-007",
-  "title": "CI/CD Pipeline and Process Automation Infrastructure",
-  "issuer": "Apex Financial Group",
-  "deadline": "2026-11-05",
-  "raw_text": "Apex Financial requires automated workflow and CI/CD pipeline modernization across 50+ microservices. The solution must implement GitOps deployment patterns, automated security scanning integration, infrastructure-as-code scripting, and developer platform tooling.",
+  "title": "Demand Forecasting for Industrial Raw Materials",
+  "issuer": "Vanterra Minerals SA",
+  "deadline": "2026-10-24",
+  "raw_text": "Vanterra Minerals SA supplies industrial raw materials to 200 B2B customers with highly variable, contract-negotiated demand. Planning is done in spreadsheets against a stale extract, and stockouts on high-value lines are routine. We require machine learning based demand forecasting per material and customer, trained on eight years of order history plus price and seasonality drivers. Forecasts must be explainable enough for buyers to challenge, and must expose a confidence band rather than a point estimate. The project includes integration between our ERP order data and the forecasting output, plus a dashboard in which planners can override a forecast and have the override captured as training signal.",
   "source": "simulated_feed",
   "requirements": [
-    "Automated CI/CD pipeline configuration with GitOps",
-    "Infrastructure as Code automation (Terraform/Ansible)",
-    "Automated security scanning tools integration",
-    "Developer portal and deployment workflow automation"
+    "Machine learning demand forecasting per material and customer",
+    "Explainable forecasts with confidence bands, not point estimates",
+    "ERP order data integration feeding the forecasting pipeline",
+    "Planner override captured as training signal"
   ]
 }

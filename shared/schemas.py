@@ -4,11 +4,16 @@ from typing import Literal
 from pydantic import BaseModel
 
 # Edit here if team skills change detection and agent both import this.
+# These are OliveSoft's five published service lines, in the order they should
+# win a tagging tie (earlier wins). Sector tagging targets work being bought,
+# not the buyer's industry — that is ProspectResearch.sector, derived from the
+# web by the agent and deliberately not constrained by this list.
 CAPABILITY_TAXONOMY: list[str] = [
-    "Security Assessment & Penetration Testing",
-    "Custom Software Development",
-    "Automation & Tooling",
-    "Data/AI Integration Consulting",
+    "Data Integration",
+    "AI Development",
+    "BI & Dashboarding",
+    "Salesforce Ecosystem",
+    "Data Platform",
 ]
 
 

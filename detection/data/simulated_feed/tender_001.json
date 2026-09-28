@@ -1,14 +1,14 @@
 {
   "id": "tender-001",
-  "title": "Web Application Security Assessment",
-  "issuer": "TechCorp International",
-  "deadline": "2026-11-15",
-  "raw_text": "TechCorp International is seeking a qualified vendor to perform a comprehensive security assessment and penetration testing engagement on our customer-facing web applications. Scope includes OWASP Top 10 testing, API security review, and authentication mechanism evaluation. The vendor must provide a detailed report with remediation priorities within 30 days of engagement start.",
+  "title": "Global HRIS Integration Across 11 Countries",
+  "issuer": "Meridian Consumer Goods Group",
+  "deadline": "2026-11-20",
+  "raw_text": "Meridian Consumer Goods Group is consolidating HR data for 4,200 employees across 11 countries. We operate SAP SuccessFactors for core HR, a third-party talent marketplace for contingent staffing, and four separate local payroll systems. We require an integration layer built on MuleSoft to unify these into a single employee record, with master data management so duplicate employees are not created across systems. Payroll interfaces must respect local statutory reporting formats. The integration must be deployed as versioned APIs and documented for our internal IT team, who will maintain it after handover.",
   "source": "simulated_feed",
   "requirements": [
-    "OWASP Top 10 security testing coverage",
-    "API security review for REST and GraphQL endpoints",
-    "Authentication and session management audit",
-    "Detailed remediation report within 30 days"
+    "MuleSoft integration layer unifying SuccessFactors, talent marketplace, and 4 local payroll systems",
+    "Master data management with cross-system duplicate employee prevention",
+    "Statutory payroll reporting formats per country",
+    "Versioned API layer with handover documentation to internal IT"
   ]
 }

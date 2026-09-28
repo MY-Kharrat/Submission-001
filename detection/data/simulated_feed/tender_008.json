@@ -1,14 +1,14 @@
 {
   "id": "tender-008",
-  "title": "Enterprise LLM RAG Pipeline and Data Integration",
-  "issuer": "Global Logistics Corp",
-  "deadline": "2026-12-10",
-  "raw_text": "Global Logistics Corp is procuring AI integration consulting services to implement an enterprise Retrieval-Augmented Generation (RAG) system over internal operational knowledge bases. The project includes data pipeline engineering, vector database indexing, and LLM fine-tuning/guardrail configuration.",
+  "title": "Grounded Support Assistant for Product and Returns Queries",
+  "issuer": "Beaumont Retail Holdings",
+  "deadline": "2026-11-07",
+  "raw_text": "Beaumont Retail Holdings wants to reduce contact centre volume on product, returns, and store-policy questions that account for roughly 60 percent of inbound contacts. We require a conversational assistant grounded in our own product catalogue, returns policy, and care documentation, built on retrieval augmented generation over an approved corpus. The assistant must not answer from general knowledge: when the corpus does not support an answer it must say so and route to a human agent. Answers require source citations to the document and page used. Evaluation is against 500 historical queries with a hard accuracy floor agreed before build.",
   "source": "simulated_feed",
   "requirements": [
-    "Enterprise RAG architecture implementation",
-    "Data pipeline integration for structured and unstructured documents",
-    "Vector store configuration and semantic search optimization",
-    "AI guardrail and compliance monitoring integration"
+    "Retrieval augmented generation assistant over an approved internal corpus",
+    "Mandatory refusal and human handover when the corpus does not support an answer",
+    "Source citations to document and page for every answer",
+    "Evaluation against 500 historical queries against an agreed accuracy floor"
   ]
 }

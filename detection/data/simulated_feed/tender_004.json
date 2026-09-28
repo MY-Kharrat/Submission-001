@@ -1,15 +1,14 @@
 {
   "id": "tender-004",
-  "title": "AI-Powered Customer Support Chatbot",
-  "issuer": "RetailMax Group",
-  "deadline": "2027-01-15",
-  "raw_text": "RetailMax Group is looking for a consulting partner to integrate AI capabilities into our customer support workflow. The project involves building a RAG-based chatbot that can answer product questions using our knowledge base, with escalation to human agents. Must include analytics dashboard for conversation metrics and continuous learning from agent corrections. Data privacy compliance with GDPR is required.",
+  "title": "Unified Customer 360 Across ERP, Commerce and Support",
+  "issuer": "Beaumont Retail Holdings",
+  "deadline": "2026-10-30",
+  "raw_text": "Beaumont Retail Holdings operates 340 stores, a Cegid ERP instance, and a separate commerce platform, with customer records created independently by each channel and by our contact centre. We need a unified customer record built through system integration across ERP, e-commerce, marketing, and support systems. Identity resolution must match records on email, loyalty number, and postcode where no stable identifier exists. On GCP with BigQuery as the analytical landing zone, we require a single customer view consumable by marketing and by store staff. Consent and opt-out state must propagate to every downstream system within one day.",
   "source": "simulated_feed",
   "requirements": [
-    "RAG-based chatbot with knowledge base integration",
-    "Human agent escalation workflow",
-    "Analytics dashboard for conversation metrics",
-    "GDPR-compliant data handling",
-    "Continuous learning from agent corrections"
+    "System integration unifying Cegid ERP, commerce, marketing, and support records",
+    "Identity resolution on email, loyalty number, and postcode fallback",
+    "BigQuery analytical landing zone on GCP",
+    "Consent and opt-out propagation to downstream systems within 24 hours"
   ]
 }

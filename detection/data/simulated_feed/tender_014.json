@@ -1,14 +1,15 @@
 {
   "id": "tender-014",
-  "title": "Legacy Core Banking Modernization and Microservices",
-  "issuer": "Heritage Credit Union",
-  "deadline": "2026-12-01",
-  "raw_text": "Heritage Credit Union requires custom software development services to replace legacy COBOL core banking workflows with modern cloud-native microservices. Deliverables include real-time transaction processing engines, audit logging services, and admin portal UI.",
+  "title": "Catering and Facilities Management Services Framework",
+  "issuer": "St. Adalbert Regional Health Trust",
+  "deadline": "2026-10-31",
+  "raw_text": "St. Adalbert Regional Health Trust is retendering catering, vending, and soft facilities management across four hospital sites, totalling roughly 1.1 million meals per month. The framework runs for five years with two break points. Current performance on patient satisfaction is poor and the trust expects measurable improvement. Suppliers must evidence allergen management to current standards, and must meet the trust's ethical sourcing policy. Two sites are operating under an interim arrangement that ends in eleven weeks, so a transition plan is required. Pricing must be transparent and separable by site and by service line. The trust is not seeking a proprietary system as part of this contract.",
   "source": "simulated_feed",
   "requirements": [
-    "Legacy system refactoring and custom software development",
-    "Cloud-native microservices architecture implementation",
-    "High-throughput transaction processing engine",
-    "Role-based administrative portal UI"
+    "Five-year framework with two break points",
+    "Allergen management evidence to current standards",
+    "Ethical sourcing policy compliance",
+    "Transition plan for two sites on an interim arrangement ending in eleven weeks",
+    "Transparent pricing separable by site and service line"
   ]
 }

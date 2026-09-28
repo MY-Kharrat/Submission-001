@@ -1,14 +1,14 @@
 {
   "id": "tender-011",
-  "title": "Robotic Process Automation (RPA) and Invoice Tooling",
-  "issuer": "Northern Energy Utility",
-  "deadline": "2026-11-18",
-  "raw_text": "Northern Energy requires workflow automation tools to digitize paper invoice processing and meter data reconciliation. Vendor will build automated python scripts, OCR extraction tools, and ERP integration bots to eliminate manual data entry errors.",
+  "title": "Citizen Services CRM and Case Analytics",
+  "issuer": "Ministry of Interior, Republic of Valdemar",
+  "deadline": "2026-12-05",
+  "raw_text": "The Ministry of Interior, Republic of Valdemar, receives 240,000 citizen service cases yearly through 30 municipal offices, tracked in a spreadsheet per office with no national view. We require a CRM Analytics implementation on an existing Salesforce platform to give central oversight of case volume, resolution time, and backlog by office, feeding a monthly reporting pack to the minister. Offices must be able to continue working offline during connectivity loss and reconcile on reconnect. Data residency for citizen records is restricted to infrastructure we operate, and the solution must not replicate that data into any external analytics service.",
   "source": "simulated_feed",
   "requirements": [
-    "Workflow automation tools development",
-    "OCR document extraction and validation engine",
-    "Automated SAP ERP integration scripts",
-    "Exception dashboard and monitoring interface"
+    "CRM Analytics on the existing Salesforce platform for central case oversight",
+    "Monthly reporting pack covering volume, resolution time, and backlog by office",
+    "Offline working capability in 30 municipal offices with reconciliation on reconnect",
+    "Citizen record data residency restricted to ministry-operated infrastructure"
   ]
 }

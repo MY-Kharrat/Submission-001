@@ -1,14 +1,14 @@
 {
   "id": "tender-015",
-  "title": "Comprehensive Strategic Technology Modernization RFP",
-  "issuer": "Summit County Government",
-  "deadline": "2026-12-20",
-  "raw_text": "Summit County Government issues this general RFP for technology modernization across county operations. The selected contractor will evaluate existing IT infrastructure, formulate digital transformation strategy, and deliver technical execution roadmaps.",
+  "title": "Unified Customer 360 Across ERP, Commerce and Support",
+  "issuer": "Beaumont Retail Holdings",
+  "deadline": "2026-11-02",
+  "raw_text": "Repost of the customer 360 integration, extended to cover the two additional regional banner groups acquired since the original notice was published. Scope and constraints are unchanged from the original notice: identity resolution across ERP, e-commerce, marketing, and support, on GCP with BigQuery as the analytical landing zone, with consent propagation to all downstream systems within one day. This entry exists to demonstrate that the detection service treats a re-announced tender as the same tender rather than a second one.",
   "source": "simulated_feed",
   "requirements": [
-    "Comprehensive IT environment infrastructure assessment",
-    "Digital transformation strategy formulation",
-    "Technical modernization execution roadmap",
-    "Stakeholder change management support"
+    "System integration unifying Cegid ERP, commerce, marketing, and support records",
+    "Identity resolution on email, loyalty number, and postcode fallback",
+    "BigQuery analytical landing zone on GCP",
+    "Consent and opt-out propagation to downstream systems within 24 hours"
   ]
 }

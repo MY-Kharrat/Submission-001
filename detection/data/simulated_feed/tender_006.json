@@ -1,14 +1,14 @@
 {
   "id": "tender-006",
-  "title": "Custom Web Application Development for Citizen Portal",
-  "issuer": "City of Austin",
-  "deadline": "2026-10-15",
-  "raw_text": "The City of Austin is seeking a qualified vendor for custom software development to modernize our public services web portal. The project requires full stack web application development using modern frameworks, accessibility compliance (WCAG 2.1 AA), and integration with legacy municipal REST APIs.",
+  "title": "Service Cloud Contact Centre and Case Management Overhaul",
+  "issuer": "Aldergate Insurance plc",
+  "deadline": "2026-11-14",
+  "raw_text": "Aldergate Insurance plc is replacing an on-premises case management system used by 600 contact centre staff across two sites. The engagement covers implementation of Salesforce Service Cloud, migration of 14 years of open and closed case history, and redesign of the adviser workspace. Telephone, email, and web channels must be unified into one queue with routing by product and policy tier. An integration is required to our policy administration system so case status and policy data stay consistent. We expect a phased cutover with a parallel-run period, and change management training for all advisers.",
   "source": "simulated_feed",
   "requirements": [
-    "Custom full stack web application development",
-    "WCAG 2.1 AA web accessibility compliance",
-    "RESTful API integration with legacy databases",
-    "Responsive UI/UX implementation for desktop and mobile"
+    "Salesforce Service Cloud implementation with unified omnichannel queue",
+    "Migration of 14 years of open and closed case history",
+    "Integration to policy administration for case and policy consistency",
+    "Phased cutover, parallel-run period, and adviser change management"
   ]
 }
