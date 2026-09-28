@@ -134,7 +134,7 @@ class Runner:
 
         # Sector disagreement is recorded in notes (required behavior).
         sector_values = [f.value for f in self.accumulated_facts.get("sector", [])]
-        distinct_sectors = sorted(set(sector_values))
+        distinct_sectors = set(sector_values)
         if len(distinct_sectors) > 1:
             notes = "Sector disagreement across sources: " + "; ".join(distinct_sectors)
         else:
@@ -150,7 +150,7 @@ class Runner:
             key_partners=key_partners,
             notes=notes,
             confidence=confidence,  # type: ignore[arg-type]
-            sources=sorted(self.sources),
+            sources=self.sources,
         )
         self.save_research(tid, pr)
         return pr
