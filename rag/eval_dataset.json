@@ -1,0 +1,80 @@
+[
+  {
+    "id": "cv-fastapi-backend",
+    "query": "Backend engineer experienced with FastAPI, Java, CI/CD and workflow automation",
+    "doc_type": "cv",
+    "relevant_ids": ["CV-0007"]
+  },
+  {
+    "id": "cv-react-fullstack",
+    "query": "Full-stack developer with React, REST API and infrastructure as code experience",
+    "doc_type": "cv",
+    "relevant_ids": ["CV-0006"]
+  },
+  {
+    "id": "cv-rag-data",
+    "query": "Data engineer experienced with Python, LlamaIndex and ChromaDB for a RAG platform",
+    "doc_type": "cv",
+    "relevant_ids": ["CV-0012"]
+  },
+  {
+    "id": "cv-kubernetes-cloud",
+    "query": "Cloud architecture profile with Kubernetes, TypeScript and REST APIs",
+    "doc_type": "cv",
+    "relevant_ids": ["CV-0020"]
+  },
+  {
+    "id": "project-banking-modernization",
+    "query": "Banking legacy modernization using Terraform, machine learning and workflow automation",
+    "doc_type": "project",
+    "relevant_ids": ["PRJ-0004"]
+  },
+  {
+    "id": "project-healthcare-ai",
+    "query": "Healthcare AI document processing delivered with AWS and Azure",
+    "doc_type": "project",
+    "relevant_ids": ["PRJ-0012"]
+  },
+  {
+    "id": "project-retail-automation",
+    "query": "Retail workflow automation with Python, MongoDB and ChromaDB",
+    "doc_type": "project",
+    "relevant_ids": ["PRJ-0008"]
+  },
+  {
+    "id": "project-mobile-real-estate",
+    "query": "Real estate mobile application for field agents using Flutter and Swift",
+    "doc_type": "project",
+    "relevant_ids": ["PRJ-0006"]
+  },
+  {
+    "id": "tool-enterprise-rag",
+    "query": "Evidence-grounded enterprise knowledge assistant with pgvector, source citations and prompt injection defenses",
+    "doc_type": "tool",
+    "relevant_ids": ["TOOL-003"]
+  },
+  {
+    "id": "tool-regulated-healthcare",
+    "query": "Healthcare interoperability using HL7 FHIR with consent, audit trail and GDPR controls",
+    "doc_type": "tool",
+    "relevant_ids": ["TOOL-006"]
+  },
+  {
+    "id": "olivesoft-olia-agentic-rag",
+    "query": "OliveSoft agentic AI platform with FastAPI microservices, RAG, React and multiple LLM providers",
+    "doc_type": "project",
+    "relevant_ids": ["olivesoft-027"]
+  },
+  {
+    "id": "olivesoft-odoo-n8n-migration",
+    "query": "Odoo ERP migration from BoondManager with PostgreSQL, custom Python modules and n8n workflows",
+    "doc_type": "project",
+    "relevant_ids": ["olivesoft-025"]
+  },
+  {
+    "id": "olivesoft-iso27001",
+    "query": "ISO 27001 Annex A gap assessment and ISMS policy improvement",
+    "doc_type": "project",
+    "relevant_ids": ["olivesoft-036"]
+  }
+]

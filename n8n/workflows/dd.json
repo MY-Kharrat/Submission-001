@@ -1,0 +1,562 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "olivesoft/tenders/process",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "a140f9b9-df87-44ae-a7a2-deba7b76e57a",
+      "name": "Receive Tender Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1408,
+        128
+      ],
+      "webhookId": "0d415b58-93b4-4e39-8d65-e626b629d696"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tenders =  [\n  {\n    id: \"tender-001\",\n    title: \"Global HRIS Integration Across 11 Countries\",\n    issuer: \"Meridian Consumer Goods Group\",\n    deadline: \"2026-11-20\",\n    raw_text: \"Meridian Consumer Goods Group is consolidating HR data for 4,200 employees across 11 countries. We operate SAP SuccessFactors for core HR, a third-party talent marketplace for contingent staffing, and four separate local payroll systems. We require an integration layer built on MuleSoft to unify these into a single employee record, with master data management so duplicate employees are not created across systems. Payroll interfaces must respect local statutory reporting formats. The integration must be deployed as versioned APIs and documented for our internal IT team, who will maintain it after handover.\",\n    source: \"simulated_feed\",\n    requirements: [\n      \"MuleSoft integration layer unifying SuccessFactors, talent marketplace, and 4 local payroll systems\",\n      \"Master data management with cross-system duplicate employee prevention\",\n      \"Statutory payroll reporting formats per country\",\n      \"Versioned API layer with handover documentation to internal IT\"\n    ]\n  },\n  \n];\n\nreturn tenders.map(tender => ({\n  json: {\n    ...tender\n  },\n}));\n"
+      },
+      "id": "05a57e40-5b57-4e95-b681-65010f74f2be",
+      "name": "Validate Tender and Configure URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -880,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:8000/tenders/seed",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Internal-Token",
+              "value": "super-token"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "0b45e057-8e10-4796-b69b-f2447f7341fb",
+      "name": "1 - Ingest and Normalize Tender",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -848,
+        128
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:8002/research/tender-id",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "12e6af32-74e9-4c11-82dc-eddc26044f25",
+      "name": "2 - Run Prospect Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -592,
+        128
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "jsCode": "const tender = $('1 - Ingest and Normalize Tender').first().json;\nconst research = $json;\nconst requirements = Array.isArray(tender.requirements) ? tender.requirements : [];\n\nconst queryParts = [\n  tender.title,\n  tender.sector,\n  ...requirements,\n  research.sector,\n  ...(research.domain_requirements ?? []),\n  ...(research.past_projects ?? []),\n  ...(research.key_partners ?? []),\n].filter(Boolean);\n\nreturn [{\n  json: {\n    tender,\n    research,\n    rag_query: queryParts.join('. ').slice(0, 10000),\n    config: $('Validate Tender and Configure URLs').first().json.config,\n  },\n}];"
+      },
+      "id": "65b6fe06-607f-40e5-9bc6-f0c1396f48ef",
+      "name": "Prepare RAG Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:8001/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.rag_query, top_k: 5, doc_type: 'cv', similarity_threshold: 0.20 }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "50f708af-2188-4922-ac19-5252be76d8e2",
+      "name": "3A - Match CVs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        -16
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = $input.all().flatMap((item) => Array.isArray(item.json) ? item.json : [item.json]);\nconst matches = values.filter((value) => value && value.id);\nreturn [{ json: { cv_matches: matches } }];"
+      },
+      "id": "880244ad-7ceb-4cb4-b654-c44003aa20ef",
+      "name": "Collect CV Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:8001/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.rag_query, top_k: 5, doc_type: 'project', similarity_threshold: 0.20 }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "6b04c505-4e35-4e22-b023-3862d9b8c2f7",
+      "name": "3B - Match Projects",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        272
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = $input.all().flatMap((item) => Array.isArray(item.json) ? item.json : [item.json]);\nconst matches = values.filter((value) => value && value.id);\nreturn [{ json: { project_matches: matches } }];"
+      },
+      "id": "b50b78f2-1db7-48b4-af06-d817802ddddf",
+      "name": "Collect Project Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "38076e53-8f3c-487d-b4d4-5ecfd2b7560d",
+      "name": "Merge RAG Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        480,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const context = $('Prepare RAG Context').first().json;\nconst tender = context.tender;\nconst research = context.research;\nconst cvMatches = Array.isArray($json.cv_matches) ? $json.cv_matches : [];\nconst projectMatches = Array.isArray($json.project_matches) ? $json.project_matches : [];\nconst toolMatches = Array.isArray($json.tool_matches) ? $json.tool_matches : [];\nconst allMatches = [...cvMatches, ...projectMatches, ...toolMatches];\n\nconst tokens = (text) => new Set(String(text ?? '').toLowerCase().match(/[a-z0-9+#.]{3,}/g) ?? []);\nconst coverageFor = (requirement, match) => {\n  const required = tokens(requirement);\n  const evidence = tokens(`${match.content ?? ''} ${JSON.stringify(match.metadata ?? {})}`);\n  const overlap = required.size ? [...required].filter((token) => evidence.has(token)).length / required.size : 0;\n  const semantic = Math.max(0, Math.min(1, Number(match.similarity ?? 0)));\n  return Math.round((semantic * 0.65 + overlap * 0.35) * 100);\n};\n\nconst requirementsMatrix = (tender.requirements ?? []).map((requirement) => {\n  const ranked = allMatches\n    .map((match) => ({ match, score: coverageFor(requirement, match) }))\n    .sort((a, b) => b.score - a.score);\n  const best = ranked[0];\n  const score = best?.score ?? 0;\n  return {\n    requirement,\n    coverage_score: score,\n    status: score >= 70 ? 'strong' : score >= 45 ? 'partial' : 'gap',\n    best_asset: best ? {\n      record_id: best.match.metadata?.record_id ?? best.match.id,\n      doc_type: best.match.doc_type,\n      similarity: best.match.similarity,\n      evidence: best.match.content,\n    } : null,\n  };\n});\n\nconst overallCoverage = requirementsMatrix.length\n  ? Math.round(requirementsMatrix.reduce((sum, row) => sum + row.coverage_score, 0) / requirementsMatrix.length)\n  : 0;\nconst gaps = requirementsMatrix.filter((row) => row.status === 'gap');\nconst daysToDeadline = Math.ceil((Date.parse(`${tender.deadline}T00:00:00Z`) - Date.now()) / 86400000);\nconst risks = [];\nif (research.confidence === 'low') risks.push('Prospect research confidence is low and needs human verification.');\nif (!cvMatches.length) risks.push('No matching CV was retrieved.');\nif (!projectMatches.length) risks.push('No matching project reference was retrieved.');\nif (!toolMatches.length) risks.push('No matching OliveSoft capability was retrieved.');\nif (!research.estimated_budget) risks.push('No sourced procurement budget was found; validate the commercial range with the client.');\nif (!(research.competitor_insights ?? []).length) risks.push('No sourced incumbent or competitor signal was found.');\nif (gaps.length) risks.push(`${gaps.length} tender requirement(s) have weak internal coverage.`);\nif (daysToDeadline < 14) risks.push(`Deadline is close (${daysToDeadline} day(s) remaining).`);\n\nconst recommendedTeam = cvMatches.map((match) => ({\n  cv_id: match.metadata?.record_id ?? match.id,\n  person: match.metadata?.person ?? null,\n  role: match.metadata?.role ?? null,\n  skills: match.metadata?.skills ?? [],\n  similarity: match.similarity,\n  evidence: match.content,\n}));\nconst relevantProjects = projectMatches.map((match) => ({\n  project_id: match.metadata?.record_id ?? match.id,\n  sector: match.metadata?.client_sector ?? null,\n  tech_stack: match.metadata?.tech_stack ?? [],\n  similarity: match.similarity,\n  evidence: match.content,\n}));\n\nreturn [{\n  json: {\n    status: 'completed',\n    orchestration_version: '1.2.0',\n    generated_at: new Date().toISOString(),\n    tender,\n    prospect_research: research,\n    rag_matches: { cvs: cvMatches, projects: projectMatches, capabilities: toolMatches },\n    requirements_matrix: requirementsMatrix,\n    overall_coverage_score: overallCoverage,\n    proposal_brief: {\n      title: `Commercial Proposal - ${tender.title}`,\n      client: tender.issuer,\n      executive_summary: `OliveSoft proposes a tailored delivery approach for ${tender.issuer}'s ${tender.title}.`,\n      opportunity_context: {\n        sector: research.sector ?? tender.sector,\n        estimated_revenue: research.estimated_revenue ?? null,\n        estimated_budget: research.estimated_budget ?? null,\n        competitor_insights: research.competitor_insights ?? [],\n        key_partners: research.key_partners ?? [],\n        domain_requirements: research.domain_requirements ?? [],\n        matched_capabilities: toolMatches.map((match) => ({\n          tool_id: match.metadata?.record_id ?? match.id,\n          name: match.metadata?.name ?? null,\n          category: match.metadata?.category ?? null,\n          similarity: match.similarity,\n          evidence: match.content,\n        })),\n        sources: research.sources ?? [],\n        research_confidence: research.confidence,\n      },\n      recommended_team: recommendedTeam,\n      relevant_case_studies: relevantProjects,\n      technical_approach: (tender.requirements ?? []).map((requirement, index) => ({\n        phase: index + 1,\n        objective: requirement,\n        coverage: requirementsMatrix[index]?.status ?? 'gap',\n      })),\n      risks,\n      next_actions: [\n        'Sales manager validates research sources and assumptions.',\n        'Commercial owner validates the sourced budget and competitive signals.',\n        'Technical lead confirms the proposed team and availability.',\n        'Proposal owner resolves coverage gaps and commercial parameters.',\n        'Generate the branded PPTX/PDF after human approval.',\n      ],\n    },\n  },\n}];"
+      },
+      "id": "5f8a9046-c6f3-4903-8968-8e38f3730a3a",
+      "name": "Build Matrix and Initial Proposal Brief",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Validate Tender and Configure URLs').first().json.config.proposalUrl.replace(/\\/$/, '') + '/proposals/generate' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "1a32ae0a-df81-48d5-bf51-de628d20e3f8",
+      "name": "4 - Generate PPTX and PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1232,
+        144
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "adea0dc6-4abc-474e-b108-ce1270c7572a",
+      "name": "Return Orchestration Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1456,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=http://localhost:8001/query",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.rag_query, top_k: 5, doc_type: 'tool', similarity_threshold: 0.20 }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "92614416-ad7a-4129-82dd-e29e06899f14",
+      "name": "3C - Match Capabilities",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        528
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = $input.all().flatMap((item) => Array.isArray(item.json) ? item.json : [item.json]);\nconst matches = values.filter((value) => value && value.id);\nreturn [{ json: { tool_matches: matches } }];"
+      },
+      "id": "0b04da38-27dc-44a2-bd53-14fdb7eafe8d",
+      "name": "Collect Capability Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        528
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "026b3d88-67c5-4a07-a38d-4bf39b4db28c",
+      "name": "Merge Capability Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        704,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const tenders = [\n  {\n    id: \"tender-001\",\n    title: \"Global HRIS Integration Across 11 Countries\",\n    issuer: \"Meridian Consumer Goods Group\",\n    deadline: \"2026-11-20\",\n    raw_text: \"Meridian Consumer Goods Group is consolidating...\",\n    source: \"simulated_feed\",\n    requirements: [\n      \"MuleSoft integration layer unifying SuccessFactors...\",\n      // ...\n    ]\n  },\n  \n  // ... remaining 14 entries\n];\n\nreturn tenders.map(t => ({\n  json: {\n    ...t,\n  },\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1104,
+        96
+      ],
+      "id": "91fe8a77-d470-4ff3-b9f4-ceb3e9ee950e",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1376,
+        288
+      ],
+      "id": "bf81e10a-a511-4037-be7e-671e9795e084",
+      "name": "When clicking ‘Execute workflow’"
+    }
+  ],
+  "connections": {
+    "Receive Tender Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Tender and Configure URLs": {
+      "main": [
+        []
+      ]
+    },
+    "1 - Ingest and Normalize Tender": {
+      "main": [
+        [
+          {
+            "node": "2 - Run Prospect Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2 - Run Prospect Research": {
+      "main": [
+        [
+          {
+            "node": "Prepare RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare RAG Context": {
+      "main": [
+        [
+          {
+            "node": "3A - Match CVs",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3B - Match Projects",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3C - Match Capabilities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3A - Match CVs": {
+      "main": [
+        [
+          {
+            "node": "Collect CV Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect CV Matches": {
+      "main": [
+        [
+          {
+            "node": "Merge RAG Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3B - Match Projects": {
+      "main": [
+        [
+          {
+            "node": "Collect Project Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Project Matches": {
+      "main": [
+        [
+          {
+            "node": "Merge RAG Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge RAG Results": {
+      "main": [
+        [
+          {
+            "node": "Merge Capability Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Matrix and Initial Proposal Brief": {
+      "main": [
+        []
+      ]
+    },
+    "4 - Generate PPTX and PDF": {
+      "main": [
+        [
+          {
+            "node": "Return Orchestration Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3C - Match Capabilities": {
+      "main": [
+        [
+          {
+            "node": "Collect Capability Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Capability Matches": {
+      "main": [
+        [
+          {
+            "node": "Merge Capability Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Capability Results": {
+      "main": [
+        [
+          {
+            "node": "Build Matrix and Initial Proposal Brief",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "1 - Ingest and Normalize Tender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "bba867877949a1d0b1554f55a62a88c958561e055d6d5577c43dc3b88fbe9581"
+  }
+}

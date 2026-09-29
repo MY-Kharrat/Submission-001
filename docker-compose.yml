@@ -1,0 +1,140 @@
+name: olivesoft
+
+services:
+  detection:
+    build: .
+    command: ["uvicorn", "detection.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+    environment:
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
+      OLIVESOFT_DB_PATH: /data/olivesoft.db
+    volumes:
+      - olivesoft-data:/data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  research:
+    build: .
+    command: ["uvicorn", "research.main:app", "--host", "0.0.0.0", "--port", "8002"]
+    restart: unless-stopped
+    environment:
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
+      OLIVESOFT_DB_PATH: /data/olivesoft.db
+      RESEARCH_AUDIT_LOG: /data/research.log
+      TAVILY_API_KEY: ${TAVILY_API_KEY:-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}
+      LLM_API_KEY: ${LLM_API_KEY:-AQ.Ab8RN6IutAtkyJw4UZ31HG07V81iMy2lMevOiABfThEmFgHyvw}
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      LLM_MODEL: ${LLM_MODEL:-gemini-2.5-flash}
+      LLM_URL: ${LLM_URL:-https://generativelanguage.googleapis.com/v1beta/openai/chat/completions}
+      MAX_SEARCH_ITERATIONS: ${MAX_SEARCH_ITERATIONS:-7}
+      TOTAL_RUN_TIMEOUT_SECONDS: ${TOTAL_RUN_TIMEOUT_SECONDS:-45}
+      PER_CALL_TIMEOUT_SECONDS: ${PER_CALL_TIMEOUT_SECONDS:-8}
+    volumes:
+      - olivesoft-data:/data
+    ports:
+      - "8002:8002"
+    depends_on:
+      detection:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  rag:
+    build: .
+    command: ["uvicorn", "rag.main:app", "--host", "0.0.0.0", "--port", "8001"]
+    restart: unless-stopped
+    environment:
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
+      SUPABASE_URL: ${SUPABASE_URL:-https://ieoqvhgumbyuhcbfgurl.supabase.co}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-sb_secret_PbkZi90FLObwcEmPUNE7Dg_CRWYNUeP}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      HF_HOME: /models
+    volumes:
+      - model-cache:/models
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # proposal:
+  #   build: .
+  #   command: ["uvicorn", "proposal.main:app", "--host", "0.0.0.0", "--port", "8003"]
+  #   restart: unless-stopped
+  #   environment:
+  #     INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
+  #     PROPOSAL_OUTPUT_DIR: /data/proposals
+  #     PROPOSAL_PUBLIC_BASE_URL: ${PROPOSAL_PUBLIC_BASE_URL:-http://localhost:8003}
+  #     PROPOSAL_SIGNING_KEY: ${PROPOSAL_SIGNING_KEY:?Set PROPOSAL_SIGNING_KEY in .env}
+  #     PROPOSAL_LINK_TTL_SECONDS: ${PROPOSAL_LINK_TTL_SECONDS:-3600}
+  #   volumes:
+  #     - olivesoft-data:/data
+  #   ports:
+  #     - "8003:8003"
+  #   healthcheck:
+  #     test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8003/health', timeout=3)"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
+
+  # n8n:
+  #   image: ${N8N_IMAGE:-n8nio/n8n:2.40.7}
+  #   restart: unless-stopped
+  #   environment:
+  #     N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
+  #     GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Africa/Tunis}
+  #     TZ: ${GENERIC_TIMEZONE:-Africa/Tunis}
+  #     N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+  #     N8N_DIAGNOSTICS_ENABLED: "false"
+  #   volumes:
+  #     - n8n-data:/home/node/.n8n
+  #     - ./n8n/workflows:/files/workflows:ro
+  #   ports:
+  #     - "5678:5678"
+  #   depends_on:
+  #     detection:
+  #       condition: service_healthy
+  #     research:
+  #       condition: service_healthy
+  #     rag:
+  #       condition: service_healthy
+  #     proposal:
+  #       condition: service_healthy
+
+  rag-ingest:
+    build: .
+    profiles: ["tools"]
+    command:
+      - /bin/sh
+      - -c
+      - >-
+        python -m rag.ingest_json --file 'Cvs dataset/fake_cvs.json' --doc_type cv --source-id internal/cvs &&
+        python -m rag.ingest_json --file 'Cvs dataset/fake_projects.json' --doc_type project --source-id internal/projects &&
+        python -m rag.ingest_json --file 'Cvs dataset/olivesoft_projects.json' --doc_type project --record-schema olivesoft --source-id internal/olivesoft-projects &&
+        python -m rag.ingest_json --file 'Cvs dataset/fake_tools.json' --doc_type tool --source-id internal/tools
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL:-https://ieoqvhgumbyuhcbfgurl.supabase.co}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-sb_secret_PbkZi90FLObwcEmPUNE7Dg_CRWYNUeP}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      HF_HOME: /models
+    volumes:
+      - model-cache:/models
+
+volumes:
+  olivesoft-data:
+  model-cache:
+  #n8n-data:

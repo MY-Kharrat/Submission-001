@@ -150,7 +150,7 @@ class Runner:
             key_partners=key_partners,
             notes=notes,
             confidence=confidence,  # type: ignore[arg-type]
-            sources=self.sources,
+            sources=list(self.sources),
         )
         self.save_research(tid, pr)
         return pr
