@@ -1,0 +1,555 @@
+{
+  "name": "OliveSoft - Phase 1 RFP Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const request = $json.body ?? $json;\n\n// Single source of truth for all service endpoints.\nconst config = {\n  detectionUrl: 'http://detection:8000',\n  researchUrl: 'http://research:8002',\n  ragUrl: 'http://rag:8001',\n  proposalUrl: 'http://proposal:8003',\n};\n\nconst required = ['title', 'issuer', 'deadline', 'raw_text'];\nfor (const field of required) {\n  if (typeof request[field] !== 'string' || !request[field].trim()) {\n    throw new Error(`Invalid tender: ${field} must be a non-empty string`);\n  }\n}\nif (!/^\\d{4}-\\d{2}-\\d{2}$/.test(request.deadline) || Number.isNaN(Date.parse(`${request.deadline}T00:00:00Z`))) {\n  throw new Error('Invalid tender: deadline must be a real date in YYYY-MM-DD format');\n}\nif (request.raw_text.length > 20000) {\n  throw new Error('Invalid tender: raw_text exceeds the 20,000 character service limit');\n}\nconst requirements = request.requirements ?? [];\nif (!Array.isArray(requirements) || requirements.some((value) => typeof value !== 'string' || !value.trim())) {\n  throw new Error('Invalid tender: requirements must be an array of non-empty strings');\n}\nconst source = request.source ?? 'manual';\nif (!['manual', 'simulated_feed'].includes(source)) {\n  throw new Error('Invalid tender: source must be manual or simulated_feed');\n}\n\nconst tender = {\n  title: request.title.trim(),\n  issuer: request.issuer.trim(),\n  deadline: request.deadline,\n  raw_text: request.raw_text.trim(),\n  requirements: requirements.map((value) => value.trim()),\n  source,\n};\nif (request.id) tender.id = String(request.id);\nif (request.detected_at) tender.detected_at = String(request.detected_at);\n\nreturn [{ json: { tender, config } }];"
+      },
+      "id": "2b6a7592-da09-404f-a884-4a8767d18f54",
+      "name": "Validate Tender and Configure URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1104,
+        -176
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.config.detectionUrl.replace(/\\/$/, '') + '/tenders/ingest' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.tender) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "cedd7e64-a3cd-4da6-8f0e-e735fc49a245",
+      "name": "1 - Ingest and Normalize Tender",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -912,
+        -128
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1jkrmTCmul0EG6JS",
+          "name": "Header Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Validate Tender and Configure URLs').first().json.config.researchUrl.replace(/\\/$/, '') + '/research/' + encodeURIComponent($json.id) }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {
+          "timeout": 45000
+        }
+      },
+      "id": "52c5bfcf-978f-43e4-ab53-3f8c1c67a0e8",
+      "name": "2 - Run Prospect Research",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -688,
+        -128
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1jkrmTCmul0EG6JS",
+          "name": "Header Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const tender = $('1 - Ingest and Normalize Tender').first().json;\nconst research = $json;\nconst requirements = Array.isArray(tender.requirements) ? tender.requirements : [];\n\nconst queryParts = [\n  tender.title,\n  tender.sector,\n  ...requirements,\n  research.sector,\n  ...(research.domain_requirements ?? []),\n  ...(research.past_projects ?? []),\n  ...(research.key_partners ?? []),\n].filter(Boolean);\n\nreturn [{\n  json: {\n    tender,\n    research,\n    rag_query: queryParts.join('. ').slice(0, 10000),\n    config: $('Validate Tender and Configure URLs').first().json.config,\n  },\n}];"
+      },
+      "id": "38167371-d4fe-400d-9e5b-e383556edd3e",
+      "name": "Prepare RAG Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.config.ragUrl.replace(/\\/$/, '') + '/query' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.rag_query, top_k: 5, doc_type: 'cv', similarity_threshold: 0.20 }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "f3a5cc58-86ac-4366-b65e-3bdfbf49f476",
+      "name": "3A - Match CVs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -80,
+        -240
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1jkrmTCmul0EG6JS",
+          "name": "Header Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = $input.all().flatMap((item) => Array.isArray(item.json) ? item.json : [item.json]);\nconst matches = values.filter((value) => value && value.id);\nreturn [{ json: { cv_matches: matches } }];"
+      },
+      "id": "97b9b30d-5c6b-4552-b748-c349dc0877c9",
+      "name": "Collect CV Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -256
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.config.ragUrl.replace(/\\/$/, '') + '/query' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.rag_query, top_k: 5, doc_type: 'project', similarity_threshold: 0.20 }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "5c05fea4-1485-4cc4-999e-3aca32930a6c",
+      "name": "3B - Match Projects",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -80,
+        -16
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "1jkrmTCmul0EG6JS",
+          "name": "Header Auth account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = $input.all().flatMap((item) => Array.isArray(item.json) ? item.json : [item.json]);\nconst matches = values.filter((value) => value && value.id);\nreturn [{ json: { project_matches: matches } }];"
+      },
+      "id": "26526280-63b5-4ae8-b956-510caefb58d3",
+      "name": "Collect Project Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "eb4e883a-c1c7-441c-8958-09c3df96c700",
+      "name": "Merge RAG Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        560,
+        -96
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PYJb0LErMeVcYifBNEQq5y16kQcjG_E_MFErh5hQMCY",
+          "mode": "list",
+          "cachedResultName": "Simulated_feed",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PYJb0LErMeVcYifBNEQq5y16kQcjG_E_MFErh5hQMCY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PYJb0LErMeVcYifBNEQq5y16kQcjG_E_MFErh5hQMCY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        320
+      ],
+      "id": "cc1a8b24-4cc3-44ed-a205-7602c4bc98d9",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dirv0x5BYn71xq1h",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds",
+              "secondsInterval": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -320,
+        320
+      ],
+      "id": "ae85fc22-1e3b-446d-ba43-49e265cb1d86",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst rows = $input.all();\n\nreturn rows.map((item) => {\n  const row = item.json;\n\n  // Convert a requirements cell into an array.\n  const rawRequirements =\n    row.requirements ??\n    row.Requirements ??\n    row.technical_requirements ??\n    \"\";\n\n  const requirements = Array.isArray(rawRequirements)\n    ? rawRequirements\n    : String(rawRequirements)\n        .split(/\\n|;/)\n        .map((value) => value.trim())\n        .filter(Boolean);\n\n  const title = row.title ?? row.Title ?? \"\";\n  const issuer = row.issuer ?? row.Issuer ?? \"\";\n  const deadline = row.deadline ?? row.Deadline ?? \"\";\n\n  // Prefer an existing description or raw tender text.\n  const rawText =\n    row.raw_text ??\n    row.description ??\n    row.Description ??\n    row.tender_text ??\n    title;\n\n  // Match the usual n8n Webhook output structure:\n  // the incoming request payload is under \"body\".\n  return {\n    json: {\n      body: {\n        title: String(title),\n        issuer: String(issuer),\n        deadline: String(deadline),\n        raw_text: String(rawText),\n        requirements,\n        source: \"simulated_feed\",\n        external_id: String(row.id ?? row.ID ?? \"\")\n      }\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        320
+      ],
+      "id": "025cd9b1-37f6-4727-b55d-ecfc8cd8397b",
+      "name": "Normalize Sheet Tender"
+    },
+    {
+      "parameters": {
+        "jsCode": "const tender = $('1 - Ingest and Normalize Tender').first().json;\nconst cvs = $json.cv_matches ?? [];\nconst projects = $json.project_matches ?? [];\n\n// Similarity field name depends on your RAG service; these are the common ones.\nconst scoreOf = (m) => Number(m.similarity ?? m.score ?? m.similarity_score ?? 0);\nconst avg = (arr) => arr.length ? arr.reduce((s, m) => s + scoreOf(m), 0) / arr.length : 0;\nconst label = (m) => m.title ?? m.name ?? m.id;\n\n// Average of CV coverage and project coverage, rounded to 2 decimals.\nconst overall = Math.round(((avg(cvs) + avg(projects)) / 2) * 100) / 100;\n\nconst brief =\n  `${tender.title} (${tender.issuer}, deadline ${tender.deadline}). ` +\n  `Matched ${cvs.length} CVs (${cvs.map(label).join(', ') || 'none'}) ` +\n  `and ${projects.length} projects (${projects.map(label).join(', ') || 'none'}).`;\n\nreturn [{\n  json: {\n    tender_title: tender.title,\n    overall_coverage_score: overall,\n    proposal_brief: brief,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        -96
+      ],
+      "id": "904d1074-0d30-4623-8bfb-1e6d87bd9866",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1NtubZ8vYuSQoa1QFaZqcgckyYBZmdaa0r44QWqXZRCE/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NtubZ8vYuSQoa1QFaZqcgckyYBZmdaa0r44QWqXZRCE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tender_title": "={{ $json.tender_title }}",
+            "overall_coverage_score": "={{ $json.overall_coverage_score }}",
+            "proposal_brief": "={{ $json.proposal_brief }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "tender_title",
+              "displayName": "tender_title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "overall_coverage_score",
+              "displayName": "overall_coverage_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "proposal_brief",
+              "displayName": "proposal_brief",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        112
+      ],
+      "id": "0a7479d1-d60a-46be-bea7-5926059e0895",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "dirv0x5BYn71xq1h",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        768,
+        304
+      ],
+      "id": "58293f8f-e8df-4087-8e47-657f41fb7e45"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Validate Tender and Configure URLs": {
+      "main": [
+        [
+          {
+            "node": "1 - Ingest and Normalize Tender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1 - Ingest and Normalize Tender": {
+      "main": [
+        [
+          {
+            "node": "2 - Run Prospect Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2 - Run Prospect Research": {
+      "main": [
+        [
+          {
+            "node": "Prepare RAG Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare RAG Context": {
+      "main": [
+        [
+          {
+            "node": "3A - Match CVs",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3B - Match Projects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3A - Match CVs": {
+      "main": [
+        [
+          {
+            "node": "Collect CV Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect CV Matches": {
+      "main": [
+        [
+          {
+            "node": "Merge RAG Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3B - Match Projects": {
+      "main": [
+        [
+          {
+            "node": "Collect Project Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Collect Project Matches": {
+      "main": [
+        [
+          {
+            "node": "Merge RAG Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge RAG Results": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Normalize Sheet Tender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Sheet Tender": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Validate Tender and Configure URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "7c88247e-a372-433e-831a-7a765dceed79",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0357b163b8438f5d3d7824a5461a40aac5f9d6bd3aaaaee2fb13554635babaae"
+  },
+  "nodeGroups": [],
+  "id": "WKc5pGNROkgly1Xx",
+  "tags": []
+}
