@@ -1,0 +1,62 @@
+[
+  {
+    "tool_id": "TOOL-001",
+    "name": "Secure Digital Platform Accelerator",
+    "category": "Custom Software Development",
+    "description": "Reusable architecture and delivery patterns for accessible web portals and mobile services.",
+    "capabilities": ["responsive web applications", "mobile applications", "REST API integration", "role-based access control"],
+    "technologies": ["React", "Next.js", "FastAPI", "PostgreSQL", "Flutter"],
+    "use_cases": ["citizen portals", "customer self-service", "enterprise workflow applications"],
+    "certifications": ["WCAG 2.1 AA", "OWASP ASVS"]
+  },
+  {
+    "tool_id": "TOOL-002",
+    "name": "Cloud-Native Delivery Factory",
+    "category": "Automation & Tooling",
+    "description": "Standardized CI/CD, infrastructure-as-code, observability, and container delivery capability.",
+    "capabilities": ["CI/CD automation", "GitOps", "infrastructure as code", "monitoring", "automated rollback"],
+    "technologies": ["Docker", "Kubernetes", "GitHub Actions", "GitLab CI", "Terraform", "Argo CD", "Prometheus"],
+    "use_cases": ["platform engineering", "microservice delivery", "cloud migration"],
+    "certifications": ["ISO 27001 delivery controls"]
+  },
+  {
+    "tool_id": "TOOL-003",
+    "name": "Enterprise RAG and AI Knowledge Assistant",
+    "category": "Data/AI Integration Consulting",
+    "description": "Evidence-grounded retrieval augmented generation for internal documents with evaluation and guardrails.",
+    "capabilities": ["document ingestion", "semantic retrieval", "RAG evaluation", "source citations", "prompt-injection defenses"],
+    "technologies": ["Python", "FastAPI", "pgvector", "Supabase", "sentence-transformers", "OpenAI", "Anthropic"],
+    "use_cases": ["knowledge assistants", "proposal intelligence", "policy search"],
+    "certifications": ["GDPR data minimization"]
+  },
+  {
+    "tool_id": "TOOL-004",
+    "name": "Application Security Assessment Toolkit",
+    "category": "Security Assessment & Penetration Testing",
+    "description": "Repeatable web, API, mobile, and cloud security assessment methodology with remediation evidence.",
+    "capabilities": ["penetration testing", "vulnerability assessment", "threat modeling", "secure code review", "remediation verification"],
+    "technologies": ["Burp Suite", "OWASP ZAP", "Nmap", "Semgrep", "Trivy"],
+    "use_cases": ["pre-production assurance", "regulatory audit preparation", "third-party risk review"],
+    "certifications": ["OWASP Testing Guide", "ISO 27001", "PCI DSS"]
+  },
+  {
+    "tool_id": "TOOL-005",
+    "name": "Data Integration and Analytics Platform",
+    "category": "Data/AI Integration Consulting",
+    "description": "Batch and event-driven integration patterns for governed operational analytics and machine learning.",
+    "capabilities": ["ETL and ELT", "data quality", "event streaming", "analytics dashboards", "ML pipelines"],
+    "technologies": ["Python", "Apache Airflow", "Kafka", "dbt", "PostgreSQL", "Power BI"],
+    "use_cases": ["enterprise data hubs", "predictive analytics", "legacy integration"],
+    "certifications": ["GDPR", "data lineage controls"]
+  },
+  {
+    "tool_id": "TOOL-006",
+    "name": "Regulated Interoperability Delivery Pack",
+    "category": "Custom Software Development",
+    "description": "Domain patterns for systems requiring auditable interoperability, privacy, and accessibility controls.",
+    "capabilities": ["FHIR and HL7 integration", "audit trails", "consent management", "accessibility engineering", "data residency design"],
+    "technologies": ["HL7 FHIR", "OAuth 2.0", "OpenID Connect", "FastAPI", "PostgreSQL"],
+    "use_cases": ["healthcare integration", "public-sector platforms", "regulated customer portals"],
+    "certifications": ["HL7 FHIR", "GDPR", "WCAG 2.1 AA"]
+  }
+]

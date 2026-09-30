@@ -35,7 +35,9 @@ def query_knowledge_base(
         "similarity": 0.83
     }
     """
-    # TODO: Makes it return matching based on threshold (90%)
+    # similarity_threshold is enforced by the vector RPC (match_threshold),
+    # not re-checked here. 0.20 is an empirical floor for all-MiniLM-L6-v2
+    # on tender text — 0.90 would return zero rows for every query.
     if not isinstance(text, str) or not text.strip():
         raise ValueError("query text must be non-empty")
     if not 1 <= top_k <= 20:
@@ -89,10 +91,19 @@ def query_knowledge_base(
             raise RetrievalError("vector search returned invalid similarity") from exc
         if not math.isfinite(similarity) or not -1.0 <= similarity <= 1.0:
             raise RetrievalError("vector search returned invalid similarity")
-        item = dict(row)
-        item["metadata"] = metadata
-        item["similarity"] = similarity
-        item["ranking_score"] = ranking_score(similarity, item["doc_type"], metadata)
+        # Project explicitly onto the QueryResult contract. The RPC lives in a
+        # database we do not control here, and QueryResult forbids extras —
+        # one new column upstream would otherwise turn every response into
+        # a 500 instead of being ignored.
+        item = {
+            "id": row["id"],
+            "content": row["content"],
+            "doc_type": row["doc_type"],
+            "source_file": row["source_file"],
+            "metadata": metadata,
+            "similarity": similarity,
+            "ranking_score": ranking_score(similarity, row["doc_type"], metadata),
+        }
         record_key = str(item["metadata"].get("record_id") or item["id"])
         identity = (item["doc_type"], record_key)
         if identity in seen_records:

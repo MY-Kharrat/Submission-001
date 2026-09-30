@@ -35,7 +35,10 @@ class Tender(BaseModel):
 class Fact(BaseModel):
     model_config = ConfigDict(strict=True)
 
-    value: str = Field(min_length=1)
+    # max_length bounds the injection surface: an attacker-controlled page
+    # cannot smuggle arbitrarily large payloads through a single fact, and
+    # the extractor prompt already asks for spans under 200 characters.
+    value: str = Field(min_length=1, max_length=500)
     category: Literal["sector", "estimated_revenue", "past_projects", "key_partners"]
     confidence: Literal["low", "medium", "high"]
 
