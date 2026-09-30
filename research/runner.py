@@ -241,10 +241,10 @@ class Runner:
 
             except Exception as e:
                 self.audit.log("Search Error", {"query": query}, str(e))
+            
+            if not results or len(results) == 0:
                 iterations += 1
                 continue
-            #results = (results or [])[:MAX_RESULTS_PER_QUERY]
-
             # Process the top results per query (not just the first success):
             # audit every snippet, and let each extraction fail gracefully so
             # one flaky LLM call degrades instead of aborting the whole run.
@@ -258,7 +258,6 @@ class Runner:
             try:
                 if extract_fn is not None:
                     # Uses custom provided extractor
-                    print(r.content)
                     out = await extract_fn(r.content, r.url)
                 else:
                     # Uses the established Quarantined LLM
