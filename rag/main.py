@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 from rag.embeddings import EmbeddingError
+from shared.schemas import QueryRequest, QueryResult
 from rag.query import RetrievalError, query_knowledge_base
 from rag.supabase_client import RagConfigurationError
 from shared.auth import require_internal_token
@@ -22,26 +23,6 @@ load_dotenv()
 
 app = FastAPI(title="OliveSoft RAG Retrieval Service")
 
-
-class QueryRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
-
-    text: str = Field(min_length=3, max_length=10_000)
-    top_k: int = Field(default=5, ge=1, le=20)
-    doc_type: Literal["cv", "project", "tool"] | None = None
-    similarity_threshold: float = Field(default=0.0, ge=0.0, le=1.0)
-
-
-class QueryResult(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    id: str
-    content: str
-    doc_type: Literal["cv", "project", "tool"]
-    source_file: str
-    metadata: dict[str, Any]
-    similarity: float
-    ranking_score: float
 
 
 @app.get("/health")
