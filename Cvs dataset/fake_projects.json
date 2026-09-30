@@ -1,156 +1,418 @@
 [
   {
     "project_id": "PRJ-0001",
-    "client_sector": "energy",
-    "summary": "Energy data platform migration",
+    "client_sector": "consumer goods",
+    "summary": "Employee master data consolidation with versioned APIs for a consumer goods company",
     "tech_stack": [
-      "Azure",
-      "Flutter",
-      "MongoDB"
+      "MuleSoft",
+      "Anypoint Platform",
+      "REST APIs",
+      "Master Data Management"
     ],
-    "outcome": "Cut infrastructure costs by 38% after migration."
+    "outcome": "Statutory payroll feeds validated per country; internal IT took over support after handover documentation was signed off."
   },
   {
     "project_id": "PRJ-0002",
-    "client_sector": "manufacturing",
-    "summary": "Manufacturing customer portal revamp",
+    "client_sector": "banking",
+    "summary": "Retail mobile banking app refresh for a banking institution",
     "tech_stack": [
-      "Docker",
-      "LlamaIndex",
-      "Node.js"
+      "Swift",
+      "Kotlin",
+      "REST APIs",
+      "CI/CD"
     ],
-    "outcome": "Delivered on schedule with a 52% reduction in reported defects."
+    "outcome": "App store rating rose to 4.13; release cadence doubled."
   },
   {
     "project_id": "PRJ-0003",
-    "client_sector": "manufacturing",
-    "summary": "Manufacturing internal workflow automation",
+    "client_sector": "insurance",
+    "summary": "LLM answer quality evaluation programme for an insurance service desk",
     "tech_stack": [
-      "GraphQL",
-      "AWS",
-      "React",
-      "PostgreSQL",
-      "TypeScript",
-      "Pinecone"
+      "LLM evaluation",
+      "Retrieval augmented generation",
+      "LangChain",
+      "Python"
     ],
-    "outcome": "Cut infrastructure costs by 34% after migration."
+    "outcome": "Accuracy measured on 5 historical queries per release; regressions blocked before deployment."
   },
   {
     "project_id": "PRJ-0004",
-    "client_sector": "banking",
-    "summary": "Banking legacy system modernization",
+    "client_sector": "healthcare",
+    "summary": "Custom approval workflow application for a healthcare back office",
     "tech_stack": [
-      "Scikit-learn",
-      "Terraform",
-      "n8n",
       "React",
-      "TensorFlow"
+      "FastAPI",
+      "Docker",
+      "Kubernetes"
     ],
-    "outcome": "Reduced manual processing time by 56%."
+    "outcome": "Manual approval steps cut by 39%; 12 paper forms retired."
   },
   {
     "project_id": "PRJ-0005",
-    "client_sector": "logistics",
-    "summary": "Logistics data platform migration",
+    "client_sector": "consumer goods",
+    "summary": "Explainable forecasting with planner feedback loop for a consumer goods company",
     "tech_stack": [
-      "Node.js",
-      "Terraform",
-      "n8n",
-      "Flutter",
-      "Pinecone",
-      "React"
+      "Machine learning",
+      "Explainable AI",
+      "SHAP",
+      "MLflow"
     ],
-    "outcome": "Cut infrastructure costs by 42% after migration."
+    "outcome": "Planner overrides captured and retrained on monthly; forecast error improved by 57%."
   },
   {
     "project_id": "PRJ-0006",
-    "client_sector": "real estate",
-    "summary": "Real estate mobile app for field agents",
+    "client_sector": "fashion retail",
+    "summary": "Inspection label cleanup and defect model training for a fashion retail producer",
     "tech_stack": [
-      "Scikit-learn",
-      "Swift",
-      "Flutter",
-      "Terraform",
-      "Redis"
+      "Computer vision",
+      "Defect detection",
+      "Label adjudication",
+      "OpenCV"
     ],
-    "outcome": "Reduced manual processing time by 35%."
+    "outcome": "Ground truth rebuilt from conflicting inspector decisions; missed safety defects down 25%."
   },
   {
     "project_id": "PRJ-0007",
-    "client_sector": "telecom",
-    "summary": "Telecom data platform migration",
+    "client_sector": "banking",
+    "summary": "Service Cloud contact centre rollout for a banking provider",
     "tech_stack": [
-      "PostgreSQL",
-      "Flutter",
-      "REST APIs",
-      "ChromaDB",
-      "Python",
-      "Scikit-learn"
+      "Salesforce Service Cloud",
+      "Omni-Channel routing",
+      "Case migration",
+      "Data Loader"
     ],
-    "outcome": "Increased platform adoption by 35% within the first quarter."
+    "outcome": "11 years of case history migrated; average handling time down 44%."
   },
   {
     "project_id": "PRJ-0008",
-    "client_sector": "retail",
-    "summary": "Retail internal workflow automation",
+    "client_sector": "telecom",
+    "summary": "Offline field inspection mobile app for a telecom network operator",
     "tech_stack": [
-      "MongoDB",
-      "ChromaDB",
-      "Redis",
-      "Python",
-      "PyTorch"
+      "Flutter",
+      "Firebase",
+      "SQLite",
+      "REST APIs"
     ],
-    "outcome": "Improved system response time by 27%."
+    "outcome": "Inspectors capture findings without signal; reports filed 50% faster."
   },
   {
     "project_id": "PRJ-0009",
-    "client_sector": "logistics",
-    "summary": "Logistics AI-powered document processing",
+    "client_sector": "telecom",
+    "summary": "Telecom billing mediation on event streams",
     "tech_stack": [
-      "PostgreSQL",
-      "Swift",
-      "Kotlin",
-      "Tailwind CSS",
-      "GraphQL",
-      "Python"
+      "Kafka",
+      "Java",
+      "Spring Boot"
     ],
-    "outcome": "Improved system response time by 20%."
+    "outcome": "Billing records mediated in seconds instead of hours."
   },
   {
     "project_id": "PRJ-0010",
-    "client_sector": "logistics",
-    "summary": "Logistics real-time analytics dashboard",
+    "client_sector": "public sector (justice)",
+    "summary": "Prior-art crawler with auditable matching for a public sector (justice) authority",
     "tech_stack": [
-      "LlamaIndex",
-      "n8n",
-      "Swift",
-      "PyTorch"
+      "Web crawler",
+      "Similarity detection",
+      "Elasticsearch",
+      "Audit logging"
     ],
-    "outcome": "Cut infrastructure costs by 37% after migration."
+    "outcome": "Every match decision reproducible for external appeal; class code filters across 6 classes."
   },
   {
     "project_id": "PRJ-0011",
-    "client_sector": "insurance",
-    "summary": "Insurance mobile app for field agents",
+    "client_sector": "banking",
+    "summary": "Oracle ERP data migration with Informatica",
     "tech_stack": [
-      "Flutter",
-      "Redis",
-      "LlamaIndex",
-      "MongoDB",
-      "GCP"
+      "Informatica PowerCenter",
+      "Oracle",
+      "ETL"
     ],
-    "outcome": "Delivered on schedule with a 22% reduction in reported defects."
+    "outcome": "Ledger history moved with zero reconciliation breaks."
   },
   {
     "project_id": "PRJ-0012",
-    "client_sector": "healthcare",
-    "summary": "Healthcare AI-powered document processing",
+    "client_sector": "retail",
+    "summary": "Scripted delivery-status chatbot",
     "tech_stack": [
-      "AWS",
-      "Azure",
-      "Swift",
-      "Redis"
+      "Dialogflow",
+      "Chatbot",
+      "Node.js"
     ],
-    "outcome": "Reduced manual processing time by 52%."
+    "outcome": "Deflected routine tracking questions from the contact centre."
+  },
+  {
+    "project_id": "PRJ-0013",
+    "client_sector": "energy utilities",
+    "summary": "Offline-first driver app fed by telematics data for an energy utilities company",
+    "tech_stack": [
+      "Flutter",
+      "Offline-first mobile",
+      "API integration",
+      "Localisation"
+    ],
+    "outcome": "Delivery proof and logbooks captured in poor connectivity across 5 depots; paper retired within 29 days."
+  },
+  {
+    "project_id": "PRJ-0014",
+    "client_sector": "insurance",
+    "summary": "SSIS to Talend pipeline migration for an insurance operator",
+    "tech_stack": [
+      "Talend",
+      "SSIS",
+      "SQL Server",
+      "ETL"
+    ],
+    "outcome": "9 legacy packages retired; incremental loads recover from partial failures with no manual reruns."
+  },
+  {
+    "project_id": "PRJ-0015",
+    "client_sector": "consumer goods",
+    "summary": "Customer-level demand forecasting for a consumer goods supplier",
+    "tech_stack": [
+      "Machine learning",
+      "Demand forecasting",
+      "LightGBM",
+      "ERP data integration"
+    ],
+    "outcome": "Stockouts on high-value lines down 51%; forecasts published with confidence bands."
+  },
+  {
+    "project_id": "PRJ-0016",
+    "client_sector": "insurance",
+    "summary": "Policy-aware case management on Salesforce for an insurance group",
+    "tech_stack": [
+      "Salesforce Service Cloud",
+      "Apex",
+      "Salesforce Flow",
+      "Change management"
+    ],
+    "outcome": "Case and policy data kept consistent; phased cutover completed with no service outage."
+  },
+  {
+    "project_id": "PRJ-0017",
+    "client_sector": "healthcare",
+    "summary": "Governed workforce analytics in Power BI for a healthcare organisation",
+    "tech_stack": [
+      "Power BI",
+      "DAX",
+      "Semantic model design",
+      "Row-level security"
+    ],
+    "outcome": "6 divisional reporting packs replaced; HR managers see only their own division."
+  },
+  {
+    "project_id": "PRJ-0018",
+    "client_sector": "retail",
+    "summary": "Customer single view on BigQuery for a retail chain",
+    "tech_stack": [
+      "BigQuery",
+      "GCP",
+      "Identity resolution",
+      "Cegid ERP"
+    ],
+    "outcome": "32% of customers resolved to one profile across ERP, commerce and support systems."
+  },
+  {
+    "project_id": "PRJ-0019",
+    "client_sector": "healthcare",
+    "summary": "Official statistics warehouse with end-to-end lineage for a healthcare body",
+    "tech_stack": [
+      "BigQuery",
+      "Snowflake",
+      "Data lineage",
+      "dbt"
+    ],
+    "outcome": "Each published series traceable to its submitting unit; 56% fewer correction notices."
+  },
+  {
+    "project_id": "PRJ-0020",
+    "client_sector": "retail",
+    "summary": "Multi-market sales and returns lakehouse model for a retail brand",
+    "tech_stack": [
+      "Databricks",
+      "Lakehouse",
+      "Kafka",
+      "Data observability"
+    ],
+    "outcome": "Currency-normalised sales across 12 markets; pipeline incidents detected 37% faster."
+  },
+  {
+    "project_id": "PRJ-0021",
+    "client_sector": "public sector (interior)",
+    "summary": "Citizen case analytics on Salesforce for a public sector (interior) ministry",
+    "tech_stack": [
+      "Salesforce CRM Analytics",
+      "SAQL",
+      "Case management",
+      "Apex"
+    ],
+    "outcome": "Monthly backlog and resolution reporting across 4 offices generated automatically."
+  },
+  {
+    "project_id": "PRJ-0022",
+    "client_sector": "logistics",
+    "summary": "Recruitment and applicant tracking ETL modernisation for a logistics group",
+    "tech_stack": [
+      "Talend",
+      "ETL",
+      "Python",
+      "Data reconciliation"
+    ],
+    "outcome": "Automated reconciliation report flags extract drift within one day; load window cut by 28%."
+  },
+  {
+    "project_id": "PRJ-0023",
+    "client_sector": "energy utilities",
+    "summary": "Fleet telematics integration with maintenance and fuel systems for an energy utilities operator",
+    "tech_stack": [
+      "Telematics integration",
+      "API integration",
+      "MQTT",
+      "Kotlin"
+    ],
+    "outcome": "Vehicle events reach the systems that act on them; 9 vehicles connected with no dispatch downtime."
+  },
+  {
+    "project_id": "PRJ-0024",
+    "client_sector": "telecom",
+    "summary": "Customer self-service web portal for a telecom provider",
+    "tech_stack": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL"
+    ],
+    "outcome": "Self-service adoption up 18%; call volumes fell in the first quarter."
+  },
+  {
+    "project_id": "PRJ-0025",
+    "client_sector": "industrial manufacturing",
+    "summary": "Edge visual inspection for textile quality control at an industrial manufacturing plant",
+    "tech_stack": [
+      "Computer vision",
+      "Edge inference",
+      "PyTorch",
+      "NVIDIA Jetson"
+    ],
+    "outcome": "7 defect classes detected on the line; runs offline with opportunistic sync."
+  },
+  {
+    "project_id": "PRJ-0026",
+    "client_sector": "fashion retail",
+    "summary": "Order event streaming into a Databricks lakehouse for a fashion retail business",
+    "tech_stack": [
+      "Kafka",
+      "Databricks",
+      "Delta Lake",
+      "Spark Structured Streaming"
+    ],
+    "outcome": "Order visibility moved from overnight to near real time; late events reconciled automatically."
+  },
+  {
+    "project_id": "PRJ-0027",
+    "client_sector": "consumer goods",
+    "summary": "B2B ordering web shop for a consumer goods distributor",
+    "tech_stack": [
+      "Next.js",
+      "Spring Boot",
+      "PostgreSQL",
+      "REST APIs"
+    ],
+    "outcome": "Online share of orders grew to 58% within a year."
+  },
+  {
+    "project_id": "PRJ-0028",
+    "client_sector": "public statistics",
+    "summary": "Validated submissions and open data release pipeline for a public statistics body",
+    "tech_stack": [
+      "Schema validation",
+      "De-identification",
+      "Great Expectations",
+      "GCP"
+    ],
+    "outcome": "Non-conforming files rejected with specific errors; every release passes a signed disclosure review."
+  },
+  {
+    "project_id": "PRJ-0029",
+    "client_sector": "logistics",
+    "summary": "Multi-country HR and payroll integration hub for a logistics group",
+    "tech_stack": [
+      "MuleSoft",
+      "SAP SuccessFactors",
+      "Master Data Management",
+      "DataWeave"
+    ],
+    "outcome": "Single employee golden record across 6 payroll providers; duplicate hires fell by 32%."
+  },
+  {
+    "project_id": "PRJ-0030",
+    "client_sector": "insurance",
+    "summary": "Grounded customer support assistant for an insurance business",
+    "tech_stack": [
+      "Retrieval augmented generation",
+      "LlamaIndex",
+      "pgvector",
+      "Source citations"
+    ],
+    "outcome": "Every answer cites its source page; unsupported questions routed to agents instead of guessed."
+  },
+  {
+    "project_id": "PRJ-0031",
+    "client_sector": "healthcare",
+    "summary": "HR KPI semantic model and executive dashboards for a healthcare organisation",
+    "tech_stack": [
+      "Power BI",
+      "KPI governance",
+      "SQL",
+      "Power Query"
+    ],
+    "outcome": "Three years of historical workforce data comparable on one model; report preparation time down 49%."
+  },
+  {
+    "project_id": "PRJ-0032",
+    "client_sector": "retail",
+    "summary": "Regional sales dashboards in Tableau",
+    "tech_stack": [
+      "Tableau",
+      "SQL",
+      "Excel"
+    ],
+    "outcome": "Sales managers self-serve weekly figures."
+  },
+  {
+    "project_id": "PRJ-0033",
+    "client_sector": "public sector (justice)",
+    "summary": "Trademark image and word-mark similarity search for a public sector (justice) registry",
+    "tech_stack": [
+      "Similarity detection",
+      "Image embeddings",
+      "Text similarity",
+      "FAISS"
+    ],
+    "outcome": "Examiners review ranked candidates with the matched basis visible; review time down 39%."
+  },
+  {
+    "project_id": "PRJ-0034",
+    "client_sector": "retail",
+    "summary": "Consent-aware customer data platform on GCP for a retail brand",
+    "tech_stack": [
+      "BigQuery",
+      "GCP",
+      "Consent management",
+      "Pub/Sub"
+    ],
+    "outcome": "Opt-outs reach every downstream system in under 7 hours; marketing complaints fell sharply."
+  },
+  {
+    "project_id": "PRJ-0035",
+    "client_sector": "public sector (interior)",
+    "summary": "Offline-capable case handling and oversight dashboards for a public sector (interior) agency",
+    "tech_stack": [
+      "Salesforce CRM Analytics",
+      "Salesforce Field Service",
+      "Offline sync",
+      "Data residency"
+    ],
+    "outcome": "Offices keep working through outages and reconcile on reconnect; records never leave sovereign hosting."
   }
 ]
