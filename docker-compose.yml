@@ -28,10 +28,10 @@ services:
       OLIVESOFT_DB_PATH: /data/olivesoft.db
       RESEARCH_AUDIT_LOG: /data/research.log
       TAVILY_API_KEY: ${TAVILY_API_KEY:-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}
-      LLM_API_KEY: ${LLM_API_KEY:-AQ.Ab8RN6IutAtkyJw4UZ31HG07V81iMy2lMevOiABfThEmFgHyvw}
+      LLM_API_KEY: ${LLM_API_KEY:-dd}
       LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
-      LLM_MODEL: ${LLM_MODEL:-gemini-2.5-flash}
-      LLM_URL: ${LLM_URL:-https://generativelanguage.googleapis.com/v1beta/openai/chat/completions}
+      LLM_MODEL: ${LLM_MODEL:-bcluzel/LFM2.5-1.2B-Instruct:Q4_K_M}
+      LLM_URL: ${LLM_URL:-}
       MAX_SEARCH_ITERATIONS: ${MAX_SEARCH_ITERATIONS:-7}
       TOTAL_RUN_TIMEOUT_SECONDS: ${TOTAL_RUN_TIMEOUT_SECONDS:-45}
       PER_CALL_TIMEOUT_SECONDS: ${PER_CALL_TIMEOUT_SECONDS:-8}
@@ -91,29 +91,29 @@ services:
   #     retries: 5
   #     start_period: 10s
 
-  # n8n:
-  #   image: ${N8N_IMAGE:-n8nio/n8n:2.40.7}
-  #   restart: unless-stopped
-  #   environment:
-  #     N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
-  #     GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Africa/Tunis}
-  #     TZ: ${GENERIC_TIMEZONE:-Africa/Tunis}
-  #     N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
-  #     N8N_DIAGNOSTICS_ENABLED: "false"
-  #   volumes:
-  #     - n8n-data:/home/node/.n8n
-  #     - ./n8n/workflows:/files/workflows:ro
-  #   ports:
-  #     - "5678:5678"
-  #   depends_on:
-  #     detection:
-  #       condition: service_healthy
-  #     research:
-  #       condition: service_healthy
-  #     rag:
-  #       condition: service_healthy
-  #     proposal:
-  #       condition: service_healthy
+  n8n:
+    image: ${N8N_IMAGE:-n8nio/n8n:2.40.7}
+    restart: unless-stopped
+    environment:
+      #N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?Set N8N_ENCRYPTION_KEY in .env}
+      #GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Africa/Tunis}
+      TZ: ${GENERIC_TIMEZONE:-Africa/Tunis}
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n/workflows:/files/workflows:ro
+    ports:
+      - "5678:5678"
+    depends_on:
+      detection:
+        condition: service_healthy
+      research:
+        condition: service_healthy
+      rag:
+        condition: service_healthy
+      # proposal:
+      #   condition: service_healthy
 
   rag-ingest:
     build: .
@@ -137,4 +137,5 @@ services:
 volumes:
   olivesoft-data:
   model-cache:
-  #n8n-data:
+  n8n_data:
+#    external: true
