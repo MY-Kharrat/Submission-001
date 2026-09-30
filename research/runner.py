@@ -94,7 +94,7 @@ class Runner:
         # Server budget sits under the n8n node's 45s client timeout:
         # worst case 35s + one 8s in-flight call = 43s, so n8n never aborts
         # mid-run while the server keeps burning search/LLM budget.
-        self.iteration_cap = iteration_cap or int(os.environ.get("MAX_SEARCH_ITERATIONS", "6"))
+        self.iteration_cap = iteration_cap or int(os.environ.get("MAX_SEARCH_ITERATIONS", "4"))
         self.timeout_seconds = timeout_seconds or float(os.environ.get("TOTAL_RUN_TIMEOUT_SECONDS", "35"))
         self.accumulated_facts: dict[str, list[Fact]] = {}
         self.sources: set[str] = set()
@@ -206,8 +206,10 @@ class Runner:
             return restamped
         
         iterations = 0
-        gap_order = list(GAP_QUERIES)
-        gap_cursor = 0
+        # One Tavily call per gap max: a gap already searched is never
+        # re-queried, even if it yielded nothing (un-fillable gaps must not
+        # starve the others, and filled gaps must not be revisited).
+        searched: set[str] = set()
         while iterations < self.iteration_cap:
             if time.monotonic() - start >= self.timeout_seconds:
                 # Stops loop because exceeded timeout
@@ -219,67 +221,69 @@ class Runner:
                 self.audit.log("missing_fields", {}, "There's no missing field!")
                 break
 
-            # Advance over the stable canonical order, skipping fields already
-            # filled. Indexing directly into the shrinking ``missing`` list can
-            # jump over a field whenever another one disappears from that list.
-            # The stable cursor gives every unfilled objective a fair turn.
+            # First unsearched gap in canonical GAP_QUERIES order. Using the
+            # stable canonical order (not missing[iterations % len(missing)])
+            # matters: the missing list shrinks as gaps fill, so a modulo
+            # index drifts — it re-searches an already-tried gap while
+            # starving one never attempted.
             missing_set = set(missing)
-            gap = missing[0]
-            for offset in range(len(gap_order)):
-                index = (gap_cursor + offset) % len(gap_order)
-                candidate = gap_order[index]
-                if candidate in missing_set:
-                    gap = candidate
-                    gap_cursor = (index + 1) % len(gap_order)
-                    break
+            todo = [g for g in GAP_QUERIES if g in missing_set and g not in searched]
+            if not todo:
+                break
+            gap = todo[0]
+            searched.add(gap)
 
             # Builds a query: <issuer, gap>
             query = self._build_query(issuer, gap)
             try:
                 # Performs a web search using Tavily
                 results = await search(query)
+
             except Exception as e:
                 self.audit.log("Search Error", {"query": query}, str(e))
                 iterations += 1
                 continue
-            results = (results or [])[:MAX_RESULTS_PER_QUERY]
+            #results = (results or [])[:MAX_RESULTS_PER_QUERY]
 
             # Process the top results per query (not just the first success):
             # audit every snippet, and let each extraction fail gracefully so
             # one flaky LLM call degrades instead of aborting the whole run.
-            for r in results:
-                if time.monotonic() - start >= self.timeout_seconds:
-                    break
-                self.audit.log("search", {"query": query}, r.content)
+            r = results[0]
 
-                try:
-                    if extract_fn is not None:
-                        # Uses custom provided extractor
-                        out = await extract_fn(r.content, r.url)
-                    else:
-                        # Uses the established Quarantined LLM
-                        out = await self.extractor.extract(r.content, r.url)
-                except Exception:
+            
+            if time.monotonic() - start >= self.timeout_seconds:
+                break
+            self.audit.log("search", {"query": query}, r.content)
+
+            try:
+                if extract_fn is not None:
+                    # Uses custom provided extractor
+                    print(r.content)
+                    out = await extract_fn(r.content, r.url)
+                else:
+                    # Uses the established Quarantined LLM
+                    out = await self.extractor.extract(r.content, r.url)
+            except Exception:
+                continue
+
+            for fact in out.facts:
+                if fact.category not in GAP_QUERIES:
                     continue
-
-                for fact in out.facts:
-                    if fact.category not in GAP_QUERIES:
-                        continue
-                    bucket = self.accumulated_facts.setdefault(fact.category, [])
-                    # Idempotent accumulation: consecutive gap queries often
-                    # re-read the same overlapping page, so the identical fact
-                    # arrives again. Without this, output lists fill with
-                    # duplicates and an attacker-controlled page gets its
-                    # payload restated once per iteration. A fact that is not
-                    # new also does not credit its URL as a fresh source, so
-                    # "echo a known fact from many URLs" cannot inflate
-                    # confidence.
-                    if any(
-                        existing.value.strip().casefold() == fact.value.strip().casefold()
-                        for existing in bucket
-                    ):
-                        continue
-                    bucket.append(fact)
-                    self.sources.add(r.url)
+                bucket = self.accumulated_facts.setdefault(fact.category, [])
+                # Idempotent accumulation: consecutive gap queries often
+                # re-read the same overlapping page, so the identical fact
+                # arrives again. Without this, output lists fill with
+                # duplicates and an attacker-controlled page gets its
+                # payload restated once per iteration. A fact that is not
+                # new also does not credit its URL as a fresh source, so
+                # "echo a known fact from many URLs" cannot inflate
+                # confidence.
+                if any(
+                    existing.value.strip().casefold() == fact.value.strip().casefold()
+                    for existing in bucket
+                ):
+                    continue
+                bucket.append(fact)
+                self.sources.add(r.url)
             iterations += 1
         return self.finalize(tender_id)
