@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from typing import Literal, Optional, List
+from typing import Literal, Optional, List, Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -16,7 +16,7 @@ CAPABILITY_TAXONOMY: list[str] = [
     "Data Platform",
 ]
 
-
+# @Todo: Remove comments
 class Tender(BaseModel):
     model_config = ConfigDict(strict=True)
 

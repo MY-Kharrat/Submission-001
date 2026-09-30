@@ -8,7 +8,6 @@ n8n (or your teammates' agents) can then POST to:
     http://localhost:8001/query
 """
 
-from typing import Any, Literal
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException
