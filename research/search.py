@@ -50,7 +50,7 @@ def _is_client_error(exc: BaseException) -> bool:
 
 class SearchTool:
     def __init__(self, max_results: int = 3):
-        self.max_results = min(max(1, max_results), 3)
+        self.max_results = 1#min(max(1, max_results), 3)
 
     async def _sdk_search(self, query: str, api_key: str) -> list[SearchResult]:
         """Tavily SDK path, bounded by the per-call timeout with one retry."""
