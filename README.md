@@ -20,19 +20,16 @@
 5. [Component Design](#5-component-design)
 6. [Data Model](#6-data-model)
 7. [Security Architecture](#7-security-architecture)
-8. [Reliability and Performance](#8-reliability-and-performance)
-9. [Quality Assurance](#9-quality-assurance)
-10. [Getting Started](#10-getting-started)
-11. [API Reference](#11-api-reference)
-12. [Configuration](#12-configuration)
-13. [Repository Structure](#13-repository-structure)
-14. [Roadmap]
+8. [Quality Assurance](#8-quality-assurance)
+9. [Getting Started](#9-getting-started)
+10. [API Reference](#10-api-reference)
+11. [Configuration](#11-configuration)
 
 ---
 
 ## 1. Executive Summary
 
-Responding to a request for proposal (RFP) requires three things that are slow when done by hand: understanding what the buyer is asking for, understanding who the buyer is, and proving that the company has the people and track record to deliver.
+Responding to a request for proposal (RFP) requires three things that are slow when done by hand: understanding what the client is asking for, understanding who's client, and proving that the company has the people and track record to deliver.
 
 This platform automates all three. A tender enters the system and leaves as a structured, evidence-backed brief: a classified requirement set, a sourced profile of the issuing organization, and a ranked shortlist of the CVs, past projects and capabilities that best match the request.
 
@@ -42,6 +39,7 @@ This platform automates all three. A tender enters the system and leaves as a st
 |---|---|
 | Faster bid qualification | Three chained services replace manual reading, web research and internal search |
 | Trustworthy AI output | Every research fact is sourced, schema-validated and scored by a deterministic confidence rule |
+| Dual-LLM architecture | redhat-inspired (2026) LLM architecture for maximizing security |
 | Controlled cost | Hard iteration, time and size budgets on every LLM and search call; duplicate work is never repeated |
 | Safe to operate | Untrusted web content is quarantined; all actions are logged in a tamper-evident audit trail |
 | Verifiable quality | 155 automated test functions, four security scanners in CI, and a labelled retrieval benchmark |
@@ -53,10 +51,10 @@ This platform automates all three. A tender enters the system and leaves as a st
 | Pain point | Consequence |
 |---|---|
 | Tenders arrive in unstructured text of varying quality | Analysts spend hours extracting requirements and judging fit |
-| Buyer research is manual and inconsistent | Bid decisions rest on incomplete or unsourced information |
+| RFP research is manual and inconsistent | Bid decisions rest on incomplete or unsourced information |
 | Internal expertise is scattered across CVs and project records | The strongest evidence of capability is often not found in time |
 | Generic AI tooling offers no provenance | Stakeholders cannot verify, and therefore cannot trust, machine-generated claims |
-| Agents that read the open web are an attack surface | A single malicious page can manipulate output or leak data |
+| Agents that read the open web are an **attack surface** | A single malicious page can manipulate output or **leak** data |
 
 ---
 
@@ -76,9 +74,9 @@ flowchart LR
 
 | Stage | Input | Output |
 |---|---|---|
-| **Detection** | Raw tender payload (title, issuer, deadline, text) | Validated, de-duplicated record with requirements and a service-line classification |
+| **Detection** | Raw tender payload (title, issuer, deadline, text) | Validated, de-duplicated record (by hash) with requirements and a service-line classification |
 | **Research** | A stored tender | Issuer profile: sector, estimated revenue, past projects, key partners, sources, confidence |
-| **Matching** | Tender text plus research context | Top-K CVs and projects ranked by semantic similarity with a bounded business priority |
+| **Matching** | Tender text plus research context | Top CVs and projects ranked by semantic similarity with a bounded business priority |
 
 OliveSoft's five service lines used for classification: Data Integration, AI Development, BI and Dashboarding, Salesforce Ecosystem, Data Platform.
 
@@ -206,10 +204,8 @@ flowchart TD
 | Validate before any database or LLM work | Bad input never spends budget |
 | Canonical natural key (whitespace-collapsed, case-folded) | Cosmetic edits and workflow retries do not create duplicates |
 | Keyword classification first, LLM second | Deterministic, free and explainable in the common case |
-| Tie-break by declared taxonomy order, plus an import-time drift guard | Classification is reproducible; configuration drift fails fast |
-| `ON CONFLICT DO UPDATE` instead of `INSERT OR REPLACE` | The latter performs a delete, which cascades and silently destroys stored research |
 | Selective cache invalidation | A deadline-only change does not force an expensive re-research |
-| Deterministic fallback when the LLM is unavailable | Ingest degrades gracefully instead of returning a 500 |
+| Tie-break by declared taxonomy order, plus an import-time drift guard | Classification is reproducible; configuration drift fails fast |
 
 **Enforced limits:** `raw_text` 20,000 characters, title 300, issuer 200, requirement 1,000, at most 100 requirements.
 
@@ -239,7 +235,7 @@ flowchart TD
 
 **Quarantined extractor**
 
-The extractor is the only component that sees untrusted web text, and it has no authority to act.
+The extractor is the ***only*** component that sees **untrusted** web text, and it has ***no*** authority to act.
 
 | Property | Implementation |
 |---|---|
@@ -407,37 +403,7 @@ Logs rotate daily with 365 days of retention, handled inside the application rat
 
 ---
 
-## 8. Reliability and Performance
-
-### 8.1 Time budget
-
-The server-side budget is set below the orchestrator's client timeout so the workflow never abandons a run that is still spending money.
-
-| Limit | Value | Note |
-|---|:---:|---|
-| n8n research node timeout | 45 s | Client side |
-| Total research run budget | 35 s | Configurable |
-| Per-call timeout | 8 s | Search and LLM |
-| Worst case | about 43 s | 35 s plus one in-flight call |
-| Search iterations | 6 | Configurable |
-| Results processed per query | 3 | Enforced in both tool and runner |
-
-### 8.2 Failure handling
-
-| Failure | Behaviour |
-|---|---|
-| LLM transient error (5xx, network) | One retry with backoff |
-| LLM client error (4xx) | Fail fast; misconfiguration is never disguised as a result |
-| LLM unavailable during ingest | Deterministic sentence-based requirement extraction |
-| Search exhaustion | Degrades to an empty result; the run continues |
-| One extraction fails | That snippet is skipped; the run continues |
-| Embedding or upsert failure | Previous knowledge-base version remains intact |
-| Read-only container filesystem | Audit log path falls back to a writable temporary directory |
-| Duplicate request or retry | Served from storage or cache; no repeated spend |
-
----
-
-## 9. Quality Assurance
+## 8. Quality Assurance
 
 | Area | Detail |
 |---|---|
@@ -455,7 +421,7 @@ python -m rag.evaluate_local             # retrieval benchmark, no database requ
 
 ---
 
-## 10. Getting Started
+## 9. Getting Started
 
 **Prerequisites:** Docker with Compose, a Supabase project, and API keys for an LLM provider and Tavily.
 
@@ -502,7 +468,7 @@ The orchestration workflow is in `n8n/workflows/` and ships inactive.
 
 ---
 
-## 11. API Reference
+## 10. API Reference
 
 | Service | Method and path | Description |
 |---|---|---|
@@ -531,7 +497,7 @@ Research is a `POST` by design: a run spends search and LLM budget, so it must n
 
 ---
 
-## 12. Configuration
+## 11. Configuration
 
 | Variable | Purpose | Default or example |
 |---|---|---|
@@ -554,42 +520,3 @@ Research is a `POST` by design: a run spends search and LLM budget, so it must n
 Secrets must be supplied through the environment and never committed.
 
 ---
-
-## 13. Repository Structure
-
-```
-.
-├── detection/            Tender ingestion, normalization, classification
-│   └── data/simulated_feed/   15 sample tenders
-├── research/             Agentic prospect research
-│   ├── runner.py         Bounded orchestration loop and confidence rule
-│   ├── extractor.py      Quarantined LLM extraction
-│   ├── audit.py          Tamper-evident audit logger
-│   ├── search.py         Tavily client with timeouts and retry policy
-│   └── tools/            SSRF-guarded fetch, LLM contract probe
-├── rag/                  Semantic retrieval service
-│   ├── structured_chunking.py   Record-aware chunkers
-│   ├── ranking.py        Bounded priority policy
-│   ├── storage.py        Failure-safe replace logic
-│   └── evaluate_local.py Offline retrieval benchmark
-├── shared/               Auth, schemas, SQLite store, log redaction
-├── sql/schema.sql        pgvector schema, indexes, RLS, search function
-├── n8n/workflows/        Phase 1 orchestrator
-├── Cvs dataset/          Synthetic knowledge base (see below)
-├── .github/workflows/    Test and security pipelines
-├── Dockerfile
-└── docker-compose.yml
-```
-
-**Bundled data (synthetic).** 20 CVs, 12 projects, 6 capability records and a 36-entry OliveSoft project catalogue. No real personal data is included.
-
----
-
-### 14.1Roadmap 
-
-| Phase | Scope | Status |
-|---|---|---|
-| 1 | Detection, research, matching, orchestration, security hardening | Complete |
-| 2 | Commercial proposal generation service | Scaffolded, not enabled |
-| 3 | Per-caller identity, token rotation, rate limiting | Planned |
-| 4 | Richer ranking signals (CV banks, repeat-client portfolios, tool fit) | Planned |
