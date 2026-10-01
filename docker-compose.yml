@@ -27,11 +27,11 @@ services:
       INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
       OLIVESOFT_DB_PATH: /data/olivesoft.db
       RESEARCH_AUDIT_LOG: /data/research.log
-      TAVILY_API_KEY: ${TAVILY_API_KEY:-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}
-      LLM_API_KEY: ${LLM_API_KEY:-dd}
+      TAVILY_API_KEY: ${TAVILY_API_KEY:-tavily-secret}
+      LLM_API_KEY: ${LLM_API_KEY:-api-key}
       LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
       LLM_MODEL: ${LLM_MODEL:-bcluzel/LFM2.5-1.2B-Instruct:Q4_K_M}
-      LLM_URL: ${LLM_URL:-}
+      LLM_URL: ${LLM_URL:-url}
       MAX_SEARCH_ITERATIONS: ${MAX_SEARCH_ITERATIONS:-7}
       TOTAL_RUN_TIMEOUT_SECONDS: ${TOTAL_RUN_TIMEOUT_SECONDS:-45}
       PER_CALL_TIMEOUT_SECONDS: ${PER_CALL_TIMEOUT_SECONDS:-8}
@@ -55,8 +55,8 @@ services:
     restart: unless-stopped
     environment:
       INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-super-token}
-      SUPABASE_URL: ${SUPABASE_URL:-https://ieoqvhgumbyuhcbfgurl.supabase.co}
-      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-sb_secret_PbkZi90FLObwcEmPUNE7Dg_CRWYNUeP}
+      SUPABASE_URL: ${SUPABASE_URL:-supa_url}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-service}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
       HF_HOME: /models
     volumes:
@@ -127,8 +127,8 @@ services:
         python -m rag.ingest_json --file 'Cvs dataset/olivesoft_projects.json' --doc_type project --record-schema olivesoft --source-id internal/olivesoft-projects &&
         python -m rag.ingest_json --file 'Cvs dataset/fake_tools.json' --doc_type tool --source-id internal/tools
     environment:
-      SUPABASE_URL: ${SUPABASE_URL:-https://ieoqvhgumbyuhcbfgurl.supabase.co}
-      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-sb_secret_PbkZi90FLObwcEmPUNE7Dg_CRWYNUeP}
+      SUPABASE_URL: ${SUPABASE_URL:-supa-url}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY:-service}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
       HF_HOME: /models
     volumes:
