@@ -44,6 +44,10 @@ This platform automates all three. A tender enters the system and leaves as a st
 | Safe to operate | Untrusted web content is quarantined; all actions are logged in a tamper-evident audit trail |
 | Verifiable quality | 155 automated test functions, four security scanners in CI, and a labelled retrieval benchmark |
 
+**Results achieved**
+<img width="1731" height="340" alt="image" src="https://github.com/user-attachments/assets/6e2395e2-809f-40c8-bb67-9ebd281feb73" />
+
+
 ---
 
 ## 2. Problem Statement
