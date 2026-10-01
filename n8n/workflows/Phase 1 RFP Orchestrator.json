@@ -124,7 +124,8 @@
       ],
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 2000
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -169,7 +170,8 @@
       ],
       "retryOnFail": true,
       "maxTries": 3,
-      "waitBetweenTries": 2000
+      "waitBetweenTries": 2000,
+      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -266,7 +268,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const tender = $('1 - Ingest and Normalize Tender').first().json;\nconst cvs = $json.cv_matches ?? [];\nconst projects = $json.project_matches ?? [];\n\n// Similarity field names and candidate data may vary, so normalize them before scoring.\nconst normalize = (value) => {\n  if (!value) return 0;\n  if (typeof value === 'number') return value;\n  const asNumber = Number(value);\n  return Number.isFinite(asNumber) ? asNumber : 0;\n};\n\nconst coverages = cvs.map((cv) => ({\n  ...cv,\n  score: normalize(cv.score)\n}));\nconst projectMatches = projects.map((project) => ({\n  ...project,\n  score: normalize(project.score)\n}));\n\nconst total = coverages.length + projectMatches.length;\nconst overallCoverage = total ? ((coverages.reduce((sum, item) => sum + normalize(item.score), 0) + projectMatches.reduce((sum, item) => sum + normalize(item.score), 0)) / total) : 0;\n\nreturn {\n  json: {\n    tender_title: tender.title || '',\n    overall_coverage_score: Number(overallCoverage.toFixed(2)),\n    proposal_brief: `We have ${coverages.length} CV matches and ${projectMatches.length} project matches.`,\n    cv_matches: coverages,\n    project_matches: projectMatches\n  }\n};\n"
+        "jsCode": "const tender = $('1 - Ingest and Normalize Tender').first().json;\nconst cvs = $json.cv_matches ?? [];\nconst projects = $json.project_matches ?? [];\n\n// The RAG service (rag/query.py -> QueryResult) returns `similarity` (raw\n// cosine) and `ranking_score` (similarity + bounded business boost). It never\n// returns `score`, so reading `.score` made every match 0. Coverage uses raw\n// similarity so the OliveSoft priority boost cannot inflate it.\nconst scoreOf = (match) => {\n  if (!match) return 0;\n  for (const field of ['similarity', 'ranking_score', 'score']) {\n    const value = Number(match[field]);\n    if (match[field] !== null && match[field] !== undefined && Number.isFinite(value)) {\n      return Math.min(1, Math.max(0, value));\n    }\n  }\n  return 0;\n};\n\nconst coverages = cvs.map((cv) => ({ ...cv, score: scoreOf(cv) }));\nconst projectMatches = projects.map((project) => ({ ...project, score: scoreOf(project) }));\n\nconst all = [...coverages, ...projectMatches];\nconst overallCoverage = all.length\n  ? all.reduce((sum, item) => sum + item.score, 0) / all.length\n  : 0;\n\nreturn {\n  json: {\n    tender_title: tender.title || '',\n    overall_coverage_score: Number(overallCoverage.toFixed(2)),\n    proposal_brief: `We have ${coverages.length} CV matches and ${projectMatches.length} project matches.`,\n    cv_matches: coverages,\n    project_matches: projectMatches\n  }\n};\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
