@@ -70,8 +70,8 @@ This platform automates all three. A tender enters the system and leaves as a st
 flowchart LR
     A["Tender feed"] --> B["1. Detection<br/>validate, deduplicate, classify"]
     B --> C["2. Prospect Research<br/>bounded agent, sourced facts"]
-    C --> D["3. Capability Matching<br/>semantic search over CVs,<br/>projects and tools"]
-    D --> E["Coverage report<br/>and ranked matches"]
+    C --> D["3. Capability Matching<br/>semantic search over<br/>CVs and projects"]
+    D --> E["Brief with ranked matches<br/>and match score"]
 ```
 
 ### 3.2 Capabilities
@@ -119,25 +119,28 @@ sequenceDiagram
         D-->>W: Normalized tender
     end
 
-    W->>R: POST /research/{tender_id}
+ W->>R: POST /research/{tender_id}
     alt cached for this tender
         R-->>W: Cached research
     else cache miss
-        loop until budget or evidence complete
-            R->>X: Tavily search
+        loop each unfilled gap, once, until 35 s budget
+            R->>X: Tavily search (top result)
+            R->>R: Audit snippet
             R->>X: LLM: quarantined extraction
-            R->>R: Validate, deduplicate, audit
+            R->>R: Validate, deduplicate facts
         end
         R-->>W: ProspectResearch with confidence
     end
 
+    W->>W: Build query (title, issuer, requirements)
     par CV matching
         W->>G: POST /query (doc_type cv)
     and Project matching
         W->>G: POST /query (doc_type project)
     end
     G-->>W: Ranked matches
-    W->>W: Compute coverage, append result row
+    W->>W: Overall match score (mean similarity), append result row
+
 ```
 
 ---
