@@ -84,42 +84,7 @@ OliveSoft's five service lines used for classification: Data Integration, AI Dev
 
 ## 4. System Architecture
 
-### 4.1 Context diagram
-
-```mermaid
-flowchart TB
-    subgraph EXT["External systems"]
-        SHEET[("Google Sheets<br/>tender feed and results")]
-        TAV(["Tavily<br/>web search API"])
-        LLM(["LLM provider<br/>Anthropic, OpenAI or compatible"])
-        SB[("Supabase<br/>PostgreSQL with pgvector")]
-    end
-
-    subgraph PLAT["OliveSoft platform (Docker Compose)"]
-        N8N{{"n8n orchestrator"}}
-        DET["Detection service<br/>port 8000"]
-        RES["Research service<br/>port 8002"]
-        RAG["RAG service<br/>port 8001"]
-        SQL[("SQLite<br/>WAL mode")]
-        AUD[/"Audit log<br/>SHA-256 per entry"/]
-        EMB["Local embedding model<br/>MiniLM-L6-v2"]
-    end
-
-    SHEET <--> N8N
-    N8N --> DET
-    N8N --> RES
-    N8N --> RAG
-    DET --> SQL
-    DET --> LLM
-    RES --> SQL
-    RES --> TAV
-    RES --> LLM
-    RES --> AUD
-    RAG --> EMB
-    RAG --> SB
-```
-
-### 4.2 Services
+### 4.1Services
 
 | Service | Port | Responsibility | Depends on |
 |---|:---:|---|---|
@@ -130,7 +95,7 @@ flowchart TB
 
 All services expose `GET /health` without authentication. Every other endpoint requires the `X-Internal-Token` header.
 
-### 4.3 End-to-end sequence
+### 4.2 End-to-end sequence
 
 ```mermaid
 sequenceDiagram
