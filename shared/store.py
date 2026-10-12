@@ -10,6 +10,7 @@ write lock that broke every subsequent test with "database is locked".
 """
 
 import json
+import os
 import sqlite3
 from contextlib import contextmanager
 from datetime import date, datetime
@@ -18,7 +19,9 @@ from typing import Iterator, Optional
 
 from shared.schemas import ProspectResearch, Tender
 
-DB_PATH = Path(__file__).parent / "sqlite.db"
+DB_PATH = Path(
+    os.environ.get("OLIVESOFT_DB_PATH", str(Path(__file__).parent / "sqlite.db"))
+)
 
 
 def _row_to_tender(row: sqlite3.Row) -> Tender:

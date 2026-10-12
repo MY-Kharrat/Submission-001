@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from typing import Literal, Optional, List
+from typing import Literal, Optional, List, Any
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -16,7 +16,7 @@ CAPABILITY_TAXONOMY: list[str] = [
     "Data Platform",
 ]
 
-
+# @Todo: Remove comments
 class Tender(BaseModel):
     model_config = ConfigDict(strict=True)
 
@@ -35,7 +35,10 @@ class Tender(BaseModel):
 class Fact(BaseModel):
     model_config = ConfigDict(strict=True)
 
-    value: str = Field(min_length=1)
+    # max_length bounds the injection surface: an attacker-controlled page
+    # cannot smuggle arbitrarily large payloads through a single fact, and
+    # the extractor prompt already asks for spans under 200 characters.
+    value: str = Field(min_length=1, max_length=500)
     category: Literal["sector", "estimated_revenue", "past_projects", "key_partners"]
     confidence: Literal["low", "medium", "high"]
 
@@ -83,3 +86,23 @@ class ProspectResearch(BaseModel):
     notes: str
     confidence: Literal["low", "medium", "high"]  # computed by runner.py, not the model
     sources: list[str]  # only URLs that contributed a fact, not every URL searched
+
+class QueryRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    text: str = Field(min_length=3, max_length=10_000)
+    top_k: int = Field(default=5, ge=1, le=20)
+    doc_type: Literal["cv", "project", "tool"] | None = None
+    similarity_threshold: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class QueryResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str
+    content: str
+    doc_type: Literal["cv", "project", "tool"]
+    source_file: str
+    metadata: dict[str, Any]
+    similarity: float
+    ranking_score: float

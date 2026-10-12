@@ -46,8 +46,9 @@ async def run_research(
 
     POST because a run spends search + LLM budget: it is neither safe nor
     idempotent-by-default, so it must not be a GET (prefetchers, crawlers
-    and browser retries fire GETs). Issuer-keyed caching inside Runner
-    makes repeated triggers cheap.
+    and browser retries fire GETs). Exact-tender caching inside Runner makes
+    unchanged repeated triggers cheap without reusing opportunity-specific
+    evidence across separate RFPs from the same issuer.
     """
     try:
         # finalize() already persists exactly once — no second write here.
