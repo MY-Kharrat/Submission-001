@@ -21,7 +21,7 @@ GAP_QUERIES: dict[str, str] = {
 # Defense in depth: SearchTool caps to 3 as well, but the orchestrator must not
 # trust the tool alone — an alternate/injected search implementation returning
 # more would otherwise widen both the token cost and the injection surface.
-MAX_RESULTS_PER_QUERY = 3
+MAX_RESULTS_PER_QUERY = 1
 
 
 class TenderNotFoundError(LookupError):
