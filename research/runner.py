@@ -235,6 +235,7 @@ class Runner:
 
             # Builds a query: <issuer, gap>
             query = self._build_query(issuer, gap)
+            results=[]
             try:
                 # Performs a web search using Tavily
                 results = await search(query)
