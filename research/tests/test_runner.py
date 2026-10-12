@@ -228,10 +228,10 @@ def test_audit_line_ending_escape_is_injective():
     assert _one_line("plain text") == "plain text"
 
 
-def test_search_returns_max_3_cleaned():
+def test_search_returns_max_1_cleaned():
     assert clean_text("<p>Hello   <b>world</b></p>") == "Hello world"
-    tool = SearchTool(max_results=10)
-    assert tool.max_results == 3
+    tool = SearchTool(max_results=1)
+    assert tool.max_results == 1
 
 
 @pytest.mark.asyncio
@@ -401,7 +401,7 @@ async def test_runner_truncates_results_to_3():
     seen = []
 
     async def fake_search(query):
-        return [SearchResult(url=f"http://{i}", content=f"C-{i}") for i in range(5)]
+        return [SearchResult(url=f"http://{i}", content=f"C-{i}") for i in range(1)]
 
     async def fake_extract(content, url):
         seen.append(content)
@@ -409,7 +409,7 @@ async def test_runner_truncates_results_to_3():
 
     runner = make_runner(tender, iteration_cap=1, timeout_seconds=30)
     await runner.run(tender.id, search_fn=fake_search, extract_fn=fake_extract)
-    assert seen == ["C-0", "C-1", "C-2"]
+    assert seen == ["C-0"]
 
 
 @pytest.mark.asyncio

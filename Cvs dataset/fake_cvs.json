@@ -2,23 +2,22 @@
   {
     "cv_id": "CV-0001",
     "name": "Employee_001",
-    "role": "Solutions Architect",
-    "years_experience": 2,
+    "role": "Business Analyst",
+    "years_experience": 7,
     "skills": [
-      "Redis",
-      "PostgreSQL",
-      "GCP",
-      "Django"
+      "Requirements analysis",
+      "BPMN",
+      "User stories",
+      "Workshops"
     ],
     "past_projects": [
       {
-        "project_name": "Real estate internal workflow automation",
-        "client_sector": "real estate",
-        "description": "Contributed as solutions architect on a real estate sector project, working with Django, Redis, GCP.",
+        "project_name": "B2B ordering web shop for a consumer goods distributor",
+        "client_sector": "consumer goods",
+        "description": "Worked as business analyst on design, build and release.",
         "tech_stack": [
-          "Redis",
-          "Django",
-          "GCP"
+          "Requirements analysis",
+          "BPMN"
         ]
       }
     ],
@@ -27,520 +26,358 @@
   {
     "cv_id": "CV-0002",
     "name": "Employee_002",
-    "role": "AI/ML Engineer",
-    "years_experience": 1,
+    "role": "Project Manager",
+    "years_experience": 2,
     "skills": [
-      "AWS",
-      "CI/CD",
-      "GCP",
-      "Tailwind CSS",
-      "LangChain",
-      "Django",
-      "GraphQL",
-      "Terraform"
+      "Scrum",
+      "Stakeholder management",
+      "Delivery planning",
+      "Jira"
     ],
     "past_projects": [
       {
-        "project_name": "Public administration real-time analytics dashboard",
-        "client_sector": "public administration",
-        "description": "Contributed as ai/ml engineer on a public administration sector project, working with Django, GCP, CI/CD.",
+        "project_name": "Custom approval workflow application for a healthcare back office",
+        "client_sector": "healthcare",
+        "description": "Worked as project manager on design, build and release.",
         "tech_stack": [
-          "Tailwind CSS",
-          "GraphQL",
-          "GCP"
+          "Scrum",
+          "Stakeholder management"
         ]
       }
     ],
-    "certifications": [
-      "AWS Certified Developer"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0003",
     "name": "Employee_003",
-    "role": "Frontend Developer",
-    "years_experience": 7,
+    "role": "Junior BI Analyst",
+    "years_experience": 1,
     "skills": [
-      "Pinecone",
-      "MongoDB",
-      "JavaScript",
-      "Flutter"
+      "Power BI",
+      "Excel",
+      "SQL"
     ],
     "past_projects": [
       {
-        "project_name": "Logistics internal workflow automation",
-        "client_sector": "logistics",
-        "description": "Contributed as frontend developer on a logistics sector project, working with JavaScript, Flutter, MongoDB.",
+        "project_name": "Internal delivery for an industrial manufacturing client",
+        "client_sector": "industrial manufacturing",
+        "description": "Maintained monthly headcount reports for an HR team under supervision.",
         "tech_stack": [
-          "MongoDB",
-          "JavaScript",
-          "Pinecone"
+          "Power BI",
+          "Excel",
+          "SQL"
         ]
       }
     ],
-    "certifications": [
-      "AWS Certified Solutions Architect"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0004",
     "name": "Employee_004",
-    "role": "Solutions Architect",
-    "years_experience": 4,
+    "role": "Senior Data Engineer",
+    "years_experience": 9,
     "skills": [
-      "Next.js",
+      "BigQuery",
       "GCP",
-      "Node.js",
-      "REST APIs",
-      "Django",
-      "PyTorch"
+      "Identity resolution",
+      "Consent management",
+      "dbt",
+      "Looker Studio",
+      "Data quality"
     ],
     "past_projects": [
       {
-        "project_name": "Public administration legacy system modernization",
-        "client_sector": "public administration",
-        "description": "Contributed as solutions architect on a public administration sector project, working with Node.js, GCP, PyTorch.",
+        "project_name": "Customer single view on BigQuery for a retail chain",
+        "client_sector": "retail",
+        "description": "Unified ERP, e-commerce, marketing and support customer records in a BigQuery landing zone, matching people on email and loyalty id with a postcode fallback.",
         "tech_stack": [
-          "PyTorch",
-          "Next.js",
-          "GCP"
+          "BigQuery",
+          "GCP",
+          "Identity resolution"
         ]
       },
       {
-        "project_name": "Education mobile app for field agents",
-        "client_sector": "education",
-        "description": "Contributed as solutions architect on a education sector project, working with GCP, REST APIs, Django.",
+        "project_name": "Custom approval workflow application for a healthcare back office",
+        "client_sector": "healthcare",
+        "description": "Supported the delivery team on integration and data tasks.",
         "tech_stack": [
-          "Node.js",
-          "Django",
-          "GCP"
-        ]
-      },
-      {
-        "project_name": "Real estate legacy system modernization",
-        "client_sector": "real estate",
-        "description": "Contributed as solutions architect on a real estate sector project, working with Next.js, GCP, PyTorch.",
-        "tech_stack": [
-          "Node.js",
-          "REST APIs",
-          "PyTorch"
+          "React",
+          "FastAPI"
         ]
       }
     ],
     "certifications": [
-      "AWS Certified Developer"
+      "Google Professional Data Engineer"
     ]
   },
   {
     "cv_id": "CV-0005",
     "name": "Employee_005",
-    "role": "Data Engineer",
-    "years_experience": 15,
+    "role": "Senior BI Consultant",
+    "years_experience": 10,
     "skills": [
-      "Qdrant",
-      "Azure",
-      "Kotlin",
-      "GraphQL",
-      "Tailwind CSS",
-      "Flutter",
-      "Scikit-learn",
-      "GCP"
+      "Power BI",
+      "DAX",
+      "Semantic model design",
+      "Row-level security",
+      "KPI governance",
+      "Azure Synapse"
     ],
     "past_projects": [
       {
-        "project_name": "Telecom data platform migration",
-        "client_sector": "telecom",
-        "description": "Contributed as data engineer on a telecom sector project, working with GraphQL, Flutter, Tailwind CSS.",
+        "project_name": "HR KPI semantic model and executive dashboards for a healthcare organisation",
+        "client_sector": "healthcare",
+        "description": "Replaced divisional spreadsheet packs with one governed Power BI semantic model whose KPI definitions were agreed with the HR leadership team.",
         "tech_stack": [
-          "Tailwind CSS",
-          "Flutter",
-          "GCP"
+          "Power BI",
+          "KPI governance"
         ]
       },
       {
-        "project_name": "Logistics real-time analytics dashboard",
-        "client_sector": "logistics",
-        "description": "Contributed as data engineer on a logistics sector project, working with Flutter, Azure, Scikit-learn.",
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
         "tech_stack": [
-          "GCP",
-          "Qdrant",
-          "Scikit-learn"
+          "Flutter",
+          "Firebase"
         ]
       }
     ],
     "certifications": [
-      "AWS Certified Developer"
+      "Microsoft Certified: Power BI Data Analyst Associate"
     ]
   },
   {
     "cv_id": "CV-0006",
     "name": "Employee_006",
-    "role": "Full Stack Developer",
-    "years_experience": 11,
+    "role": "Edge AI Engineer",
+    "years_experience": 6,
     "skills": [
-      "Terraform",
-      "React",
-      "REST APIs",
-      "Flutter",
-      "PyTorch"
+      "Computer vision",
+      "Defect detection",
+      "Edge inference",
+      "PyTorch",
+      "ONNX Runtime",
+      "Label adjudication",
+      "OpenCV"
     ],
     "past_projects": [
       {
-        "project_name": "Education customer portal revamp",
-        "client_sector": "education",
-        "description": "Contributed as full stack developer on a education sector project, working with Terraform, REST APIs, Flutter.",
+        "project_name": "Inspection label cleanup and defect model training for a fashion retail producer",
+        "client_sector": "fashion retail",
+        "description": "Trained computer vision models for fabric and garment defect classes, tuned to favour catching safety-relevant defects over avoiding false alarms.",
         "tech_stack": [
-          "REST APIs",
-          "Terraform",
-          "React"
+          "Computer vision",
+          "Defect detection",
+          "Label adjudication",
+          "OpenCV"
         ]
       },
       {
-        "project_name": "Logistics data platform migration",
-        "client_sector": "logistics",
-        "description": "Contributed as full stack developer on a logistics sector project, working with Flutter, Terraform, REST APIs.",
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
         "tech_stack": [
-          "REST APIs",
-          "React",
-          "PyTorch"
-        ]
-      },
-      {
-        "project_name": "Healthcare AI-powered document processing",
-        "client_sector": "healthcare",
-        "description": "Contributed as full stack developer on a healthcare sector project, working with PyTorch, React, Terraform.",
-        "tech_stack": [
-          "REST APIs",
-          "React",
-          "PyTorch"
+          "Flutter",
+          "Firebase"
         ]
       }
     ],
-    "certifications": []
+    "certifications": [
+      "NVIDIA DLI: Building AI-Based Defect Detection"
+    ]
   },
   {
     "cv_id": "CV-0007",
     "name": "Employee_007",
-    "role": "Backend Developer",
-    "years_experience": 10,
+    "role": "Data Engineer",
+    "years_experience": 6,
     "skills": [
-      "Kotlin",
-      "Java",
-      "FastAPI",
-      "n8n",
-      "Tailwind CSS",
+      "BigQuery",
+      "GCP",
+      "Identity resolution",
+      "Consent management",
+      "dbt",
+      "Pub/Sub"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Customer single view on BigQuery for a retail chain",
+        "client_sector": "retail",
+        "description": "Unified ERP, e-commerce, marketing and support customer records in a BigQuery landing zone, matching people on email and loyalty id with a postcode fallback.",
+        "tech_stack": [
+          "BigQuery",
+          "GCP",
+          "Identity resolution"
+        ]
+      },
+      {
+        "project_name": "Consent-aware customer data platform on GCP for a retail brand",
+        "client_sector": "retail",
+        "description": "Built consent and opt-out propagation so downstream marketing tools honoured a customer withdrawal the same day.",
+        "tech_stack": [
+          "BigQuery",
+          "GCP",
+          "Consent management",
+          "Pub/Sub"
+        ]
+      },
+      {
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "Flutter",
+          "Firebase"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Professional Cloud Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0008",
+    "name": "Employee_008",
+    "role": "DevOps Engineer",
+    "years_experience": 12,
+    "skills": [
+      "Docker",
+      "Kubernetes",
+      "Terraform",
       "CI/CD"
     ],
     "past_projects": [
       {
-        "project_name": "Retail customer portal revamp",
-        "client_sector": "retail",
-        "description": "Contributed as backend developer on a retail sector project, working with Java, Tailwind CSS, Kotlin.",
+        "project_name": "Custom approval workflow application for a healthcare back office",
+        "client_sector": "healthcare",
+        "description": "Worked as devops engineer on design, build and release.",
         "tech_stack": [
-          "Kotlin",
-          "n8n",
-          "CI/CD"
-        ]
-      },
-      {
-        "project_name": "Education data platform migration",
-        "client_sector": "education",
-        "description": "Contributed as backend developer on a education sector project, working with Java, n8n, CI/CD.",
-        "tech_stack": [
-          "FastAPI",
-          "Tailwind CSS",
-          "n8n"
-        ]
-      },
-      {
-        "project_name": "Retail mobile app for field agents",
-        "client_sector": "retail",
-        "description": "Contributed as backend developer on a retail sector project, working with CI/CD, FastAPI, n8n.",
-        "tech_stack": [
-          "CI/CD",
-          "FastAPI",
-          "n8n"
+          "Docker",
+          "Kubernetes"
         ]
       }
     ],
     "certifications": []
   },
   {
-    "cv_id": "CV-0008",
-    "name": "Employee_008",
-    "role": "QA Engineer",
-    "years_experience": 2,
-    "skills": [
-      "GCP",
-      "React",
-      "ChromaDB",
-      "Java",
-      "Python"
-    ],
-    "past_projects": [
-      {
-        "project_name": "Real estate customer portal revamp",
-        "client_sector": "real estate",
-        "description": "Contributed as qa engineer on a real estate sector project, working with React, GCP, Java.",
-        "tech_stack": [
-          "ChromaDB",
-          "GCP",
-          "Python"
-        ]
-      }
-    ],
-    "certifications": [
-      "PMP"
-    ]
-  },
-  {
     "cv_id": "CV-0009",
     "name": "Employee_009",
-    "role": "Data Scientist",
-    "years_experience": 11,
+    "role": "Backend Developer",
+    "years_experience": 3,
     "skills": [
-      "Azure",
-      "Django",
-      "Swift",
+      "Java",
+      "Spring Boot",
       "PostgreSQL",
-      "GraphQL",
-      "Kotlin",
-      "TensorFlow"
+      "REST APIs"
     ],
     "past_projects": [
       {
-        "project_name": "Retail internal workflow automation",
-        "client_sector": "retail",
-        "description": "Contributed as data scientist on a retail sector project, working with Azure, Kotlin, PostgreSQL.",
+        "project_name": "B2B ordering web shop for a consumer goods distributor",
+        "client_sector": "consumer goods",
+        "description": "Worked as backend developer on design, build and release.",
         "tech_stack": [
-          "Swift",
+          "Spring Boot",
           "PostgreSQL",
-          "Kotlin"
-        ]
-      },
-      {
-        "project_name": "Energy customer portal revamp",
-        "client_sector": "energy",
-        "description": "Contributed as data scientist on a energy sector project, working with Kotlin, TensorFlow, Azure.",
-        "tech_stack": [
-          "Azure",
-          "PostgreSQL",
-          "Swift"
-        ]
-      },
-      {
-        "project_name": "Healthcare mobile app for field agents",
-        "client_sector": "healthcare",
-        "description": "Contributed as data scientist on a healthcare sector project, working with Django, TensorFlow, GraphQL.",
-        "tech_stack": [
-          "PostgreSQL",
-          "Django",
-          "TensorFlow"
-        ]
-      },
-      {
-        "project_name": "Public administration AI-powered document processing",
-        "client_sector": "public administration",
-        "description": "Contributed as data scientist on a public administration sector project, working with PostgreSQL, Django, Azure.",
-        "tech_stack": [
-          "PostgreSQL",
-          "GraphQL",
-          "Azure"
+          "REST APIs"
         ]
       }
     ],
-    "certifications": [
-      "AWS Certified Solutions Architect"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0010",
     "name": "Employee_010",
-    "role": "Solutions Architect",
-    "years_experience": 9,
+    "role": "Frontend Developer",
+    "years_experience": 5,
     "skills": [
+      "React",
       "Next.js",
-      "PostgreSQL",
-      "Docker",
-      "CI/CD"
+      "TypeScript",
+      "Tailwind CSS"
     ],
     "past_projects": [
       {
-        "project_name": "Energy mobile app for field agents",
-        "client_sector": "energy",
-        "description": "Contributed as solutions architect on a energy sector project, working with CI/CD, Next.js, Docker.",
-        "tech_stack": [
-          "CI/CD",
-          "Next.js",
-          "PostgreSQL"
-        ]
-      },
-      {
-        "project_name": "Telecom API integration hub",
+        "project_name": "Customer self-service web portal for a telecom provider",
         "client_sector": "telecom",
-        "description": "Contributed as solutions architect on a telecom sector project, working with Docker, PostgreSQL, CI/CD.",
+        "description": "Worked as frontend developer on design, build and release.",
         "tech_stack": [
-          "PostgreSQL",
+          "React",
           "Next.js",
-          "CI/CD"
-        ]
-      },
-      {
-        "project_name": "Retail customer portal revamp",
-        "client_sector": "retail",
-        "description": "Contributed as solutions architect on a retail sector project, working with Next.js, Docker, PostgreSQL.",
-        "tech_stack": [
-          "Next.js",
-          "CI/CD",
-          "PostgreSQL"
-        ]
-      },
-      {
-        "project_name": "Education data platform migration",
-        "client_sector": "education",
-        "description": "Contributed as solutions architect on a education sector project, working with Next.js, Docker, CI/CD.",
-        "tech_stack": [
-          "PostgreSQL",
-          "Next.js",
-          "Docker"
+          "TypeScript"
         ]
       }
     ],
-    "certifications": [
-      "PMP"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0011",
     "name": "Employee_011",
-    "role": "Cloud Architect",
-    "years_experience": 2,
+    "role": "Full Stack Developer",
+    "years_experience": 1,
     "skills": [
-      "PostgreSQL",
-      "JavaScript",
       "Next.js",
-      "CI/CD",
-      "ChromaDB",
-      "LangChain",
-      "Flutter",
-      "MongoDB"
+      "Node.js",
+      "PostgreSQL",
+      "TypeScript"
     ],
     "past_projects": [
       {
-        "project_name": "Telecom mobile app for field agents",
-        "client_sector": "telecom",
-        "description": "Contributed as cloud architect on a telecom sector project, working with LangChain, JavaScript, Next.js.",
+        "project_name": "B2B ordering web shop for a consumer goods distributor",
+        "client_sector": "consumer goods",
+        "description": "Worked as full stack developer on design, build and release.",
         "tech_stack": [
-          "Flutter",
-          "JavaScript",
-          "LangChain"
-        ]
-      },
-      {
-        "project_name": "Real estate AI-powered document processing",
-        "client_sector": "real estate",
-        "description": "Contributed as cloud architect on a real estate sector project, working with MongoDB, Next.js, PostgreSQL.",
-        "tech_stack": [
-          "PostgreSQL",
-          "CI/CD",
-          "ChromaDB"
-        ]
-      },
-      {
-        "project_name": "Manufacturing internal workflow automation",
-        "client_sector": "manufacturing",
-        "description": "Contributed as cloud architect on a manufacturing sector project, working with JavaScript, ChromaDB, MongoDB.",
-        "tech_stack": [
-          "ChromaDB",
-          "JavaScript",
-          "Next.js"
+          "Next.js",
+          "PostgreSQL"
         ]
       }
     ],
-    "certifications": [
-      "AWS Certified Developer"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0012",
     "name": "Employee_012",
-    "role": "Data Engineer",
+    "role": "ETL Developer",
     "years_experience": 6,
     "skills": [
-      "Docker",
-      "Tailwind CSS",
-      "LlamaIndex",
-      "Python",
-      "ChromaDB",
-      "CI/CD"
+      "Informatica PowerCenter",
+      "Oracle",
+      "ETL",
+      "Shell scripting"
     ],
     "past_projects": [
       {
-        "project_name": "Real estate internal workflow automation",
-        "client_sector": "real estate",
-        "description": "Contributed as data engineer on a real estate sector project, working with Tailwind CSS, LlamaIndex, Docker.",
+        "project_name": "Oracle ERP data migration with Informatica",
+        "client_sector": "banking",
+        "description": "Migrated Informatica workflows between Oracle environments.",
         "tech_stack": [
-          "Docker",
-          "ChromaDB",
-          "Tailwind CSS"
-        ]
-      },
-      {
-        "project_name": "Telecom AI-powered document processing",
-        "client_sector": "telecom",
-        "description": "Contributed as data engineer on a telecom sector project, working with ChromaDB, Tailwind CSS, LlamaIndex.",
-        "tech_stack": [
-          "Tailwind CSS",
-          "LlamaIndex",
-          "Python"
-        ]
-      },
-      {
-        "project_name": "Telecom customer portal revamp",
-        "client_sector": "telecom",
-        "description": "Contributed as data engineer on a telecom sector project, working with Docker, Python, LlamaIndex.",
-        "tech_stack": [
-          "Docker",
-          "CI/CD",
-          "LlamaIndex"
+          "Informatica PowerCenter",
+          "Oracle",
+          "ETL"
         ]
       }
     ],
-    "certifications": [
-      "Certified Kubernetes Administrator"
-    ]
+    "certifications": []
   },
   {
     "cv_id": "CV-0013",
     "name": "Employee_013",
-    "role": "Solutions Architect",
-    "years_experience": 5,
+    "role": "Cloud Architect",
+    "years_experience": 1,
     "skills": [
-      "Tailwind CSS",
+      "AWS",
       "Terraform",
-      "Python",
-      "FastAPI",
-      "React"
+      "Kubernetes",
+      "Serverless"
     ],
     "past_projects": [
       {
-        "project_name": "Education customer portal revamp",
-        "client_sector": "education",
-        "description": "Contributed as solutions architect on a education sector project, working with Python, Terraform, FastAPI.",
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Worked as cloud architect on design, build and release.",
         "tech_stack": [
-          "Terraform",
-          "Tailwind CSS",
-          "React"
-        ]
-      },
-      {
-        "project_name": "Insurance customer portal revamp",
-        "client_sector": "insurance",
-        "description": "Contributed as solutions architect on a insurance sector project, working with Python, Terraform, React.",
-        "tech_stack": [
-          "Terraform",
-          "Tailwind CSS",
-          "React"
+          "AWS",
+          "Terraform"
         ]
       }
     ],
@@ -549,348 +386,1544 @@
   {
     "cv_id": "CV-0014",
     "name": "Employee_014",
-    "role": "Business Analyst",
-    "years_experience": 7,
+    "role": "Data Engineer",
+    "years_experience": 6,
     "skills": [
-      "Spring Boot",
-      "PostgreSQL",
-      "Docker",
-      "Kubernetes",
-      "Tailwind CSS",
-      "Azure",
       "Python",
-      "Next.js"
+      "Airflow",
+      "PostgreSQL",
+      "Metabase"
     ],
     "past_projects": [
       {
-        "project_name": "Logistics mobile app for field agents",
+        "project_name": "Internal delivery for a logistics client",
         "client_sector": "logistics",
-        "description": "Contributed as business analyst on a logistics sector project, working with Tailwind CSS, PostgreSQL, Azure.",
+        "description": "Ran nightly batch pipelines and a shared KPI dashboard for an operations team.",
         "tech_stack": [
-          "PostgreSQL",
-          "Kubernetes",
-          "Spring Boot"
-        ]
-      },
-      {
-        "project_name": "Energy mobile app for field agents",
-        "client_sector": "energy",
-        "description": "Contributed as business analyst on a energy sector project, working with Kubernetes, Python, Next.js.",
-        "tech_stack": [
-          "Azure",
-          "Docker",
-          "PostgreSQL"
-        ]
-      },
-      {
-        "project_name": "Retail customer portal revamp",
-        "client_sector": "retail",
-        "description": "Contributed as business analyst on a retail sector project, working with Kubernetes, Next.js, Docker.",
-        "tech_stack": [
-          "Tailwind CSS",
           "Python",
-          "Spring Boot"
-        ]
-      }
-    ],
-    "certifications": [
-      "Scrum Master (CSM)"
-    ]
-  },
-  {
-    "cv_id": "CV-0015",
-    "name": "Employee_015",
-    "role": "DevOps Engineer",
-    "years_experience": 11,
-    "skills": [
-      "GraphQL",
-      "ChromaDB",
-      "Java",
-      "FastAPI",
-      "Tailwind CSS",
-      "Django",
-      "Next.js",
-      "LangChain"
-    ],
-    "past_projects": [
-      {
-        "project_name": "Banking internal workflow automation",
-        "client_sector": "banking",
-        "description": "Contributed as devops engineer on a banking sector project, working with Next.js, Java, Django.",
-        "tech_stack": [
-          "Django",
-          "FastAPI",
-          "Tailwind CSS"
-        ]
-      },
-      {
-        "project_name": "Education internal workflow automation",
-        "client_sector": "education",
-        "description": "Contributed as devops engineer on a education sector project, working with Next.js, Tailwind CSS, ChromaDB.",
-        "tech_stack": [
-          "Tailwind CSS",
-          "GraphQL",
-          "Django"
-        ]
-      },
-      {
-        "project_name": "Logistics customer portal revamp",
-        "client_sector": "logistics",
-        "description": "Contributed as devops engineer on a logistics sector project, working with FastAPI, Java, LangChain.",
-        "tech_stack": [
-          "ChromaDB",
-          "Django",
-          "Java"
+          "Airflow",
+          "PostgreSQL"
         ]
       }
     ],
     "certifications": []
   },
   {
-    "cv_id": "CV-0016",
-    "name": "Employee_016",
-    "role": "DevOps Engineer",
-    "years_experience": 11,
+    "cv_id": "CV-0015",
+    "name": "Employee_015",
+    "role": "Lakehouse Architect",
+    "years_experience": 13,
     "skills": [
-      "LlamaIndex",
-      "TensorFlow",
-      "CI/CD",
-      "Qdrant"
+      "Kafka",
+      "Databricks",
+      "Lakehouse",
+      "Delta Lake",
+      "Late-arriving event handling",
+      "Python",
+      "Spark Structured Streaming",
+      "Grafana"
     ],
     "past_projects": [
       {
-        "project_name": "Telecom data platform migration",
-        "client_sector": "telecom",
-        "description": "Contributed as devops engineer on a telecom sector project, working with TensorFlow, Qdrant, CI/CD.",
+        "project_name": "Multi-market sales and returns lakehouse model for a retail brand",
+        "client_sector": "retail",
+        "description": "Streamed order and warehouse events through Kafka into a Databricks lakehouse, with watermarking so late events corrected earlier aggregates instead of being dropped.",
         "tech_stack": [
-          "TensorFlow",
-          "CI/CD",
-          "Qdrant"
-        ]
-      },
-      {
-        "project_name": "Logistics customer portal revamp",
-        "client_sector": "logistics",
-        "description": "Contributed as devops engineer on a logistics sector project, working with CI/CD, TensorFlow, LlamaIndex.",
-        "tech_stack": [
-          "Qdrant",
-          "CI/CD",
-          "TensorFlow"
-        ]
-      },
-      {
-        "project_name": "Energy API integration hub",
-        "client_sector": "energy",
-        "description": "Contributed as devops engineer on a energy sector project, working with Qdrant, CI/CD, LlamaIndex.",
-        "tech_stack": [
-          "Qdrant",
-          "CI/CD",
-          "LlamaIndex"
-        ]
-      },
-      {
-        "project_name": "Real estate internal workflow automation",
-        "client_sector": "real estate",
-        "description": "Contributed as devops engineer on a real estate sector project, working with CI/CD, Qdrant, TensorFlow.",
-        "tech_stack": [
-          "LlamaIndex",
-          "Qdrant",
-          "TensorFlow"
+          "Databricks",
+          "Lakehouse",
+          "Kafka"
         ]
       }
     ],
     "certifications": [
-      "PMP"
+      "Databricks Certified Data Engineer Professional"
+    ]
+  },
+  {
+    "cv_id": "CV-0016",
+    "name": "Employee_016",
+    "role": "Senior AI Engineer",
+    "years_experience": 9,
+    "skills": [
+      "Retrieval augmented generation",
+      "LLM evaluation",
+      "Source citations",
+      "pgvector",
+      "Prompt injection defense"
+    ],
+    "past_projects": [
+      {
+        "project_name": "LLM answer quality evaluation programme for an insurance service desk",
+        "client_sector": "insurance",
+        "description": "Shipped a retrieval augmented generation assistant over an approved document corpus that cites document and page, and refuses with a human handover when evidence is missing.",
+        "tech_stack": [
+          "LLM evaluation",
+          "Retrieval augmented generation"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Azure AI Engineer Associate"
     ]
   },
   {
     "cv_id": "CV-0017",
     "name": "Employee_017",
-    "role": "Project Manager",
-    "years_experience": 4,
+    "role": "Forecasting Lead",
+    "years_experience": 14,
     "skills": [
-      "Java",
-      "JavaScript",
-      "PostgreSQL",
-      "Swift",
-      "React"
+      "Machine learning",
+      "Demand forecasting",
+      "Explainable AI",
+      "Prediction intervals",
+      "ERP data integration",
+      "SHAP",
+      "LightGBM"
     ],
     "past_projects": [
       {
-        "project_name": "Logistics mobile app for field agents",
-        "client_sector": "logistics",
-        "description": "Contributed as project manager on a logistics sector project, working with Swift, React, JavaScript.",
+        "project_name": "Customer-level demand forecasting for a consumer goods supplier",
+        "client_sector": "consumer goods",
+        "description": "Built machine learning demand forecasts per product and customer from years of ERP order history, exposing prediction intervals rather than single numbers.",
         "tech_stack": [
-          "JavaScript",
-          "React",
-          "PostgreSQL"
+          "Machine learning",
+          "Demand forecasting",
+          "LightGBM",
+          "ERP data integration"
         ]
       },
       {
-        "project_name": "Banking internal workflow automation",
-        "client_sector": "banking",
-        "description": "Contributed as project manager on a banking sector project, working with Swift, JavaScript, Java.",
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
         "tech_stack": [
-          "React",
-          "Swift",
-          "Java"
-        ]
-      },
-      {
-        "project_name": "Education mobile app for field agents",
-        "client_sector": "education",
-        "description": "Contributed as project manager on a education sector project, working with Java, Swift, React.",
-        "tech_stack": [
-          "Swift",
-          "PostgreSQL",
-          "JavaScript"
-        ]
-      },
-      {
-        "project_name": "Manufacturing real-time analytics dashboard",
-        "client_sector": "manufacturing",
-        "description": "Contributed as project manager on a manufacturing sector project, working with React, Swift, Java.",
-        "tech_stack": [
-          "Swift",
-          "React",
-          "JavaScript"
+          "Flutter",
+          "Firebase"
         ]
       }
     ],
     "certifications": [
-      "PMP"
+      "AWS Certified Machine Learning - Specialty"
     ]
   },
   {
     "cv_id": "CV-0018",
     "name": "Employee_018",
-    "role": "Business Analyst",
-    "years_experience": 11,
+    "role": "Integration Developer",
+    "years_experience": 7,
     "skills": [
-      "PyTorch",
-      "Kotlin",
-      "PostgreSQL",
-      "Redis",
-      "GCP",
-      "JavaScript"
+      "MuleSoft",
+      "SAP SuccessFactors",
+      "Master Data Management",
+      "API-led connectivity",
+      "DataWeave",
+      "OAuth 2.0"
     ],
     "past_projects": [
       {
-        "project_name": "Retail AI-powered document processing",
-        "client_sector": "retail",
-        "description": "Contributed as business analyst on a retail sector project, working with PostgreSQL, JavaScript, PyTorch.",
+        "project_name": "Employee master data consolidation with versioned APIs for a consumer goods company",
+        "client_sector": "consumer goods",
+        "description": "Built MuleSoft flows linking SuccessFactors to regional payroll engines, with master data rules that stopped duplicate employee records appearing across countries.",
         "tech_stack": [
-          "Kotlin",
-          "JavaScript",
-          "GCP"
+          "MuleSoft",
+          "Master Data Management"
         ]
       },
       {
-        "project_name": "Logistics data platform migration",
+        "project_name": "Multi-country HR and payroll integration hub for a logistics group",
         "client_sector": "logistics",
-        "description": "Contributed as business analyst on a logistics sector project, working with JavaScript, Kotlin, PyTorch.",
+        "description": "Designed versioned API contracts and a handover pack so the client's IT team could run the integration estate, including country-specific statutory payroll exports.",
         "tech_stack": [
-          "Redis",
-          "JavaScript",
-          "PostgreSQL"
+          "MuleSoft",
+          "SAP SuccessFactors",
+          "Master Data Management",
+          "DataWeave"
         ]
-      },
+      }
+    ],
+    "certifications": [
+      "MuleSoft Certified Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0019",
+    "name": "Employee_019",
+    "role": "Backend Developer",
+    "years_experience": 5,
+    "skills": [
+      "Kafka",
+      "Java",
+      "Spring Boot",
+      "PostgreSQL"
+    ],
+    "past_projects": [
       {
-        "project_name": "Education API integration hub",
-        "client_sector": "education",
-        "description": "Contributed as business analyst on a education sector project, working with Redis, PyTorch, Kotlin.",
+        "project_name": "Telecom billing mediation on event streams",
+        "client_sector": "telecom",
+        "description": "Built Kafka consumers for a telecom billing mediation service.",
         "tech_stack": [
-          "Redis",
-          "JavaScript",
-          "PyTorch"
+          "Kafka",
+          "Java",
+          "Spring Boot"
         ]
       }
     ],
     "certifications": []
   },
   {
-    "cv_id": "CV-0019",
-    "name": "Employee_019",
-    "role": "Cloud Architect",
+    "cv_id": "CV-0020",
+    "name": "Employee_020",
+    "role": "Integration Engineer (IoT)",
+    "years_experience": 6,
+    "skills": [
+      "Telematics integration",
+      "API integration",
+      "Flutter",
+      "Offline-first mobile",
+      "SQLite"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Fleet telematics integration with maintenance and fuel systems for an energy utilities operator",
+        "client_sector": "energy utilities",
+        "description": "Connected fleet telematics feeds to maintenance and fuel systems, with a defined fallback when the telematics provider goes offline for an extended period.",
+        "tech_stack": [
+          "Telematics integration",
+          "API integration"
+        ]
+      },
+      {
+        "project_name": "Offline-first driver app fed by telematics data for an energy utilities company",
+        "client_sector": "energy utilities",
+        "description": "Built an offline-first driver app recording delivery confirmations and digital logbook entries, localised into the drivers' own language and rolled out without disrupting dispatch.",
+        "tech_stack": [
+          "Flutter",
+          "Offline-first mobile",
+          "API integration"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Associate Android Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0021",
+    "name": "Employee_021",
+    "role": "LLM Application Engineer",
+    "years_experience": 7,
+    "skills": [
+      "Retrieval augmented generation",
+      "LLM evaluation",
+      "Source citations",
+      "pgvector",
+      "Prompt injection defense",
+      "LangChain",
+      "Python"
+    ],
+    "past_projects": [
+      {
+        "project_name": "LLM answer quality evaluation programme for an insurance service desk",
+        "client_sector": "insurance",
+        "description": "Shipped a retrieval augmented generation assistant over an approved document corpus that cites document and page, and refuses with a human handover when evidence is missing.",
+        "tech_stack": [
+          "LLM evaluation",
+          "Retrieval augmented generation",
+          "LangChain",
+          "Python"
+        ]
+      },
+      {
+        "project_name": "Grounded customer support assistant for an insurance business",
+        "client_sector": "insurance",
+        "description": "Built an evaluation harness replaying hundreds of historical customer questions against an agreed accuracy threshold before each release.",
+        "tech_stack": [
+          "Retrieval augmented generation",
+          "pgvector",
+          "Source citations"
+        ]
+      },
+      {
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "React",
+          "Next.js"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Azure AI Engineer Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0022",
+    "name": "Employee_022",
+    "role": "Computer Vision Engineer",
+    "years_experience": 6,
+    "skills": [
+      "Computer vision",
+      "Defect detection",
+      "Edge inference",
+      "PyTorch",
+      "NVIDIA Jetson",
+      "OpenCV",
+      "Label adjudication"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Edge visual inspection for textile quality control at an industrial manufacturing plant",
+        "client_sector": "industrial manufacturing",
+        "description": "Trained computer vision models for fabric and garment defect classes, tuned to favour catching safety-relevant defects over avoiding false alarms.",
+        "tech_stack": [
+          "Computer vision",
+          "Edge inference",
+          "PyTorch",
+          "NVIDIA Jetson"
+        ]
+      }
+    ],
+    "certifications": [
+      "NVIDIA DLI: Building AI-Based Defect Detection"
+    ]
+  },
+  {
+    "cv_id": "CV-0023",
+    "name": "Employee_023",
+    "role": "Backend Developer",
+    "years_experience": 1,
+    "skills": [
+      "Node.js",
+      "GraphQL",
+      "MongoDB",
+      "Redis"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Custom approval workflow application for a healthcare back office",
+        "client_sector": "healthcare",
+        "description": "Worked as backend developer on design, build and release.",
+        "tech_stack": [
+          "Node.js",
+          "GraphQL"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0024",
+    "name": "Employee_024",
+    "role": "Salesforce Consultant",
+    "years_experience": 9,
+    "skills": [
+      "Salesforce Service Cloud",
+      "Omni-Channel routing",
+      "Apex",
+      "Case migration",
+      "Change management",
+      "Salesforce Flow"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Policy-aware case management on Salesforce for an insurance group",
+        "client_sector": "insurance",
+        "description": "Rolled out Service Cloud with a single omnichannel queue for phone, email and chat, migrating more than a decade of historical cases.",
+        "tech_stack": [
+          "Salesforce Service Cloud",
+          "Apex",
+          "Salesforce Flow",
+          "Change management"
+        ]
+      }
+    ],
+    "certifications": [
+      "Salesforce Certified Application Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0025",
+    "name": "Employee_025",
+    "role": "Senior Data Scientist",
+    "years_experience": 9,
+    "skills": [
+      "Machine learning",
+      "Demand forecasting",
+      "Explainable AI",
+      "Prediction intervals",
+      "MLflow",
+      "ERP data integration",
+      "SHAP"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Explainable forecasting with planner feedback loop for a consumer goods company",
+        "client_sector": "consumer goods",
+        "description": "Built machine learning demand forecasts per product and customer from years of ERP order history, exposing prediction intervals rather than single numbers.",
+        "tech_stack": [
+          "Machine learning",
+          "Explainable AI",
+          "SHAP",
+          "MLflow"
+        ]
+      },
+      {
+        "project_name": "B2B ordering web shop for a consumer goods distributor",
+        "client_sector": "consumer goods",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "Next.js",
+          "Spring Boot"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Machine Learning - Specialty"
+    ]
+  },
+  {
+    "cv_id": "CV-0026",
+    "name": "Employee_026",
+    "role": "Senior Integration Architect",
+    "years_experience": 10,
+    "skills": [
+      "MuleSoft",
+      "SAP SuccessFactors",
+      "Master Data Management",
+      "API-led connectivity",
+      "REST APIs",
+      "DataWeave"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Multi-country HR and payroll integration hub for a logistics group",
+        "client_sector": "logistics",
+        "description": "Built MuleSoft flows linking SuccessFactors to regional payroll engines, with master data rules that stopped duplicate employee records appearing across countries.",
+        "tech_stack": [
+          "MuleSoft",
+          "SAP SuccessFactors",
+          "Master Data Management",
+          "DataWeave"
+        ]
+      },
+      {
+        "project_name": "Employee master data consolidation with versioned APIs for a consumer goods company",
+        "client_sector": "consumer goods",
+        "description": "Designed versioned API contracts and a handover pack so the client's IT team could run the integration estate, including country-specific statutory payroll exports.",
+        "tech_stack": [
+          "MuleSoft",
+          "REST APIs",
+          "Master Data Management"
+        ]
+      }
+    ],
+    "certifications": [
+      "MuleSoft Certified Integration Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0027",
+    "name": "Employee_027",
+    "role": "Integration Consultant",
+    "years_experience": 10,
+    "skills": [
+      "Salesforce Sales Cloud",
+      "MuleSoft",
+      "REST APIs",
+      "Pre-sales"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Internal delivery for a consumer goods client",
+        "client_sector": "consumer goods",
+        "description": "Connected Sales Cloud opportunities to an ERP through a small MuleSoft layer.",
+        "tech_stack": [
+          "Salesforce Sales Cloud",
+          "MuleSoft",
+          "REST APIs"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0028",
+    "name": "Employee_028",
+    "role": "MuleSoft Developer",
     "years_experience": 8,
     "skills": [
-      "Pinecone",
+      "MuleSoft",
+      "SAP SuccessFactors",
+      "Master Data Management",
+      "API-led connectivity",
+      "Anypoint Platform"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Employee master data consolidation with versioned APIs for a consumer goods company",
+        "client_sector": "consumer goods",
+        "description": "Built MuleSoft flows linking SuccessFactors to regional payroll engines, with master data rules that stopped duplicate employee records appearing across countries.",
+        "tech_stack": [
+          "MuleSoft",
+          "Anypoint Platform",
+          "Master Data Management"
+        ]
+      },
+      {
+        "project_name": "Multi-country HR and payroll integration hub for a logistics group",
+        "client_sector": "logistics",
+        "description": "Designed versioned API contracts and a handover pack so the client's IT team could run the integration estate, including country-specific statutory payroll exports.",
+        "tech_stack": [
+          "MuleSoft",
+          "SAP SuccessFactors",
+          "Master Data Management"
+        ]
+      }
+    ],
+    "certifications": [
+      "MuleSoft Certified Integration Architect"
+    ]
+  },
+  {
+    "cv_id": "CV-0029",
+    "name": "Employee_029",
+    "role": "Data Scientist (Similarity Search)",
+    "years_experience": 6,
+    "skills": [
+      "Similarity detection",
+      "Image embeddings",
+      "Text similarity",
+      "Web crawler",
+      "FAISS"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Trademark image and word-mark similarity search for a public sector (justice) registry",
+        "client_sector": "public sector (justice)",
+        "description": "Built similarity detection over logo images and word marks, returning ranked candidates with the matched evidence shown rather than an opaque score.",
+        "tech_stack": [
+          "Similarity detection",
+          "Image embeddings",
+          "Text similarity",
+          "FAISS"
+        ]
+      },
+      {
+        "project_name": "Prior-art crawler with auditable matching for a public sector (justice) authority",
+        "client_sector": "public sector (justice)",
+        "description": "Handled national and international classification codes and kept an auditable decision trail that could withstand an appeal; wrote the prior-art web crawler.",
+        "tech_stack": [
+          "Web crawler",
+          "Similarity detection"
+        ]
+      },
+      {
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "React",
+          "Next.js"
+        ]
+      }
+    ],
+    "certifications": [
+      "Elastic Certified Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0030",
+    "name": "Employee_030",
+    "role": "Power BI Developer",
+    "years_experience": 6,
+    "skills": [
+      "Power BI",
+      "DAX",
+      "Semantic model design",
+      "Row-level security",
+      "KPI governance",
+      "Power Query"
+    ],
+    "past_projects": [
+      {
+        "project_name": "HR KPI semantic model and executive dashboards for a healthcare organisation",
+        "client_sector": "healthcare",
+        "description": "Replaced divisional spreadsheet packs with one governed Power BI semantic model whose KPI definitions were agreed with the HR leadership team.",
+        "tech_stack": [
+          "Power BI",
+          "KPI governance",
+          "Power Query"
+        ]
+      },
+      {
+        "project_name": "Governed workforce analytics in Power BI for a healthcare organisation",
+        "client_sector": "healthcare",
+        "description": "Implemented row-level security by division and multi-year historical trend views for workforce, absence and attrition reporting.",
+        "tech_stack": [
+          "Power BI",
+          "DAX",
+          "Semantic model design",
+          "Row-level security"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Power BI Data Analyst Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0031",
+    "name": "Employee_031",
+    "role": "Senior ETL Engineer",
+    "years_experience": 10,
+    "skills": [
+      "Talend",
+      "SSIS",
+      "ETL",
+      "SQL Server",
+      "Incremental loading",
+      "Azure Data Factory"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Recruitment and applicant tracking ETL modernisation for a logistics group",
+        "client_sector": "logistics",
+        "description": "Migrated legacy SSIS packages to Talend jobs, adding incremental loads that survive a partial failure without reprocessing the full history.",
+        "tech_stack": [
+          "Talend",
+          "ETL"
+        ]
+      },
+      {
+        "project_name": "SSIS to Talend pipeline migration for an insurance operator",
+        "client_sector": "insurance",
+        "description": "Wrote reconciliation checks comparing legacy and migrated extracts so drift in recruitment and applicant tracking data was caught before go-live.",
+        "tech_stack": [
+          "Talend",
+          "SSIS",
+          "SQL Server",
+          "ETL"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Azure Data Engineer Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0032",
+    "name": "Employee_032",
+    "role": "Salesforce Developer",
+    "years_experience": 5,
+    "skills": [
+      "Salesforce CRM Analytics",
+      "Salesforce Field Service",
+      "Offline sync",
+      "Data residency",
+      "Case management",
+      "Salesforce Shield",
+      "SAQL"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Citizen case analytics on Salesforce for a public sector (interior) ministry",
+        "client_sector": "public sector (interior)",
+        "description": "Built CRM Analytics dashboards on an existing Salesforce org giving central oversight of case volumes, resolution times and backlog per office each month.",
+        "tech_stack": [
+          "Salesforce CRM Analytics",
+          "SAQL",
+          "Case management"
+        ]
+      }
+    ],
+    "certifications": [
+      "Salesforce Certified Platform Developer I"
+    ]
+  },
+  {
+    "cv_id": "CV-0033",
+    "name": "Employee_033",
+    "role": "Information Retrieval Engineer",
+    "years_experience": 5,
+    "skills": [
+      "Similarity detection",
+      "Image embeddings",
+      "Text similarity",
+      "Web crawler",
+      "Python",
+      "Elasticsearch",
+      "Audit logging"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Trademark image and word-mark similarity search for a public sector (justice) registry",
+        "client_sector": "public sector (justice)",
+        "description": "Built similarity detection over logo images and word marks, returning ranked candidates with the matched evidence shown rather than an opaque score.",
+        "tech_stack": [
+          "Similarity detection",
+          "Image embeddings",
+          "Text similarity"
+        ]
+      },
+      {
+        "project_name": "Prior-art crawler with auditable matching for a public sector (justice) authority",
+        "client_sector": "public sector (justice)",
+        "description": "Handled national and international classification codes and kept an auditable decision trail that could withstand an appeal; wrote the prior-art web crawler.",
+        "tech_stack": [
+          "Web crawler",
+          "Similarity detection",
+          "Elasticsearch",
+          "Audit logging"
+        ]
+      }
+    ],
+    "certifications": [
+      "Elastic Certified Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0034",
+    "name": "Employee_034",
+    "role": "AI Solutions Architect",
+    "years_experience": 12,
+    "skills": [
+      "Retrieval augmented generation",
+      "LLM evaluation",
+      "Source citations",
+      "pgvector",
       "LlamaIndex",
+      "Python",
+      "LangChain"
+    ],
+    "past_projects": [
+      {
+        "project_name": "LLM answer quality evaluation programme for an insurance service desk",
+        "client_sector": "insurance",
+        "description": "Shipped a retrieval augmented generation assistant over an approved document corpus that cites document and page, and refuses with a human handover when evidence is missing.",
+        "tech_stack": [
+          "LLM evaluation",
+          "Retrieval augmented generation",
+          "LangChain",
+          "Python"
+        ]
+      },
+      {
+        "project_name": "Grounded customer support assistant for an insurance business",
+        "client_sector": "insurance",
+        "description": "Built an evaluation harness replaying hundreds of historical customer questions against an agreed accuracy threshold before each release.",
+        "tech_stack": [
+          "Retrieval augmented generation",
+          "LlamaIndex",
+          "pgvector",
+          "Source citations"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Azure AI Engineer Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0035",
+    "name": "Employee_035",
+    "role": "Senior ML Engineer (Vision)",
+    "years_experience": 13,
+    "skills": [
+      "Computer vision",
+      "Defect detection",
+      "Edge inference",
+      "PyTorch",
+      "OpenCV",
+      "Label adjudication"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Edge visual inspection for textile quality control at an industrial manufacturing plant",
+        "client_sector": "industrial manufacturing",
+        "description": "Trained computer vision models for fabric and garment defect classes, tuned to favour catching safety-relevant defects over avoiding false alarms.",
+        "tech_stack": [
+          "Computer vision",
+          "Edge inference",
+          "PyTorch"
+        ]
+      }
+    ],
+    "certifications": [
+      "NVIDIA DLI: Building AI-Based Defect Detection"
+    ]
+  },
+  {
+    "cv_id": "CV-0036",
+    "name": "Employee_036",
+    "role": "Machine Learning Engineer",
+    "years_experience": 5,
+    "skills": [
+      "Machine learning",
+      "Demand forecasting",
+      "Explainable AI",
+      "Prediction intervals",
+      "SHAP",
+      "LightGBM"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Customer-level demand forecasting for a consumer goods supplier",
+        "client_sector": "consumer goods",
+        "description": "Built machine learning demand forecasts per product and customer from years of ERP order history, exposing prediction intervals rather than single numbers.",
+        "tech_stack": [
+          "Machine learning",
+          "Demand forecasting",
+          "LightGBM"
+        ]
+      }
+    ],
+    "certifications": [
+      "AWS Certified Machine Learning - Specialty"
+    ]
+  },
+  {
+    "cv_id": "CV-0037",
+    "name": "Employee_037",
+    "role": "Senior Streaming Engineer",
+    "years_experience": 9,
+    "skills": [
+      "Kafka",
+      "Databricks",
+      "Lakehouse",
+      "Delta Lake",
+      "Late-arriving event handling",
+      "Grafana",
+      "Python",
+      "Spark Structured Streaming"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Order event streaming into a Databricks lakehouse for a fashion retail business",
+        "client_sector": "fashion retail",
+        "description": "Streamed order and warehouse events through Kafka into a Databricks lakehouse, with watermarking so late events corrected earlier aggregates instead of being dropped.",
+        "tech_stack": [
+          "Kafka",
+          "Databricks",
+          "Delta Lake",
+          "Spark Structured Streaming"
+        ]
+      },
+      {
+        "project_name": "Multi-market sales and returns lakehouse model for a retail brand",
+        "client_sector": "retail",
+        "description": "Modelled multi-currency sales and returns, and added pipeline health monitoring with alerting on lag and schema changes.",
+        "tech_stack": [
+          "Databricks",
+          "Lakehouse",
+          "Kafka"
+        ]
+      }
+    ],
+    "certifications": [
+      "Confluent Certified Developer for Apache Kafka"
+    ]
+  },
+  {
+    "cv_id": "CV-0038",
+    "name": "Employee_038",
+    "role": "Mobile Developer",
+    "years_experience": 8,
+    "skills": [
+      "Flutter",
+      "Dart",
+      "Firebase",
+      "REST APIs"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Worked as mobile developer on design, build and release.",
+        "tech_stack": [
+          "Flutter",
+          "Firebase",
+          "REST APIs"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0039",
+    "name": "Employee_039",
+    "role": "Data Platform Engineer",
+    "years_experience": 7,
+    "skills": [
+      "Kafka",
+      "Databricks",
+      "Lakehouse",
+      "Delta Lake",
+      "Late-arriving event handling",
+      "Python",
+      "Grafana",
+      "Data observability"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Multi-market sales and returns lakehouse model for a retail brand",
+        "client_sector": "retail",
+        "description": "Streamed order and warehouse events through Kafka into a Databricks lakehouse, with watermarking so late events corrected earlier aggregates instead of being dropped.",
+        "tech_stack": [
+          "Databricks",
+          "Lakehouse",
+          "Kafka",
+          "Data observability"
+        ]
+      },
+      {
+        "project_name": "Retail mobile banking app refresh for a banking institution",
+        "client_sector": "banking",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "Swift",
+          "Kotlin"
+        ]
+      }
+    ],
+    "certifications": [
+      "Databricks Certified Data Engineer Professional"
+    ]
+  },
+  {
+    "cv_id": "CV-0040",
+    "name": "Employee_040",
+    "role": "Senior Search & ML Engineer",
+    "years_experience": 13,
+    "skills": [
+      "Similarity detection",
+      "Image embeddings",
+      "Text similarity",
+      "Web crawler",
+      "Python"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Prior-art crawler with auditable matching for a public sector (justice) authority",
+        "client_sector": "public sector (justice)",
+        "description": "Built similarity detection over logo images and word marks, returning ranked candidates with the matched evidence shown rather than an opaque score.",
+        "tech_stack": [
+          "Web crawler",
+          "Similarity detection"
+        ]
+      },
+      {
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "React",
+          "Next.js"
+        ]
+      }
+    ],
+    "certifications": [
+      "Elastic Certified Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0041",
+    "name": "Employee_041",
+    "role": "Mobile Tech Lead",
+    "years_experience": 12,
+    "skills": [
+      "Telematics integration",
+      "API integration",
+      "Flutter",
+      "Offline-first mobile",
+      "MQTT"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Offline-first driver app fed by telematics data for an energy utilities company",
+        "client_sector": "energy utilities",
+        "description": "Connected fleet telematics feeds to maintenance and fuel systems, with a defined fallback when the telematics provider goes offline for an extended period.",
+        "tech_stack": [
+          "Flutter",
+          "Offline-first mobile",
+          "API integration"
+        ]
+      },
+      {
+        "project_name": "Fleet telematics integration with maintenance and fuel systems for an energy utilities operator",
+        "client_sector": "energy utilities",
+        "description": "Built an offline-first driver app recording delivery confirmations and digital logbook entries, localised into the drivers' own language and rolled out without disrupting dispatch.",
+        "tech_stack": [
+          "Telematics integration",
+          "API integration",
+          "MQTT"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Associate Android Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0042",
+    "name": "Employee_042",
+    "role": "Senior Data Platform Engineer",
+    "years_experience": 9,
+    "skills": [
+      "BigQuery",
+      "Snowflake",
+      "Data lineage",
+      "De-identification",
+      "Schema validation",
+      "dbt",
+      "Open data publishing",
+      "GCP"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Official statistics warehouse with end-to-end lineage for a healthcare body",
+        "client_sector": "healthcare",
+        "description": "Built a BigQuery warehouse for validated statistical series and Snowflake models that trace every published figure back to the unit that submitted it.",
+        "tech_stack": [
+          "BigQuery",
+          "Snowflake",
+          "Data lineage",
+          "dbt"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Professional Data Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0043",
+    "name": "Employee_043",
+    "role": "Salesforce Developer",
+    "years_experience": 3,
+    "skills": [
+      "Salesforce Service Cloud",
+      "Omni-Channel routing",
+      "Apex",
+      "Case migration",
+      "Data Loader",
+      "Salesforce Flow",
+      "Lightning Web Components"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Policy-aware case management on Salesforce for an insurance group",
+        "client_sector": "insurance",
+        "description": "Rolled out Service Cloud with a single omnichannel queue for phone, email and chat, migrating more than a decade of historical cases.",
+        "tech_stack": [
+          "Salesforce Service Cloud",
+          "Apex",
+          "Salesforce Flow"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0044",
+    "name": "Employee_044",
+    "role": "Customer Data Architect",
+    "years_experience": 13,
+    "skills": [
+      "BigQuery",
+      "GCP",
+      "Identity resolution",
+      "Consent management",
+      "dbt",
+      "Looker Studio",
+      "Data quality"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Customer single view on BigQuery for a retail chain",
+        "client_sector": "retail",
+        "description": "Unified ERP, e-commerce, marketing and support customer records in a BigQuery landing zone, matching people on email and loyalty id with a postcode fallback.",
+        "tech_stack": [
+          "BigQuery",
+          "GCP",
+          "Identity resolution"
+        ]
+      },
+      {
+        "project_name": "Consent-aware customer data platform on GCP for a retail brand",
+        "client_sector": "retail",
+        "description": "Built consent and opt-out propagation so downstream marketing tools honoured a customer withdrawal the same day.",
+        "tech_stack": [
+          "BigQuery",
+          "GCP",
+          "Consent management"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Professional Data Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0045",
+    "name": "Employee_045",
+    "role": "Data Governance Lead",
+    "years_experience": 15,
+    "skills": [
+      "BigQuery",
+      "Snowflake",
+      "Data lineage",
+      "De-identification",
+      "Schema validation",
+      "Great Expectations",
+      "Open data publishing",
+      "GCP"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Validated submissions and open data release pipeline for a public statistics body",
+        "client_sector": "public statistics",
+        "description": "Built a BigQuery warehouse for validated statistical series and Snowflake models that trace every published figure back to the unit that submitted it.",
+        "tech_stack": [
+          "Schema validation",
+          "De-identification",
+          "Great Expectations",
+          "GCP"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Professional Data Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0046",
+    "name": "Employee_046",
+    "role": "Salesforce CRM Analytics Consultant",
+    "years_experience": 6,
+    "skills": [
+      "Salesforce CRM Analytics",
+      "Salesforce Field Service",
+      "Offline sync",
+      "Data residency",
+      "Salesforce Shield",
+      "SAQL"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Citizen case analytics on Salesforce for a public sector (interior) ministry",
+        "client_sector": "public sector (interior)",
+        "description": "Built CRM Analytics dashboards on an existing Salesforce org giving central oversight of case volumes, resolution times and backlog per office each month.",
+        "tech_stack": [
+          "Salesforce CRM Analytics",
+          "SAQL"
+        ]
+      },
+      {
+        "project_name": "Offline field inspection mobile app for a telecom network operator",
+        "client_sector": "telecom",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "Flutter",
+          "Firebase"
+        ]
+      }
+    ],
+    "certifications": [
+      "Salesforce Certified CRM Analytics and Einstein Discovery Consultant"
+    ]
+  },
+  {
+    "cv_id": "CV-0047",
+    "name": "Employee_047",
+    "role": "Conversational AI Developer",
+    "years_experience": 4,
+    "skills": [
+      "Dialogflow",
+      "Chatbot",
+      "Node.js",
+      "Intent design"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Scripted delivery-status chatbot",
+        "client_sector": "retail",
+        "description": "Built a scripted FAQ chatbot answering delivery-status questions.",
+        "tech_stack": [
+          "Dialogflow",
+          "Chatbot",
+          "Node.js"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0048",
+    "name": "Employee_048",
+    "role": "Mobile Developer",
+    "years_experience": 7,
+    "skills": [
+      "Swift",
+      "Kotlin",
       "REST APIs",
       "CI/CD"
     ],
     "past_projects": [
       {
-        "project_name": "Energy mobile app for field agents",
-        "client_sector": "energy",
-        "description": "Contributed as cloud architect on a energy sector project, working with REST APIs, LlamaIndex, CI/CD.",
+        "project_name": "Retail mobile banking app refresh for a banking institution",
+        "client_sector": "banking",
+        "description": "Worked as mobile developer on design, build and release.",
         "tech_stack": [
-          "Pinecone",
-          "LlamaIndex",
-          "REST APIs"
-        ]
-      },
-      {
-        "project_name": "Real estate real-time analytics dashboard",
-        "client_sector": "real estate",
-        "description": "Contributed as cloud architect on a real estate sector project, working with LlamaIndex, CI/CD, Pinecone.",
-        "tech_stack": [
-          "Pinecone",
-          "LlamaIndex",
+          "Swift",
+          "Kotlin",
+          "REST APIs",
           "CI/CD"
         ]
       }
     ],
-    "certifications": [
-      "AWS Certified Developer"
-    ]
+    "certifications": []
   },
   {
-    "cv_id": "CV-0020",
-    "name": "Employee_020",
-    "role": "Solutions Architect",
-    "years_experience": 7,
+    "cv_id": "CV-0049",
+    "name": "Employee_049",
+    "role": "BI Solution Architect",
+    "years_experience": 11,
     "skills": [
-      "Flutter",
-      "Kubernetes",
-      "TypeScript",
-      "MongoDB",
-      "REST APIs"
+      "Power BI",
+      "DAX",
+      "Semantic model design",
+      "Row-level security",
+      "KPI governance",
+      "Azure Synapse",
+      "Power Query",
+      "SQL"
     ],
     "past_projects": [
       {
-        "project_name": "Retail API integration hub",
-        "client_sector": "retail",
-        "description": "Contributed as solutions architect on a retail sector project, working with TypeScript, REST APIs, Kubernetes.",
-        "tech_stack": [
-          "TypeScript",
-          "MongoDB",
-          "Kubernetes"
-        ]
-      },
-      {
-        "project_name": "Healthcare API integration hub",
+        "project_name": "HR KPI semantic model and executive dashboards for a healthcare organisation",
         "client_sector": "healthcare",
-        "description": "Contributed as solutions architect on a healthcare sector project, working with Flutter, REST APIs, Kubernetes.",
+        "description": "Replaced divisional spreadsheet packs with one governed Power BI semantic model whose KPI definitions were agreed with the HR leadership team.",
         "tech_stack": [
-          "Kubernetes",
-          "Flutter",
-          "TypeScript"
-        ]
-      },
-      {
-        "project_name": "Banking customer portal revamp",
-        "client_sector": "banking",
-        "description": "Contributed as solutions architect on a banking sector project, working with Kubernetes, REST APIs, Flutter.",
-        "tech_stack": [
-          "REST APIs",
-          "Kubernetes",
-          "Flutter"
+          "Power BI",
+          "KPI governance",
+          "SQL",
+          "Power Query"
         ]
       }
     ],
     "certifications": [
-      "Certified Kubernetes Administrator"
+      "Microsoft Certified: Power BI Data Analyst Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0050",
+    "name": "Employee_050",
+    "role": "Analytics Engineer",
+    "years_experience": 7,
+    "skills": [
+      "BigQuery",
+      "Snowflake",
+      "Data lineage",
+      "De-identification",
+      "Schema validation",
+      "Open data publishing",
+      "dbt"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Validated submissions and open data release pipeline for a public statistics body",
+        "client_sector": "public statistics",
+        "description": "Built a BigQuery warehouse for validated statistical series and Snowflake models that trace every published figure back to the unit that submitted it.",
+        "tech_stack": [
+          "Schema validation",
+          "De-identification"
+        ]
+      },
+      {
+        "project_name": "Official statistics warehouse with end-to-end lineage for a healthcare body",
+        "client_sector": "healthcare",
+        "description": "Enforced submission specifications that reject malformed files with precise error messages, and ran a documented de-identification review before open data release.",
+        "tech_stack": [
+          "BigQuery",
+          "Snowflake",
+          "Data lineage",
+          "dbt"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Professional Data Engineer"
+    ]
+  },
+  {
+    "cv_id": "CV-0051",
+    "name": "Employee_051",
+    "role": "Full Stack Developer",
+    "years_experience": 9,
+    "skills": [
+      "React",
+      "FastAPI",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Custom approval workflow application for a healthcare back office",
+        "client_sector": "healthcare",
+        "description": "Worked as full stack developer on design, build and release.",
+        "tech_stack": [
+          "React",
+          "FastAPI",
+          "Docker"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0052",
+    "name": "Employee_052",
+    "role": "Data Integration Engineer",
+    "years_experience": 6,
+    "skills": [
+      "Talend",
+      "SSIS",
+      "ETL",
+      "SQL Server",
+      "Incremental loading",
+      "Data reconciliation"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Recruitment and applicant tracking ETL modernisation for a logistics group",
+        "client_sector": "logistics",
+        "description": "Migrated legacy SSIS packages to Talend jobs, adding incremental loads that survive a partial failure without reprocessing the full history.",
+        "tech_stack": [
+          "Talend",
+          "ETL",
+          "Data reconciliation"
+        ]
+      },
+      {
+        "project_name": "SSIS to Talend pipeline migration for an insurance operator",
+        "client_sector": "insurance",
+        "description": "Wrote reconciliation checks comparing legacy and migrated extracts so drift in recruitment and applicant tracking data was caught before go-live.",
+        "tech_stack": [
+          "Talend",
+          "SSIS",
+          "SQL Server",
+          "ETL"
+        ]
+      }
+    ],
+    "certifications": [
+      "Microsoft Certified: Azure Data Engineer Associate"
+    ]
+  },
+  {
+    "cv_id": "CV-0053",
+    "name": "Employee_053",
+    "role": "Senior Salesforce Architect",
+    "years_experience": 14,
+    "skills": [
+      "Salesforce CRM Analytics",
+      "Salesforce Field Service",
+      "Offline sync",
+      "Data residency",
+      "Case management"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Citizen case analytics on Salesforce for a public sector (interior) ministry",
+        "client_sector": "public sector (interior)",
+        "description": "Built CRM Analytics dashboards on an existing Salesforce org giving central oversight of case volumes, resolution times and backlog per office each month.",
+        "tech_stack": [
+          "Salesforce CRM Analytics",
+          "Case management"
+        ]
+      }
+    ],
+    "certifications": [
+      "Salesforce Certified CRM Analytics and Einstein Discovery Consultant"
+    ]
+  },
+  {
+    "cv_id": "CV-0054",
+    "name": "Employee_054",
+    "role": "Frontend Developer",
+    "years_experience": 2,
+    "skills": [
+      "React",
+      "TypeScript",
+      "Storybook",
+      "Accessibility (WCAG)"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Worked as frontend developer on design, build and release.",
+        "tech_stack": [
+          "React",
+          "TypeScript"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0055",
+    "name": "Employee_055",
+    "role": "QA Engineer",
+    "years_experience": 3,
+    "skills": [
+      "Playwright",
+      "Cypress",
+      "API testing",
+      "CI/CD"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Customer self-service web portal for a telecom provider",
+        "client_sector": "telecom",
+        "description": "Worked as qa engineer on design, build and release.",
+        "tech_stack": [
+          "Playwright",
+          "Cypress"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0056",
+    "name": "Employee_056",
+    "role": "ETL Developer",
+    "years_experience": 3,
+    "skills": [
+      "Talend",
+      "SSIS",
+      "ETL",
+      "SQL Server",
+      "Incremental loading",
+      "Data reconciliation"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Recruitment and applicant tracking ETL modernisation for a logistics group",
+        "client_sector": "logistics",
+        "description": "Migrated legacy SSIS packages to Talend jobs, adding incremental loads that survive a partial failure without reprocessing the full history.",
+        "tech_stack": [
+          "Talend",
+          "ETL",
+          "Data reconciliation"
+        ]
+      },
+      {
+        "project_name": "SSIS to Talend pipeline migration for an insurance operator",
+        "client_sector": "insurance",
+        "description": "Wrote reconciliation checks comparing legacy and migrated extracts so drift in recruitment and applicant tracking data was caught before go-live.",
+        "tech_stack": [
+          "Talend",
+          "SSIS",
+          "SQL Server",
+          "ETL"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0057",
+    "name": "Employee_057",
+    "role": "Senior Mobile Developer",
+    "years_experience": 9,
+    "skills": [
+      "Telematics integration",
+      "API integration",
+      "Flutter",
+      "Offline-first mobile",
+      "MQTT",
+      "Localisation"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Fleet telematics integration with maintenance and fuel systems for an energy utilities operator",
+        "client_sector": "energy utilities",
+        "description": "Connected fleet telematics feeds to maintenance and fuel systems, with a defined fallback when the telematics provider goes offline for an extended period.",
+        "tech_stack": [
+          "Telematics integration",
+          "API integration",
+          "MQTT"
+        ]
+      },
+      {
+        "project_name": "Retail mobile banking app refresh for a banking institution",
+        "client_sector": "banking",
+        "description": "Supported the delivery team on integration and data tasks.",
+        "tech_stack": [
+          "Swift",
+          "Kotlin"
+        ]
+      }
+    ],
+    "certifications": [
+      "Google Associate Android Developer"
+    ]
+  },
+  {
+    "cv_id": "CV-0058",
+    "name": "Employee_058",
+    "role": "UI/UX Designer",
+    "years_experience": 4,
+    "skills": [
+      "Figma",
+      "Design systems",
+      "User research",
+      "Prototyping"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Retail mobile banking app refresh for a banking institution",
+        "client_sector": "banking",
+        "description": "Worked as ui/ux designer on design, build and release.",
+        "tech_stack": [
+          "Figma",
+          "Design systems"
+        ]
+      }
+    ],
+    "certifications": []
+  },
+  {
+    "cv_id": "CV-0059",
+    "name": "Employee_059",
+    "role": "Salesforce Technical Architect",
+    "years_experience": 15,
+    "skills": [
+      "Salesforce Service Cloud",
+      "Omni-Channel routing",
+      "Apex",
+      "Case migration",
+      "Salesforce Flow",
+      "Lightning Web Components",
+      "Change management"
+    ],
+    "past_projects": [
+      {
+        "project_name": "Service Cloud contact centre rollout for a banking provider",
+        "client_sector": "banking",
+        "description": "Rolled out Service Cloud with a single omnichannel queue for phone, email and chat, migrating more than a decade of historical cases.",
+        "tech_stack": [
+          "Salesforce Service Cloud",
+          "Omni-Channel routing",
+          "Case migration"
+        ]
+      }
+    ],
+    "certifications": [
+      "Salesforce Certified Service Cloud Consultant"
     ]
   }
 ]
